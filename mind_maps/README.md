@@ -7,7 +7,7 @@
   </tr>
   <tr>
     <td rowspan="4">1</td>
-    <td rowspan="4"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/EC2.png" target="_blank"><b>EC2</b></a></td>
+    <td rowspan="4"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" target="_blank"><b>EC2</b></a></td>
     <td>EC2 Fundamentals</td>
     <td rowspan="4">Done</td>
   </tr>
@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td rowspan="2">2</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/DATABASES.png" target="_blank"><b>Databases</b></a></td>
+    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank"><b>Databases</b></a></td>
     <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
     <td rowspan="2">In Progress</td>
   </tr>
@@ -32,6 +32,6 @@
 
 </table>
 
-![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/EC2.png)
+![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png)
 
-![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/DATABASES.png)
+![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png)
