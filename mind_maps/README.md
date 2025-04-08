@@ -24,7 +24,7 @@
     <td rowspan="2">2</td>
     <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank"><b>Databases</b></a></td>
     <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
-    <td rowspan="2">In Progress</td>
+    <td rowspan="2">Done</td>
   </tr>
   <tr>
     <td>Databases in AWS</td>
