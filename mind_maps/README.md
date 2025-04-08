@@ -33,3 +33,5 @@
 </table>
 
 ![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/EC2.png)
+
+![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/DATABASES.png)
