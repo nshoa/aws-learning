@@ -31,9 +31,9 @@
   </tr>
   <tr>
     <td rowspan="1">3</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.jpg" target="_blank"><b>Route 53</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" target="_blank"><b>Route 53</b></a></td>
     <td>Route 53</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="3">4</td>
@@ -129,7 +129,14 @@
 
 </table>
 
+<h1>EC2</h1>
 
 ![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png)
 
+<h1>AWS DATABASES</h1>
+
 ![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.jpg)
+
+<h1>ROUTE 53</h1>
+
+![Route 53](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png)
