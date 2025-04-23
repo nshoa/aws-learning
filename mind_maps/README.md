@@ -39,7 +39,7 @@
     <td rowspan="3">4</td>
     <td rowspan="3"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Amazon S3</b></a></td>
     <td>Amazon S3 Introduction</td>
-    <td rowspan="3">In Progress</td>
+    <td rowspan="3">Done</td>
   </tr>
   <tr>
     <td>Advanced Amazon S3</td>
