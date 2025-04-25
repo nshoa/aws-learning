@@ -133,10 +133,14 @@
 
 ![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png)
 
-<h1>AWS DATABASES</h1>
+<h1>DATABASES</h1>
 
 ![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.jpg)
 
 <h1>ROUTE 53</h1>
 
 ![Route 53](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png)
+
+<h1>S3</h1>
+
+![S3](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png)
