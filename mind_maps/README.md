@@ -49,9 +49,9 @@
   </tr>
   <tr>
     <td rowspan="1">5</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>CloudFront & AWS Global Accelerator</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" target="_blank"><b>CloudFront & AWS Global Accelerator</b></a></td>
     <td>CloudFront & AWS Global Accelerator</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">6</td>
@@ -144,3 +144,7 @@
 <h1>S3</h1>
 
 ![S3](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png)
+
+<h1>CLOUDFRONT & GLOBAL ACCELERATOR</h1>
+
+![CloudFront & Global Accelerator](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png.png)
