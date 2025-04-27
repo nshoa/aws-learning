@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td rowspan="2">2</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.jpg" target="_blank"><b>Databases</b></a></td>
+    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank"><b>Databases</b></a></td>
     <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
     <td rowspan="2">Done</td>
   </tr>
@@ -135,7 +135,7 @@
 
 <h1>DATABASES</h1>
 
-![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.jpg)
+![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png)
 
 <h1>ROUTE 53</h1>
 
