@@ -61,9 +61,9 @@
   </tr>
   <tr>
     <td rowspan="1">7</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" target="_blank"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
     <td>Decoupling applications: SQS, SNS, Kinesis, Active MQ</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">8</td>
@@ -152,3 +152,7 @@
 <h1>STORAGE EXTRA</h1>
 
 ![Storage Extra](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png)
+
+<h1>Decoupling Applications: SQS, SNS, Kinesis, Active MQ</h1>
+
+![Decoupling Applications: SQS, SNS, Kinesis, Active MQ](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png)
