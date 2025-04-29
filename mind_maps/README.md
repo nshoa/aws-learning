@@ -153,6 +153,6 @@
 
 ![Storage Extra](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png)
 
-<h1>Decoupling Applications: SQS, SNS, Kinesis, Active MQ</h1>
+<h1>DECOUPLING APPLICATIONS: SQS, SNS, KINESIS, ACTIVE MQ</h1>
 
 ![Decoupling Applications: SQS, SNS, Kinesis, Active MQ](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png)
