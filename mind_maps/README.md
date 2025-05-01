@@ -157,5 +157,6 @@
 
 ![Decoupling Applications: SQS, SNS, Kinesis, Active MQ](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png)
 
-<h1>Containers on AWS: ECS, Fargate, ECR & EKS</h1>
+<h1>CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS</h1>
+
 ![Containers on AWS: ECS, Fargate, ECR & EKS](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png)
