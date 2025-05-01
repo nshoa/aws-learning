@@ -67,9 +67,9 @@
   </tr>
   <tr>
     <td rowspan="1">8</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Containers</b></a></td>
-    <td>Containers on AWS: EC2, Fargate, ECR & EKS</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" target="_blank"><b>Containers</b></a></td>
+    <td>Containers on AWS: ECS, Fargate, ECR & EKS</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="2">9</td>
@@ -156,3 +156,6 @@
 <h1>DECOUPLING APPLICATIONS: SQS, SNS, KINESIS, ACTIVE MQ</h1>
 
 ![Decoupling Applications: SQS, SNS, Kinesis, Active MQ](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png)
+
+<h1>Containers on AWS: ECS, Fargate, ECR & EKS</h1>
+![Containers on AWS: ECS, Fargate, ECR & EKS](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png)
