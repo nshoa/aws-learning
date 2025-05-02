@@ -73,9 +73,9 @@
   </tr>
   <tr>
     <td rowspan="2">9</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Serverless Architecture</b></a></td>
+    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.jpg" target="_blank"><b>Serverless Architecture</b></a></td>
     <td>Serverless Overviews from a Solution Architect Perspective</td>
-    <td rowspan="2">Open</td>
+    <td rowspan="2">Done</td>
   </tr>
   <tr>
     <td>Serverless Solution Architecture Discussions</td>
@@ -160,3 +160,7 @@
 <h1>CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS</h1>
 
 ![Containers on AWS: ECS, Fargate, ECR & EKS](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png)
+
+<h1>SERVERLESS ARCHITECTURE</h1>
+
+![Serverless Architecture](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png)
