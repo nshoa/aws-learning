@@ -82,9 +82,9 @@
   </tr>
   <tr>
     <td rowspan="1">10</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Data & Analytic</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" target="_blank"><b>Data & Analytic</b></a></td>
     <td>Data & Analytic</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">11</td>
@@ -164,3 +164,7 @@
 <h1>SERVERLESS ARCHITECTURE</h1>
 
 ![Serverless Architecture](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png)
+
+<h1>Data & Analytics</h1>
+
+![Data & Analytics](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png)
