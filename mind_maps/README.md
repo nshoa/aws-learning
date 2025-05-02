@@ -73,7 +73,7 @@
   </tr>
   <tr>
     <td rowspan="2">9</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.jpg" target="_blank"><b>Serverless Architecture</b></a></td>
+    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" target="_blank"><b>Serverless Architecture</b></a></td>
     <td>Serverless Overviews from a Solution Architect Perspective</td>
     <td rowspan="2">Done</td>
   </tr>
