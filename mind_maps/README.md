@@ -88,9 +88,9 @@
   </tr>
   <tr>
     <td rowspan="1">11</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Machine Learning</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" target="_blank"><b>Machine Learning</b></a></td>
     <td>Machine Learning</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">12</td>
@@ -168,3 +168,7 @@
 <h1>Data & Analytics</h1>
 
 ![Data & Analytics](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png)
+
+<h1>Machine Learning</h1>
+
+![Machine Learning](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png)
