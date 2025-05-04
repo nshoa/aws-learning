@@ -100,9 +100,9 @@
   </tr>
   <tr>
     <td rowspan="2">13</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>IAM</b></a></td>
-    <td>IAM & AWS CLI</td>
-    <td rowspan="2">Open</td>
+    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" target="_blank"><b>IAM</b></a></td>
+    <td>IAM</td>
+    <td rowspan="2">Done</td>
   </tr>
   <tr>
     <td>Identity and Access Management (IAM) Advanced</td>
@@ -176,3 +176,7 @@
 <h1>MONITORING & AUDIT: CLOUDWATCH, CLOUDTRAIL & CONFIG</h1>
 
 ![Monitoring & Audit](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png)
+
+<h1>IAM</h1>
+
+![IAM](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png)
