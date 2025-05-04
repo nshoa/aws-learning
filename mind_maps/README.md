@@ -94,9 +94,9 @@
   </tr>
   <tr>
     <td rowspan="1">12</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>AWS Monitoring & Audit</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" target="_blank"><b>AWS Monitoring & Audit</b></a></td>
     <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="2">13</td>
@@ -165,10 +165,14 @@
 
 ![Serverless Architecture](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png)
 
-<h1>Data & Analytics</h1>
+<h1>DATA & ANALYTICS</h1>
 
 ![Data & Analytics](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png)
 
-<h1>Machine Learning</h1>
+<h1>MACHINE LEARNING</h1>
 
 ![Machine Learning](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png)
+
+<h1>MONITORING & AUDIT: CLOUDWATCH, CLOUDTRAIL & CONFIG</h1>
+
+![Monitoring & Audit](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png)
