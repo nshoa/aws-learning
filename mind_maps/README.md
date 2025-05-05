@@ -109,9 +109,9 @@
   </tr>
   <tr>
     <td rowspan="1">14</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>AWS Security & Encryption</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" target="_blank"><b>AWS Security & Encryption</b></a></td>
     <td>AWS Security & Encryption: KMS, SSM, Parameter Store, Shield, WAF</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">15</td>
@@ -180,3 +180,7 @@
 <h1>IAM</h1>
 
 ![IAM](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png)
+
+<h1>SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF</h1>
+
+![SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png)
