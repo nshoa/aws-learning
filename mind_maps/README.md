@@ -115,9 +115,9 @@
   </tr>
   <tr>
     <td rowspan="1">15</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Networking</b></a></td>
-    <td>Networking - VPC </td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" target="_blank"><b>Networking</b></a></td>
+    <td>Networking - VPC</td>
+    <td rowspan="1">Done</td>
   </tr>
   <tr>
     <td rowspan="1">16</td>
@@ -184,3 +184,7 @@
 <h1>SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF</h1>
 
 ![SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png)
+
+<h1>NETWORKING - VPC</h1>
+
+![NETWORKING - VPC](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png)
