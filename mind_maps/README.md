@@ -1,149 +1,136 @@
 # AWS Learning Mind Maps
 
-<table width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <h2>Table of Contents</h2>
-      <table width="100%">
-        <tr>
-          <th>#</th>
-          <th>Mindmap</th>
-          <th>Detail Contents</th>
-          <th>Status</th>
-        </tr>
-        <tr>
-          <td rowspan="4">1</td>
-          <td rowspan="4"><a href="#ec2"><b>EC2</b></a></td>
-          <td>EC2 Fundamentals</td>
-          <td rowspan="4">Done</td>
-        </tr>
-        <tr>
-          <td>EC2 Solutions Architect Associate Level</td>
-        </tr>
-        <tr>
-          <td>EC2 Instance Storage</td>
-        </tr>
-        <tr>
-          <td>High Availability and Scalability: ELB & ASG</td>
-        </tr>
-        <tr>
-          <td rowspan="2">2</td>
-          <td rowspan="2"><a href="#databases"><b>Databases</b></a></td>
-          <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
-          <td rowspan="2">Done</td>
-        </tr>
-        <tr>
-          <td>Databases in AWS</td>
-        </tr>
-        <tr>
-          <td rowspan="1">3</td>
-          <td rowspan="1"><a href="#route53"><b>Route 53</b></a></td>
-          <td>Route 53</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="3">4</td>
-          <td rowspan="3"><a href="#s3"><b>Amazon S3</b></a></td>
-          <td>Amazon S3 Introduction</td>
-          <td rowspan="3">Done</td>
-        </tr>
-        <tr>
-          <td>Advanced Amazon S3</td>
-        </tr>
-        <tr>
-          <td>Amazon S3 Security</td>
-        </tr>
-        <tr>
-          <td rowspan="1">5</td>
-          <td rowspan="1"><a href="#cloudfront-global-accelerator"><b>CloudFront & AWS Global Accelerator</b></a></td>
-          <td>CloudFront & AWS Global Accelerator</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">6</td>
-          <td rowspan="1"><a href="#storage-extra"><b>AWS Storage Extra</b></a></td>
-          <td>AWS Storage Extra</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">7</td>
-          <td rowspan="1"><a href="#decoupling-applications"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
-          <td>Decoupling applications: SQS, SNS, Kinesis, Active MQ</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">8</td>
-          <td rowspan="1"><a href="#containers"><b>Containers</b></a></td>
-          <td>Containers on AWS: ECS, Fargate, ECR & EKS</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="2">9</td>
-          <td rowspan="2"><a href="#serverless-architecture"><b>Serverless Architecture</b></a></td>
-          <td>Serverless Overviews from a Solution Architect Perspective</td>
-          <td rowspan="2">Done</td>
-        </tr>
-        <tr>
-          <td>Serverless Solution Architecture Discussions</td>
-        </tr>
-        <tr>
-          <td rowspan="1">10</td>
-          <td rowspan="1"><a href="#data-analytics"><b>Data & Analytic</b></a></td>
-          <td>Data & Analytic</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">11</td>
-          <td rowspan="1"><a href="#machine-learning"><b>Machine Learning</b></a></td>
-          <td>Machine Learning</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">12</td>
-          <td rowspan="1"><a href="#monitoring-audit"><b>AWS Monitoring & Audit</b></a></td>
-          <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="2">13</td>
-          <td rowspan="2"><a href="#iam"><b>IAM</b></a></td>
-          <td>IAM</td>
-          <td rowspan="2">Done</td>
-        </tr>
-        <tr>
-          <td>Identity and Access Management (IAM) Advanced</td>
-        </tr>
-        <tr>
-          <td rowspan="1">14</td>
-          <td rowspan="1"><a href="#security-encryption"><b>AWS Security & Encryption</b></a></td>
-          <td>AWS Security & Encryption: KMS, SSM, Parameter Store, Shield, WAF</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">15</td>
-          <td rowspan="1"><a href="#networking"><b>Networking</b></a></td>
-          <td>Networking - VPC</td>
-          <td rowspan="1">Done</td>
-        </tr>
-        <tr>
-          <td rowspan="1">16</td>
-          <td rowspan="1"><a href="#disaster-recovery"><b>Disaster Recovery - Migrations</b></a></td>
-          <td>Disaster Recovery - Migrations</td>
-          <td rowspan="1">Done</td>
-        </tr>
-      </table>
-    </td>
-    <td width="50%" valign="top">
-      <h2>Featured Mindmap</h2>
-      <div align="center">
-        <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" target="_blank">
-          <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" alt="AWS Services Overview" width="95%" height="auto">
-        </a>
-        <p><i>AWS Services Overview</i></p>
-      </div>
-    </td>
-  </tr>
-</table>
+<div id="top">
+  <h2>Table of Contents</h2>
+  <table>
+    <tr>
+      <th>#</th>
+      <th>Mindmap</th>
+      <th>Detail Contents</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td rowspan="4">1</td>
+      <td rowspan="4"><a href="#ec2"><b>EC2</b></a></td>
+      <td>EC2 Fundamentals</td>
+      <td rowspan="4">Done</td>
+    </tr>
+    <tr>
+      <td>EC2 Solutions Architect Associate Level</td>
+    </tr>
+    <tr>
+      <td>EC2 Instance Storage</td>
+    </tr>
+    <tr>
+      <td>High Availability and Scalability: ELB & ASG</td>
+    </tr>
+    <tr>
+      <td rowspan="2">2</td>
+      <td rowspan="2"><a href="#databases"><b>Databases</b></a></td>
+      <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
+      <td rowspan="2">Done</td>
+    </tr>
+    <tr>
+      <td>Databases in AWS</td>
+    </tr>
+    <tr>
+      <td rowspan="1">3</td>
+      <td rowspan="1"><a href="#route53"><b>Route 53</b></a></td>
+      <td>Route 53</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="3">4</td>
+      <td rowspan="3"><a href="#s3"><b>Amazon S3</b></a></td>
+      <td>Amazon S3 Introduction</td>
+      <td rowspan="3">Done</td>
+    </tr>
+    <tr>
+      <td>Advanced Amazon S3</td>
+    </tr>
+    <tr>
+      <td>Amazon S3 Security</td>
+    </tr>
+    <tr>
+      <td rowspan="1">5</td>
+      <td rowspan="1"><a href="#cloudfront-global-accelerator"><b>CloudFront & AWS Global Accelerator</b></a></td>
+      <td>CloudFront & AWS Global Accelerator</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">6</td>
+      <td rowspan="1"><a href="#storage-extra"><b>AWS Storage Extra</b></a></td>
+      <td>AWS Storage Extra</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">7</td>
+      <td rowspan="1"><a href="#decoupling-applications"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
+      <td>Decoupling applications: SQS, SNS, Kinesis, Active MQ</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">8</td>
+      <td rowspan="1"><a href="#containers"><b>Containers</b></a></td>
+      <td>Containers on AWS: ECS, Fargate, ECR & EKS</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="2">9</td>
+      <td rowspan="2"><a href="#serverless-architecture"><b>Serverless Architecture</b></a></td>
+      <td>Serverless Overviews from a Solution Architect Perspective</td>
+      <td rowspan="2">Done</td>
+    </tr>
+    <tr>
+      <td>Serverless Solution Architecture Discussions</td>
+    </tr>
+    <tr>
+      <td rowspan="1">10</td>
+      <td rowspan="1"><a href="#data-analytics"><b>Data & Analytic</b></a></td>
+      <td>Data & Analytic</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">11</td>
+      <td rowspan="1"><a href="#machine-learning"><b>Machine Learning</b></a></td>
+      <td>Machine Learning</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">12</td>
+      <td rowspan="1"><a href="#monitoring-audit"><b>AWS Monitoring & Audit</b></a></td>
+      <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="2">13</td>
+      <td rowspan="2"><a href="#iam"><b>IAM</b></a></td>
+      <td>IAM</td>
+      <td rowspan="2">Done</td>
+    </tr>
+    <tr>
+      <td>Identity and Access Management (IAM) Advanced</td>
+    </tr>
+    <tr>
+      <td rowspan="1">14</td>
+      <td rowspan="1"><a href="#security-encryption"><b>AWS Security & Encryption</b></a></td>
+      <td>AWS Security & Encryption: KMS, SSM, Parameter Store, Shield, WAF</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">15</td>
+      <td rowspan="1"><a href="#networking"><b>Networking</b></a></td>
+      <td>Networking - VPC</td>
+      <td rowspan="1">Done</td>
+    </tr>
+    <tr>
+      <td rowspan="1">16</td>
+      <td rowspan="1"><a href="#disaster-recovery"><b>Disaster Recovery - Migrations</b></a></td>
+      <td>Disaster Recovery - Migrations</td>
+      <td rowspan="1">Done</td>
+    </tr>
+  </table>
+</div>
 
 <div style="margin-top: 40px;">
   <!-- EC2 Section -->
