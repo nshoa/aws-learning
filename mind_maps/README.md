@@ -1,194 +1,326 @@
-<table>
-  <tr>
-    <th>#</th>
-    <th>Mindmap</th>
-    <th>Detail Contents</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td rowspan="4">1</td>
-    <td rowspan="4"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" target="_blank"><b>EC2</b></a></td>
-    <td>EC2 Fundamentals</td>
-    <td rowspan="4">Done</td>
-  </tr>
-  <tr>
-    <td>EC2 Solutions Architect Associate Level</td>
-  </tr>
-  <tr>
-    <td>EC2 Instance Storage</td>
-  </tr>
-  <tr>
-    <td>High Availability and Scalability: ELB & ASG</td>
-  </tr>
-  <tr>
-    <td rowspan="2">2</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank"><b>Databases</b></a></td>
-    <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
-    <td rowspan="2">Done</td>
-  </tr>
-  <tr>
-    <td>Databases in AWS</td>
-  </tr>
-  <tr>
-    <td rowspan="1">3</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" target="_blank"><b>Route 53</b></a></td>
-    <td>Route 53</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="3">4</td>
-    <td rowspan="3"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png" target="_blank"><b>Amazon S3</b></a></td>
-    <td>Amazon S3 Introduction</td>
-    <td rowspan="3">Done</td>
-  </tr>
-  <tr>
-    <td>Advanced Amazon S3</td>
-  </tr>
-  <tr>
-    <td>Amazon S3 Security</td>
-  </tr>
-  <tr>
-    <td rowspan="1">5</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" target="_blank"><b>CloudFront & AWS Global Accelerator</b></a></td>
-    <td>CloudFront & AWS Global Accelerator</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">6</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png" target="_blank"><b>AWS Storage Extra</b></a></td>
-    <td>AWS Storage Extra</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">7</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" target="_blank"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
-    <td>Decoupling applications: SQS, SNS, Kinesis, Active MQ</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">8</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" target="_blank"><b>Containers</b></a></td>
-    <td>Containers on AWS: ECS, Fargate, ECR & EKS</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="2">9</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" target="_blank"><b>Serverless Architecture</b></a></td>
-    <td>Serverless Overviews from a Solution Architect Perspective</td>
-    <td rowspan="2">Done</td>
-  </tr>
-  <tr>
-    <td>Serverless Solution Architecture Discussions</td>
-  </tr>
-  <tr>
-    <td rowspan="1">10</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" target="_blank"><b>Data & Analytic</b></a></td>
-    <td>Data & Analytic</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">11</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" target="_blank"><b>Machine Learning</b></a></td>
-    <td>Machine Learning</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">12</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" target="_blank"><b>AWS Monitoring & Audit</b></a></td>
-    <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="2">13</td>
-    <td rowspan="2"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" target="_blank"><b>IAM</b></a></td>
-    <td>IAM</td>
-    <td rowspan="2">Done</td>
-  </tr>
-  <tr>
-    <td>Identity and Access Management (IAM) Advanced</td>
-  </tr>
-  <tr>
-    <td rowspan="1">14</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" target="_blank"><b>AWS Security & Encryption</b></a></td>
-    <td>AWS Security & Encryption: KMS, SSM, Parameter Store, Shield, WAF</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">15</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" target="_blank"><b>Networking</b></a></td>
-    <td>Networking - VPC</td>
-    <td rowspan="1">Done</td>
-  </tr>
-  <tr>
-    <td rowspan="1">16</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" target="_blank"><b>Disaster Recovery - Migrations</b></a></td>
-    <td>Disaster Recovery - Migrations</td>
-    <td rowspan="1">Done</td>
-  </tr>
+# AWS Learning Mind Maps
 
+<div id="top" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
+  <!-- Table of Contents Section -->
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+    <h2>Table of Contents</h2>
+    <div>
+      <table>
+        <tr>
+          <th>#</th>
+          <th>Mindmap</th>
+          <th>Detail Contents</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td rowspan="4">1</td>
+          <td rowspan="4"><a href="#ec2"><b>EC2</b></a></td>
+          <td>EC2 Fundamentals</td>
+          <td rowspan="4">Done</td>
+        </tr>
+        <tr>
+          <td>EC2 Solutions Architect Associate Level</td>
+        </tr>
+        <tr>
+          <td>EC2 Instance Storage</td>
+        </tr>
+        <tr>
+          <td>High Availability and Scalability: ELB & ASG</td>
+        </tr>
+        <tr>
+          <td rowspan="2">2</td>
+          <td rowspan="2"><a href="#databases"><b>Databases</b></a></td>
+          <td>AWS Fundamentals: RDS + Aurora + ElastiCache</td>
+          <td rowspan="2">Done</td>
+        </tr>
+        <tr>
+          <td>Databases in AWS</td>
+        </tr>
+        <tr>
+          <td rowspan="1">3</td>
+          <td rowspan="1"><a href="#route53"><b>Route 53</b></a></td>
+          <td>Route 53</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="3">4</td>
+          <td rowspan="3"><a href="#s3"><b>Amazon S3</b></a></td>
+          <td>Amazon S3 Introduction</td>
+          <td rowspan="3">Done</td>
+        </tr>
+        <tr>
+          <td>Advanced Amazon S3</td>
+        </tr>
+        <tr>
+          <td>Amazon S3 Security</td>
+        </tr>
+        <tr>
+          <td rowspan="1">5</td>
+          <td rowspan="1"><a href="#cloudfront-global-accelerator"><b>CloudFront & AWS Global Accelerator</b></a></td>
+          <td>CloudFront & AWS Global Accelerator</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">6</td>
+          <td rowspan="1"><a href="#storage-extra"><b>AWS Storage Extra</b></a></td>
+          <td>AWS Storage Extra</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">7</td>
+          <td rowspan="1"><a href="#decoupling-applications"><b>SQS, SNS, Kinesis, Active MQ</b></a></td>
+          <td>Decoupling applications: SQS, SNS, Kinesis, Active MQ</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">8</td>
+          <td rowspan="1"><a href="#containers"><b>Containers</b></a></td>
+          <td>Containers on AWS: ECS, Fargate, ECR & EKS</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="2">9</td>
+          <td rowspan="2"><a href="#serverless-architecture"><b>Serverless Architecture</b></a></td>
+          <td>Serverless Overviews from a Solution Architect Perspective</td>
+          <td rowspan="2">Done</td>
+        </tr>
+        <tr>
+          <td>Serverless Solution Architecture Discussions</td>
+        </tr>
+        <tr>
+          <td rowspan="1">10</td>
+          <td rowspan="1"><a href="#data-analytics"><b>Data & Analytic</b></a></td>
+          <td>Data & Analytic</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">11</td>
+          <td rowspan="1"><a href="#machine-learning"><b>Machine Learning</b></a></td>
+          <td>Machine Learning</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">12</td>
+          <td rowspan="1"><a href="#monitoring-audit"><b>AWS Monitoring & Audit</b></a></td>
+          <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="2">13</td>
+          <td rowspan="2"><a href="#iam"><b>IAM</b></a></td>
+          <td>IAM</td>
+          <td rowspan="2">Done</td>
+        </tr>
+        <tr>
+          <td>Identity and Access Management (IAM) Advanced</td>
+        </tr>
+        <tr>
+          <td rowspan="1">14</td>
+          <td rowspan="1"><a href="#security-encryption"><b>AWS Security & Encryption</b></a></td>
+          <td>AWS Security & Encryption: KMS, SSM, Parameter Store, Shield, WAF</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">15</td>
+          <td rowspan="1"><a href="#networking"><b>Networking</b></a></td>
+          <td>Networking - VPC</td>
+          <td rowspan="1">Done</td>
+        </tr>
+        <tr>
+          <td rowspan="1">16</td>
+          <td rowspan="1"><a href="#disaster-recovery"><b>Disaster Recovery - Migrations</b></a></td>
+          <td>Disaster Recovery - Migrations</td>
+          <td rowspan="1">Done</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-</table>
+  <!-- Featured Mindmap Section -->
+  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
+    <h2>Featured Mindmap</h2>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" alt="AWS Services Overview" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
+</div>
 
-<h1>EC2</h1>
+<div style="margin-top: 40px;">
+  <!-- EC2 Section -->
+  <div id="ec2" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">EC2</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" alt="EC2" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![EC2](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png)
+  <!-- DATABASES Section -->
+  <div id="databases" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DATABASES</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" alt="AWS DATABASES" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>DATABASES</h1>
+  <!-- ROUTE 53 Section -->
+  <div id="route53" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">ROUTE 53</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" alt="Route 53" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![AWS DATABASES](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png)
+  <!-- S3 Section -->
+  <div id="s3" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">S3</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png" alt="S3" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>ROUTE 53</h1>
+  <!-- CLOUDFRONT & GLOBAL ACCELERATOR Section -->
+  <div id="cloudfront-global-accelerator" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">CLOUDFRONT & GLOBAL ACCELERATOR</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" alt="CloudFront & Global Accelerator" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![Route 53](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png)
+  <!-- STORAGE EXTRA Section -->
+  <div id="storage-extra" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">STORAGE EXTRA</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png" alt="Storage Extra" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>S3</h1>
+  <!-- DECOUPLING APPLICATIONS Section -->
+  <div id="decoupling-applications" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DECOUPLING APPLICATIONS: SQS, SNS, KINESIS, ACTIVE MQ</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" alt="Decoupling Applications: SQS, SNS, Kinesis, Active MQ" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![S3](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png)
+  <!-- CONTAINERS Section -->
+  <div id="containers" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" alt="Containers on AWS: ECS, Fargate, ECR & EKS" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>CLOUDFRONT & GLOBAL ACCELERATOR</h1>
+  <!-- SERVERLESS ARCHITECTURE Section -->
+  <div id="serverless-architecture" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">SERVERLESS ARCHITECTURE</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" alt="Serverless Architecture" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![CloudFront & Global Accelerator](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png)
+  <!-- DATA & ANALYTICS Section -->
+  <div id="data-analytics" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DATA & ANALYTICS</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" alt="Data & Analytics" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>STORAGE EXTRA</h1>
+  <!-- MACHINE LEARNING Section -->
+  <div id="machine-learning" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">MACHINE LEARNING</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" alt="Machine Learning" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![Storage Extra](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png)
+  <!-- MONITORING & AUDIT Section -->
+  <div id="monitoring-audit" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">MONITORING & AUDIT: CLOUDWATCH, CLOUDTRAIL & CONFIG</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" alt="Monitoring & Audit" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-<h1>DECOUPLING APPLICATIONS: SQS, SNS, KINESIS, ACTIVE MQ</h1>
+  <!-- IAM Section -->
+  <div id="iam" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">IAM</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" alt="IAM" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
 
-![Decoupling Applications: SQS, SNS, Kinesis, Active MQ](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png)
-
-<h1>CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS</h1>
-
-![Containers on AWS: ECS, Fargate, ECR & EKS](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png)
-
-<h1>SERVERLESS ARCHITECTURE</h1>
-
-![Serverless Architecture](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png)
-
-<h1>DATA & ANALYTICS</h1>
-
-![Data & Analytics](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png)
-
-<h1>MACHINE LEARNING</h1>
-
-![Machine Learning](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png)
-
-<h1>MONITORING & AUDIT: CLOUDWATCH, CLOUDTRAIL & CONFIG</h1>
-
-![Monitoring & Audit](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png)
-
-<h1>IAM</h1>
-
-![IAM](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png)
-
-<h1>SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF</h1>
-
-![SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png)
-
-<h1>NETWORKING - VPC</h1>
-
-![NETWORKING - VPC](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png)
-
-<h1>DISASTER RECOVERY - MIGRATION</h1>
-
-![NETWORKING - VPC](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png)
+  <!-- SECURITY & ENCRYPTION Section -->
+  <div id="security-encryption" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" alt="SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
+  
+  <!-- NETWORKING Section -->
+  <div id="networking" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">NETWORKING - VPC</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" alt="Networking - VPC" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
+  
+  <!-- DISASTER RECOVERY Section -->
+  <div id="disaster-recovery" style="margin-bottom: 40px; background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DISASTER RECOVERY - MIGRATIONS</h1>
+    <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
+    <div style="text-align: center;">
+      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" alt="Disaster Recovery - Migrations" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      </a>
+    </div>
+  </div>
+</div>
