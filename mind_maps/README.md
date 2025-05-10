@@ -121,9 +121,9 @@
   </tr>
   <tr>
     <td rowspan="1">16</td>
-    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.jpg" target="_blank"><b>Disaster Recovery - Migrations</b></a></td>
+    <td rowspan="1"><a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" target="_blank"><b>Disaster Recovery - Migrations</b></a></td>
     <td>Disaster Recovery - Migrations</td>
-    <td rowspan="1">Open</td>
+    <td rowspan="1">Done</td>
   </tr>
 
 
@@ -188,3 +188,7 @@
 <h1>NETWORKING - VPC</h1>
 
 ![NETWORKING - VPC](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png)
+
+<h1>DISASTER RECOVERY - MIGRATION</h1>
+
+![NETWORKING - VPC](https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png)
