@@ -1,11 +1,10 @@
 # AWS Learning Mind Maps
 
-<div id="top" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
-  <!-- Table of Contents Section -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
-    <h2>Table of Contents</h2>
-    <div>
-      <table>
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <h2>Table of Contents</h2>
+      <table width="100%">
         <tr>
           <th>#</th>
           <th>Mindmap</th>
@@ -133,19 +132,18 @@
           <td rowspan="1">Done</td>
         </tr>
       </table>
-    </div>
-  </div>
-
-  <!-- Featured Mindmap Section -->
-  <div style="flex: 1; min-width: 300px; border: 1px solid #ddd; border-radius: 5px; padding: 10px;">
-    <h2>Featured Mindmap</h2>
-    <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" alt="AWS Services Overview" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
-      </a>
-    </div>
-  </div>
-</div>
+    </td>
+    <td width="50%" valign="top">
+      <h2>Featured Mindmap</h2>
+      <div align="center">
+        <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" target="_blank">
+          <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/AmazonWebServices.png" alt="AWS Services Overview" width="95%" height="auto">
+        </a>
+        <p><i>AWS Services Overview</i></p>
+      </div>
+    </td>
+  </tr>
+</table>
 
 <div style="margin-top: 40px;">
   <!-- EC2 Section -->
