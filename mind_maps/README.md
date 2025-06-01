@@ -1,4 +1,18 @@
+
 # AWS Learning Mind Maps
+
+## About This Resource
+
+This repository contains a collection of mind maps generated based on the [Ultimate AWS Certified Solutions Architect Associate 2025](https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/?couponCode=KEEPLEARNING) course by Stephane Maarek, available on Udemy.
+
+These mind maps are created using XMind and serve as visual study guides to help you understand and remember key AWS concepts for the Solutions Architect Associate certification exam. Each map organizes the course content into logical sections with hierarchical relationships between topics.
+
+## How to Use These Mind Maps
+
+- Use these mind maps as supplementary study material alongside the course
+- Click on any image to view it in full size
+- Follow the table of contents to navigate to specific AWS service topics
+- Track your learning progress with the status indicators
 
 <div id="top">
   <h2>Table of Contents</h2>
