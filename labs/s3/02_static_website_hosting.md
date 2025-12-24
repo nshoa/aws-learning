@@ -40,6 +40,8 @@ Now you must explicitly allow "Read" access to your objects using a JSON policy.
 
 1. Still in the **Permissions** tab, scroll down to **Bucket policy** and click **Edit**.
 2. Paste the following policy (Replace `YOUR-BUCKET-NAME` with your actual bucket name):
+3. Click **Save changes**.
+
 
 ```json
 {
@@ -55,8 +57,6 @@ Now you must explicitly allow "Read" access to your objects using a JSON policy.
     ]
 }
 ```
-
-1. Click **Save changes**.
 
 ---
 
