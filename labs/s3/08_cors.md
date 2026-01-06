@@ -21,9 +21,9 @@
 
 `[Screenshot: Successful same-origin fetch in browser console]`
 
-![Configure primary bucket settings](../images/08_setup_primary_bucket.png)
+![Configure primary bucket settings](../images/s3/08_setup-primary-bucket.png)
 
-![Configure primary bucket settings result](../images/08_setup_primary_bucket_result.png)
+![Configure primary bucket settings result](../images/s3/08_setup-primary-bucket-result.png)
 
 
 ---
@@ -48,7 +48,7 @@
 
 `[Screenshot: Browser console showing Red CORS error]`
 
-![CORS error screenshot](../images/08_cors_error.png)
+![CORS error screenshot](../images/s3/08_cors-error.png)
 
 ---
 
@@ -74,7 +74,7 @@
 
 `[Screenshot: Successful cross-origin fetch in browser console]`
 
-![Cross-origin fetch successful](../images/08_cross-origin-fetch-successful.png)
+![Cross-origin fetch successful](../images/s3/08_cross-origin-fetch-successful.png)
 
 ---
 
