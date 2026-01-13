@@ -22,7 +22,7 @@
 
 `[Screenshot: S3 Object URL showing Access Denied error]`
 
-![S3 Object URL showing Access Denied error](../images/cloudfront/01-s3-object-url-access-denied.png)
+![S3 Object URL showing Access Denied error](../shared_assets/cloudfront/01-s3-object-url-access-denied.png)
 
 ---
 
@@ -79,7 +79,7 @@
 
 `[Screenshot: index.html loading successfully via CloudFront domain]`
 
-![index.html loading successfully via CloudFront domain](../images/cloudfront/01-index-html-loading-successfully-via-cloudfront-domain.png)
+![index.html loading successfully via CloudFront domain](../shared_assets/cloudfront/01-index-html-loading-successfully-via-cloudfront-domain.png)
 
 ---
 

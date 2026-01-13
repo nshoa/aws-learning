@@ -39,7 +39,7 @@
 
 `[Screenshot: Updated Object properties displaying SSE-KMS encryption]`
 
-![S3 encryption and versioning settings](../images/s3/07_s3-encryption-versioning.png)
+![S3 encryption and versioning settings](../shared_assets/s3/07_s3-encryption-versioning.png)
 
 ---
 

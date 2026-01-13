@@ -49,7 +49,7 @@ aws s3api put-bucket-versioning \\
 
 `[Screenshot: Terminal or S3 console output showing MFADelete enabled]`
 
-![MFA Delete Enabled](../images/s3/09_mfa-delete-enabled.png)
+![MFA Delete Enabled](../shared_assets/s3/09_mfa-delete-enabled.png)
 
 ---
 
@@ -61,7 +61,7 @@ aws s3api put-bucket-versioning \\
 
 `[Screenshot: Deletetion failure or console message stating versioning cannot be disabled]`
 
-![MFA Delete Enabled](../images/s3/09_mfa-delete-failure.png)
+![MFA Delete Enabled](../shared_assets/s3/09_mfa-delete-failure.png)
 
 ---
 
