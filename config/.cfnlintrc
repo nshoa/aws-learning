@@ -1,0 +1,2 @@
+templates:
+  - labs/cloud_formation/templates/*.yaml

@@ -1,0 +1,16 @@
+---
+# Relaxed YAML linting - we mainly care about real errors, not strict style.
+extends: relaxed
+
+rules:
+  line-length:
+    max: 140
+    level: warning
+  document-start: disable
+  truthy:
+    check-keys: false   # allow GitHub Actions `on:` key
+  trailing-spaces: enable
+  new-line-at-end-of-file: enable
+
+ignore: |
+  .idea/

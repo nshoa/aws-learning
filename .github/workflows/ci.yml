@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  cloudformation:
+    name: CloudFormation lint (cfn-lint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install cfn-lint
+      - run: cfn-lint --config-file config/.cfnlintrc
+
+  yaml:
+    name: YAML lint (yamllint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yamllint
+      - run: yamllint -c config/.yamllint .
+
+  markdown:
+    name: Markdown lint (markdownlint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npx --yes markdownlint-cli2 --config config/.markdownlint.json "**/*.md"
+
+  links:
+    name: Link check (informational)
+    runs-on: ubuntu-latest
+    continue-on-error: true  # broken external links shouldn't fail the build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--no-progress --max-retries 2 --exclude-all-private ./**/*.md"
+          fail: false
