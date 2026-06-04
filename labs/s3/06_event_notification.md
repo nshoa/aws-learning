@@ -1,5 +1,7 @@
 ### S3 Event Notifications (SQS)
 
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743680#lecture-article)
 
 ---
@@ -68,6 +70,7 @@ By default, S3 does not have permission to write to your queue. You must add a r
 ---
 
 ### 4. Verification & Results
+
 1. Upload a file to your S3 bucket.
 2. Go back to the SQS Console > Select your queue.
 3. Click Send and receive messages > Poll for messages.

@@ -1,5 +1,7 @@
 ### AWS Lab: S3 MFA Delete Configuration
 
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01 - MFA Delete](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743660#lecture-article)
 
 ### Lab Objectives
@@ -68,7 +70,7 @@ aws s3api put-bucket-versioning \\
 ### 5. Disabling MFA Delete
 
 1. To return the bucket to normal, execute the disable command:
-    
+
     ```bash
     aws s3api put-bucket-versioning \
     --bucket YOUR_BUCKET_NAME \
@@ -76,7 +78,7 @@ aws s3api put-bucket-versioning \\
     --mfa "YOUR_MFA_DEVICE_ARN MFA_CODE" \
     --profile root-mfa
     ```
-    
+
 2. Test deleting the object again. The deletion should now proceed successfully without an MFA prompt.
 
 ---
