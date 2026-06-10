@@ -1,5 +1,7 @@
 ### S3 Static Website Hosting
 
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/34353456#lecture-article)
 
 ---

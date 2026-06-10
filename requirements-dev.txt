@@ -1,0 +1,5 @@
+# Dev tooling for linting templates and docs.
+# Install with:  pip install -r requirements-dev.txt
+cfn-lint>=1.0,<2.0
+yamllint>=1.35
+pre-commit>=3.7

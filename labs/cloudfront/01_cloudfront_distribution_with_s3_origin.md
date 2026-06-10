@@ -1,5 +1,7 @@
 ### AWS Lab: CloudFront Distribution with S3 Origin (OAC)
 
+[← Labs index](../README.md) · **Service:** CloudFront · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01 - CloudFront with S3](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729726#overview)
 
 ### Lab Objectives

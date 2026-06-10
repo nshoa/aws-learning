@@ -1,5 +1,7 @@
 ### AWS Lab: S3 Cross-Origin Resource Sharing (CORS)
 
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01 - S3 CORS](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729172#lecture-article)
 
 ### Lab Objectives

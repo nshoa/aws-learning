@@ -1,3 +1,7 @@
+### S3 Encryption (SSE-S3)
+
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+
 **Ref:** [Udemy DVA-C01 - S3 Encryption](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743656#lecture-article)
 
 ### Lab Objectives

@@ -1,0 +1,31 @@
+---
+# Local git hooks. Enable once with:  pre-commit install
+# Bump hook versions with:             pre-commit autoupdate
+# Lint configs live in config/ (see .github/workflows/ci.yml).
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+        args: [--unsafe]  # allow CloudFormation tags like !Ref, !GetAtt
+
+  - repo: https://github.com/aws-cloudformation/cfn-lint
+    rev: v1.51.3
+    hooks:
+      - id: cfn-lint
+        files: ^labs/cloud_formation/templates/.*\.ya?ml$
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-c, config/.yamllint]
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.14.0
+    hooks:
+      - id: markdownlint-cli2
+        args: [--config, config/.markdownlint.json]

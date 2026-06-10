@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  Minimal EC2 instance - the smallest useful CloudFormation template.
+  Uses the latest Amazon Linux 2023 AMI resolved from the SSM Public Parameter
+  Store (so it stays valid in any Region and never goes stale) and launches
+  into the account's default VPC/subnet.
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t2.micro
+      - t3.micro
+      - t3.small
+    Description: EC2 instance type (free-tier eligible options listed).
+
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+    Description: >
+      Latest Amazon Linux 2023 AMI, resolved at deploy time from the SSM Public
+      Parameter Store. Prefer this over a hard-coded ami-xxxx (which is Region
+      specific and eventually deregistered).
+
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref InstanceType
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-instance"
+
+Outputs:
+  InstanceId:
+    Description: The ID of the EC2 instance.
+    Value: !Ref MyInstance
+
+  AvailabilityZone:
+    Description: The AZ the instance landed in.
+    Value: !GetAtt MyInstance.AvailabilityZone
