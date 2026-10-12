@@ -321,3 +321,5 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,jetbrains
+# GitHub Pages build output (mind_maps/build_site.sh)
+_site/
