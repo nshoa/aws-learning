@@ -25,8 +25,9 @@ so it reads fine on GitHub and also renders as an interactive mind map with [Mar
 
 ## View as an interactive mind map
 
-- **Quick look:** paste a file's contents into <https://markmap.js.org/repl>.
+- **Website:** <https://nshoa.github.io/aws-learning/> has every map as an interactive page (click to expand, scroll to zoom).
+  It is rebuilt and deployed by [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml) whenever these files change on `main`.
+- **Build locally:** `make site`, then open `_site/index.html`.
 - **VS Code:** install the *Markmap* extension and open any file.
-- **Generate HTML:** `npx markmap-cli EC2.md -o EC2.html`
 
 Architecture diagrams from the images are summarised as text lines starting with "Diagram:" or "Flow:".

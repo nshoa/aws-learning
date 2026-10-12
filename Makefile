@@ -8,7 +8,7 @@ STACK    ?= $(TEMPLATE)-lab
 CFN_CONFIG  := config/.cfnlintrc
 YAML_CONFIG := config/.yamllint
 
-.PHONY: help install lint validate yaml markdown deploy delete
+.PHONY: help install lint validate yaml markdown site deploy delete
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | \
@@ -28,6 +28,9 @@ yaml: ## Lint all YAML (yamllint)
 
 markdown: ## Lint all Markdown (markdownlint-cli2 via pre-commit; no system Node needed)
 	pre-commit run markdownlint-cli2 --all-files
+
+site: ## Build the mind map GitHub Pages site into _site/ (needs Node)
+	bash mind_maps/build_site.sh _site
 
 deploy: ## Deploy a stack, e.g. make deploy TEMPLATE=ec2-only STACK=my-stack
 	aws cloudformation deploy \
