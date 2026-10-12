@@ -8,6 +8,7 @@ markmap:
 # Databases
 
 ## Choosing The Right Database
+
 - Workload Type: Read-heavy, Write-heavy, Balanced
 - Throughput Needs: Constant, Fluctuating, Scaling required?
 - Data Volume & Growth: How much data now? Expected growth? Object size?
@@ -23,6 +24,7 @@ markmap:
 ## Relational Database Service
 
 ### Amazon RDS
+
 - **Overview**
   - Fully managed relational database service for SQL-based workloads.
   - Supported Engines: PostgreSQL, MySQL, MariaDB, Oracle, Microsoft SQL Server, IBM DB2.
@@ -127,6 +129,7 @@ markmap:
   - Supported Automation: Backup automation is still available.
 
 ### Amazon Aurora
+
 - **Overview**
   - Fully managed service.
   - AWS cloud-native relational database
@@ -203,6 +206,7 @@ markmap:
 ## In-Memory Database
 
 ### Amazon ElastiCache
+
 - Purpose: Reduce load on backend databases (like RDS, DynamoDB), improve read latency, store session state.
 - Description: Managed in-memory data store and cache service. Used to improve performance of web applications by retrieving data from fast, managed, in-memory caches, instead of relying entirely on slower disk-based databases.
 - **Security**
@@ -233,6 +237,7 @@ markmap:
 ## NoSQL Databases
 
 ### Amazon DynamoDB
+
 - Type: Fully managed, serverless, key-value & document NoSQL DB.
 - Performance: Delivers single-digit ms performance at any scale.
 - **Use Cases**
@@ -259,6 +264,7 @@ markmap:
   - On-Demand Backup/Restore: Create full backups for long-term archival or compliance. Independent of PITR. Can be restored to a new table.
 
 ### Amazon DocumentDB
+
 - Type: Fully managed, fast, scalable, highly available NoSQL document DB service that supports MongoDB workloads
 - Performance: Designed for high throughput and low latency reads/writes.
 - High Availability: Built-in fault tolerance due to storage replication. Automatic failover for compute instances. Supports up to 15 low-latency read replicas.
@@ -279,6 +285,7 @@ markmap:
   - User profiles, catalogs, applications needing flexible JSON-like document structures with MongoDB API compatibility.
 
 ### Graph Database (Amazon Neptune)
+
 - Type: Fully managed graph DB.
 - **Features**
   - Supports Property Graph (Gremlin) and RDF (SPARQL) query languages.
@@ -301,6 +308,7 @@ markmap:
   - Fraud detection, knowledge graphs.
 
 ### Ledger Database - Amazon QLDB (Quantum Ledger Database)
+
 - Type: Managed Ledger DB.
 - High Availability: Data replicated across **3 AZs** by default
 - **Features**
@@ -318,6 +326,7 @@ markmap:
   - Audit logs where data immutability is crucial.
 
 ### Time-Series Database (Amazon Timestream)
+
 - Type: Managed Time-Series DB.
 - SQL Compatibility: Native support for querying via SQL.
 - **Features**
@@ -334,6 +343,7 @@ markmap:
 - Diagram: AWS IoT, Kinesis Data Streams (→ Lambda), Prometheus, Kinesis Data Streams / Amazon MSK (→ Managed Flink) → Timestream → QuickSight, SageMaker, Grafana
 
 ### Amazon Keyspaces (for Apache Cassandra)
+
 - Type: Scalable, highly available, and managed Apache Cassandra-compatible database service.
 - Compatibility: Supports Cassandra Query Language (CQL) code, Apache 2.0 licensed Cassandra drivers, and developer tools.
 - Serverless: No clusters to manage, no servers to provision/patch. Scales automatically based on traffic.
@@ -353,6 +363,7 @@ markmap:
 ## Object Storage
 
 ### Amazon S3 (Often used with Databases)
+
 - Type: Key-value store for objects (not a traditional database).
 - **Features**
   - Highly scalable and durable (11 9s).

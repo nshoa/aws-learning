@@ -10,6 +10,7 @@ markmap:
 ## AWS CloudFront
 
 ### Overview
+
 - Content Delivery Network (CDN).
 - Improves read performance by caching content at edge locations.
 - Enhances user experience with low latency.
@@ -19,6 +20,7 @@ markmap:
 - Flow: Clients → `GET /beach.png` → CloudFront Edge Location (local cache) → forward request to your Origin (S3 or HTTP)
 
 ### Origins
+
 - **S3 Bucket**
   - Distributes files and caches them at edge locations.
   - Enhanced security with CloudFront Origin Access Control (OAC).
@@ -33,6 +35,7 @@ markmap:
     - Edge Location → ALB (*must* be public; SG allows public IPs of Edge Locations) → EC2 instances (*can* be private; SG allows Security Group of the Load Balancer)
 
 ### Key Features
+
 - **Geo Restriction**
   - Restrict access to content based on geographic location.
   - Uses allowlist (approved countries) or blocklist (banned countries).
@@ -54,6 +57,7 @@ markmap:
     - Invalidate specific paths (e.g., `/images/*`).
 
 ### Comparisons
+
 - **CloudFront vs S3 Cross Region Replication**
   - **CloudFront**
     - Caches files globally at **edge locations** for a defined TTL (e.g., one day).
@@ -69,17 +73,20 @@ markmap:
 ## AWS Global Accelerator
 
 ### Overview
+
 - Optimizes global applications by routing via AWS internal network.
 - Minimizes latency and reduces internet hops for better speed.
 - Uses globally available Edge Locations connected to AWS network.
 
 ### Unicast IP vs Anycast IP
+
 - **Unicast IP**: one server holds one IP address (e.g. `12.34.56.78`, `98.76.54.32`).
 - **Anycast IP**
   - All servers share the same IP address.
   - Client is routed to the nearest available server.
 
 ### Key Features
+
 - **Anycast IP**
   - Two Anycast IPs created for each application.
   - Routes traffic to the nearest edge location.
@@ -99,6 +106,7 @@ markmap:
   - DDoS protection integrated with AWS Shield.
 
 ### Comparisons
+
 - **Global Accelerator vs CloudFront**
   - Both use AWS global network and Edge Locations worldwide.
   - Both integrate with AWS Shield for DDoS protection.

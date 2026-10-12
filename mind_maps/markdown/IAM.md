@@ -10,10 +10,12 @@ markmap:
 ## IAM Fundamentals
 
 ### Overview
+
 - Manages access to AWS services and resources securely.
 - Global Service (users, groups, roles, policies are global).
 
 ### Principals
+
 - **Users**
   - End users (people, applications) needing long-term credentials. Have password for Console access, Access Keys for programmatic access (CLI/SDK).
 - **Groups**
@@ -24,6 +26,7 @@ markmap:
     - Use Cases: Granting AWS service permissions (e.g., EC2 Role, Lambda Role), Cross-Account Access, Identity Federation.
 
 ### Permissions
+
 - **Policies**
   - JSON documents defining permissions. Attached to Users, Groups, or Roles (Identity-based) or Resources (Resource-based).
     - Structure: Version, Statement (containing Sid, Effect, Principal, Action, Resource, Condition).
@@ -34,26 +37,31 @@ markmap:
     - `Condition`: Optional criteria for policy enforcement (e.g., time, source IP, MFA status).
 
 ### Security Features
+
 - **Multi-Factor Authentication (MFA)**: Recommended for enhanced security.
 - **Password Policy**: Enforce password complexity and rotation rules.
 
 ### Programmatic Access
+
 - **AWS CLI**: Manage AWS services via command line.
 - **AWS SDK**: Manage AWS services programmatically within applications.
 - **Access Keys**: Long-term credentials (Access Key ID & Secret Access Key) used for CLI/SDK access.
 
 ### Auditing
+
 - **IAM Credential Report**: Lists all account users and the status of their credentials.
 - **IAM Access Advisor**: Shows service permissions granted to a user/role and when those services were last accessed.
 
 ## Advanced IAM Concepts
 
 ### Resource-based Policies
+
 - Attached directly to resources (e.g., S3 Buckets, SQS Queues, SNS Topics).
 - Specify `Principal` allowed/denied access.
 - Enables cross-account access without roles; the principal retains their original permissions.
 
 ### IAM Policy Evaluation Logic
+
 - Explicit **Deny** in any applicable policy (Identity, Resource, SCP, Permissions Boundary, Session) always overrides any **Allow**.
 - If no explicit Deny, an explicit **Allow** is required from all applicable policy types (SCP, Resource, Identity, Permissions Boundary, Session).
 - If no explicit Allow matches, access is implicitly denied.
@@ -66,16 +74,19 @@ markmap:
   - **Session policies**: Is the principal a session principal? no → *Allow*; yes → is there a session policy? → is there an Allow? yes → *Allow*, no → *Deny*
 
 ### IAM Conditions
+
 - Add logic to policies based on request context.
 - Examples: `aws:SourceIp`, `aws:RequestedRegion`, `aws:MultiFactorAuthPresent`, `aws:PrincipalOrgID` (restrict access to principals within an AWS Organization).
 
 ### IAM Permission Boundaries
+
 - Advanced feature for Users and Roles (not Groups).
 - Uses a managed policy to define the *maximum* permissions an entity can have.
 - Effective permissions = Intersection of Identity Policy AND Permissions Boundary (and other applicable policies like SCPs).
 - Use Cases: Delegate limited admin tasks, prevent privilege escalation.
 
 ### Cross-Account Access
+
 - **Using IAM Roles**
   - Create a role in Account B trusting Account A. User in Account A assumes the role, getting Account B permissions (and losing Account A permissions temporarily).
 - **Using Resource-based Policies**
@@ -84,17 +95,21 @@ markmap:
 ## AWS Organizations
 
 ### Overview
+
 - Central management for multiple AWS accounts. Global service.
 
 ### Benefits
+
 - Consolidated Billing, volume discounts, central policy management (SCPs), automated account provisioning.
 
 ### Structure
+
 - **Management Account**: The primary payer account, manages the organization.
 - **Member Accounts**: Other accounts within the organization.
 - **Organizational Units (OUs)**: Group accounts for easier policy management (e.g., by environment, business unit).
 
 ### Service Control Policies (SCPs)
+
 - Centrally control maximum permissions for accounts in the organization. Applied at Root, OU, or Account level.
 - Act as guardrails, *restricting* permissions (do not grant permissions). IAM policies are still needed to grant permissions within accounts.
 - Affect all principals (including root user) in member accounts; do *not* apply to the Management Account.
@@ -110,31 +125,39 @@ markmap:
 ## AWS IAM Identity Center (formerly AWS SSO)
 
 ### Overview
+
 - Centralized Single Sign-On (SSO) service for AWS accounts and business applications.
 
 ### Functionality
+
 - Provides a user portal to access assigned AWS accounts (via Permission Sets) and integrated applications (SAML 2.0).
 
 ### Attribute-Based Access Control (ABAC)
+
 - Can use user attributes from the identity source to control access within Permission Sets.
 
 ### Identity Sources
+
 - Built-in Identity Center directory.
 - External Identity Providers (IdP): Microsoft Active Directory (via AWS Managed AD or AD Connector), Azure AD (Entra ID), Okta, etc.
 
 ### Permission Sets
+
 - Define AWS access levels using collections of IAM policies. Created centrally in Identity Center.
 - Assigned to Users/Groups for specific AWS accounts within the Organization. Identity Center manages the underlying IAM Roles in target accounts.
 
 ## AWS Directory Service
 
 ### Overview
+
 - Managed services for using Microsoft Active Directory or AD-compatible directories on AWS.
 
 ### Integration
+
 - Used as an identity source for IAM Identity Center.
 
 ### Services
+
 - **AWS Managed Microsoft AD**: Fully managed AD hosted on AWS. Supports trust relationships with on-prem AD.
 - **AD Connector**: Proxy service to connect to an existing on-premise AD for authentication. Users remain managed on-prem.
 - **Simple AD**: Standalone, AD-compatible directory. Does not support trust relationships.
@@ -142,12 +165,15 @@ markmap:
 ## AWS Control Tower
 
 ### Overview
+
 - Service to easily set up and govern a secure, compliant, multi-account AWS environment using best practices.
 
 ### Orchestration
+
 - Leverages Organizations, Identity Center, Service Catalog, Config, CloudTrail.
 
 ### Features
+
 - **Landing Zone**: Automates the creation of a baseline multi-account environment.
 - **Guardrails**: High-level governance rules applied across accounts:
   - *Preventive Guardrails*: Use SCPs to enforce restrictions (e.g., disallow actions in specific regions).

@@ -10,14 +10,17 @@ markmap:
 ## Application Decoupling
 
 ### Communication Patterns
+
 - Synchronous (Application-to-Application): Potential issues with traffic spikes
 - Asynchronous / Event-Based (Application-to-Queue/Topic-to-Application): Better for handling variable loads
 
 ### Benefits of Decoupling
+
 - Services scale independently from the application
 - Improved resilience and fault tolerance
 
 ### AWS Decoupling Services
+
 - SQS (Queue Model)
 - SNS (Pub/Sub Model)
 - Kinesis (Real-time Streaming Model)
@@ -25,6 +28,7 @@ markmap:
 ## Service Comparison Summary (SQS vs SNS vs Kinesis)
 
 ### SQS
+
 - Model: Queue (Pull/Poll)
 - Persistence: Yes (until deleted)
 - Consumers: Many workers polling
@@ -32,6 +36,7 @@ markmap:
 - Use Case: Decoupling, work queues, buffering
 
 ### SNS
+
 - Model: Pub/Sub (Push)
 - Persistence: No (unless using SQS subscriber)
 - Consumers: Many subscribers receiving pushes
@@ -39,6 +44,7 @@ markmap:
 - Use Case: Fan-out, notifications, event triggering
 
 ### Kinesis (Data Streams)
+
 - Model: Stream (Pull - Standard Consumer, Push - Enhanced Fan-Out)
 - Persistence: Yes (configurable retention, 1-365 days)
 - Consumers: Multiple applications can read the same data (replayable)
@@ -48,12 +54,14 @@ markmap:
 ## Amazon SQS (Simple Queue Service)
 
 ### Overview
+
 - Fully managed message queuing service
 - Used to decouple applications
 - Oldest AWS offering (>10 years)
 - Producers → *send messages* → SQS Queue → *poll messages* → Consumers
 
 ### Attributes (Standard Queue)
+
 - Throughput: Unlimited
 - Number of Messages: Unlimited
 - Message Size Limit: 256KB
@@ -63,6 +71,7 @@ markmap:
 - Ordering: Best-effort
 
 ### Core Concepts
+
 - **Producers**
   - Messages are sent using the `SendMessage` API.
   - Messages are stored in SQS until consumed and deleted.
@@ -76,6 +85,7 @@ markmap:
   - Example: poll/receive messages → consumer → insert into RDS → `DeleteMessage`
 
 ### Features
+
 - **Visibility Timeout**
   - Message becomes invisible after being polled
   - Default: 30 seconds
@@ -92,6 +102,7 @@ markmap:
   - Handles messages that fail processing multiple times
 
 ### Queue Types
+
 - **Standard Queue (Default)**
   - Unlimited throughput
   - At-least-once delivery
@@ -104,6 +115,7 @@ markmap:
   - Throughput: Limited (300 msg/s standard, 3000 msg/s with batching)
 
 ### Use Cases & Patterns
+
 - Scaling consumers independently using Auto Scaling Groups (ASG) based on queue length (`ApproximateNumberOfMessagesVisible` metric)
   - CloudWatch metric (queue length) → alarm for breach → ASG scales EC2 instances polling the queue
 - Decoupling microservices or application tiers
@@ -112,6 +124,7 @@ markmap:
   - Enqueue → SQS → dequeue → insert into DynamoDB / Aurora / RDS
 
 ### Security
+
 - Access Control: IAM policies
 - Resource Policies: SQS Access Policies (similar to S3 Bucket Policies) for cross-account access or granting service permissions (e.g., SNS, S3)
 - Encryption
@@ -122,22 +135,26 @@ markmap:
 ## Amazon SNS (Simple Notification Service)
 
 ### Overview
+
 - Fully managed publish/subscribe (Pub/Sub) messaging service
 - Enables sending messages to a large number of subscribers
 - Example: Buying Service → SNS Topic → Email Notification, Fraud Service, Shipping Service, SQS Queue
 
 ### Core Concepts
+
 - Topic: A communication channel where messages are published
 - Publisher: An entity (application, service) that sends messages to an SNS topic
 - Subscriber: An endpoint (e.g., SQS queue, Lambda function, email address) that receives messages from a topic
 
 ### Attributes & Limits
+
 - Subscriptions per Topic: Up to 12,500,000
 - Topics per Account: 100,000 limit
 - Delivery: Pushes messages to subscribers
 - Persistence: Messages are generally not persisted by SNS itself (lost if not delivered)
 
 ### Subscribers (Endpoints)
+
 - SQS Queues
 - AWS Lambda functions
 - Kinesis Data Firehose
@@ -147,6 +164,7 @@ markmap:
 - Mobile Push Notifications (Apple APNS, Google GCM/FCM, Amazon ADM)
 
 ### Publishers
+
 - Many AWS Services can send data directly to SNS for notifications
 - CloudWatch Alarms
 - AWS Budgets
@@ -158,10 +176,12 @@ markmap:
 - … (also DMS new replication, RDS events)
 
 ### Publishing Methods
+
 - Topic Publish: Standard method via SDK/API to a specific topic
 - Direct Publish: For mobile push notifications, publish to a specific platform endpoint
 
 ### Features
+
 - **Fan Out Pattern (SNS + SQS)**
   - Publish once to SNS, deliver to multiple SQS queues
   - Provides decoupling and persistence (via SQS)
@@ -182,12 +202,14 @@ markmap:
   - Can have SQS Standard and FIFO queues as subscribers
 
 ### Use Cases & Integrations
+
 - Event Notifications: Trigger actions based on events from other AWS services (CloudWatch Alarms, S3 Events, RDS Events, ASG Notifications, etc.)
 - Fan Out: Distribute a single event to multiple processing systems (e.g., S3 event to multiple SQS queues)
 - Mobile Push Notifications
 - Sending data to long-term storage via Kinesis Data Firehose (SNS → Firehose → S3)
 
 ### Security
+
 - Access Control: IAM policies
 - Resource Policies: SQS Access Policies (similar to S3 Bucket Policies) for cross-account access or granting service permissions (e.g., SNS, S3)
 - Encryption
@@ -198,10 +220,12 @@ markmap:
 ## Amazon Kinesis
 
 ### Overview
+
 - Platform for streaming data on AWS
 - Diagram: real-time data (click streams, IoT devices, metrics & logs) → producers (applications, Kinesis Agent) → Kinesis Data Streams → consumers (applications, Lambda, Data Firehose, Managed Service for Apache Flink)
 
 ### Kinesis Data Streams
+
 - Purpose: Collect, process, and store real-time data streams
 - Data Types: Clickstreams, IoT device data, logs, metrics
 - **Core Concepts**
@@ -231,6 +255,7 @@ markmap:
   - At-rest (KMS)
 
 ### Amazon Data Firehose (Formerly Kinesis Data Firehose)
+
 - Purpose: Easily load streaming data into data stores and analytics tools (ETL focus)
 - Diagram: sources (applications, clients, SDK, Kinesis Agent, Kinesis Data Streams, CloudWatch logs & events, AWS IoT) → record up to 1MB → Firehose (optional Lambda data transformation) → batch writes → AWS destinations (S3, Redshift via COPY through S3, OpenSearch), 3rd-party partners, custom HTTP endpoints; all or failed data → S3 backup bucket
 - **Core Concepts**
@@ -251,6 +276,7 @@ markmap:
   - Pay for data ingested
 
 ### Comparison: Data Firehose versus Kinesis Data Streams
+
 - **Data Streams**
   - Streaming data collection
   - Real-time
@@ -269,20 +295,24 @@ markmap:
 ## Amazon Message Broker - MQ
 
 ### Overview
+
 - Managed message broker service for migrating traditional applications
 - Alternative to re-engineering applications for SQS/SNS
 
 ### Supported Protocols/Brokers
+
 - Protocols: MQTT, AMQP, STOMP, OpenWire, WSS
 - Brokers: RabbitMQ, Apache ActiveMQ
 
 ### Architecture & Features
+
 - Runs on underlying EC2 instances (not serverless like SQS/SNS)
 - Supports Multi-AZ deployment with failover for High Availability (HA)
 - Uses Amazon EFS for storage in HA configurations
 - Provides both Queue (like SQS) and Topic (like SNS) features
 
 ### Comparison (vs SQS/SNS)
+
 - Less scalable than SQS/SNS
 - Suitable when existing applications rely on open protocols
 - Requires broker instance management (updates, sizing) unlike fully managed SQS/SNS

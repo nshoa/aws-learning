@@ -10,6 +10,7 @@ markmap:
 ## AWS Snowball
 
 ### Overview
+
 - Highly-secure, portable devices to collect and process data at the edge, and migrate data into and out of AWS.
 - Part of the AWS Snow Family for offline data transfers.
 - Effective solution for
@@ -20,15 +21,18 @@ markmap:
   - connection stability.
 
 ### Usage Process
+
 1. Request Snowball devices via AWS Console.
 2. Install Snowball Client / AWS OpsHub on your servers.
 3. Connect Snowball device to servers and copy files using the client.
 4. Ship back the device to AWS facilities after use.
 5. Data is loaded into an Amazon S3 bucket.
 6. Snowball is completely wiped after the process.
+
 - Flow: Client → AWS Snowball → *ship* → AWS Snowball → import/export → S3 Bucket
 
 ### Edge Computing
+
 - Process data as it's created at edge locations (e.g., trucks, ships, mining stations).
 - Ideal for locations with limited or no internet access.
 - Supports running EC2 instances or AWS Lambda functions at the edge.
@@ -43,6 +47,7 @@ markmap:
   - media transcoding.
 
 ### Integration with Glacier
+
 - Snowball cannot directly import to Amazon Glacier.
 - Requires importing into Amazon S3 first, then leveraging a lifecycle policy to transition data to Glacier.
 - Flow: Snowball → *import* → Amazon S3 → *S3 lifecycle policy* → Amazon Glacier
@@ -50,6 +55,7 @@ markmap:
 ## Amazon FSx
 
 ### Overview
+
 - Fully managed service to launch third-party high-performance file systems on AWS.
 - Types
   - FSx for Lustre.
@@ -58,6 +64,7 @@ markmap:
   - FSx for OpenZFS.
 
 ### FSx for Windows File Server
+
 - Fully-managed Windows file system with Server Message Block (SMB) protocol and NTFS support.
 - Integration with Microsoft Active Directory, ACLs, and user quotas.
 - Supports Distributed File System (DFS) Namespaces.
@@ -68,6 +75,7 @@ markmap:
   - HDD: Ideal for broad workloads like CMS and home directories.
 
 ### FSx for Lustre
+
 - Parallel distributed file system designed for high-performance computing.
 - Scales to 100s GB/s throughput, sub-ms latencies, and millions of IOPS.
 - Seamless integration with Amazon S3 for reading and writing data.
@@ -77,6 +85,7 @@ markmap:
   - HDD: Throughput-intensive, large sequential workloads.
 
 ### Other FSx Services
+
 - **FSx for NetApp ONTAP**
   - Managed NetApp ONTAP compatible with NFS, SMB, and iSCSI.
   - Offers snapshots, compression, replication, and data de-duplication.
@@ -90,6 +99,7 @@ markmap:
   - Supports snapshots, compression, and point-in-time cloning.
 
 ### Deployment Options
+
 - **Scratch File System**
   - Temporary storage with high burst throughput.
   - Non-replicated storage; data does not persist on file server failures.
@@ -100,6 +110,7 @@ markmap:
 ## AWS Transfer Family
 
 ### Overview
+
 - Fully managed service for file transfers into and out of AWS S3/EFS.
 - Protocols: FTP, FTPS, SFTP.
 - Supports AWS-native credential storage or external authentication (e.g., AD, LDAP, Amazon Cognito).
@@ -109,6 +120,7 @@ markmap:
 ## AWS DataSync
 
 ### Overview
+
 - Automate moving large data volumes to/from AWS via SMB, NFS, HDFS, or S3 APIs.
 - Can migrate data across AWS services (e.g., S3 ↔ FSx).
 - Supports all S3 storage classes and options like lifecycle policies or replication.
@@ -118,6 +130,7 @@ markmap:
 ## Storage Comparisons
 
 ### Overview
+
 - **S3**: Object-based storage.
 - **S3 Glacier**: Archival storage.
 - **EBS Volumes**: Network storage for single EC2 instances.
@@ -136,6 +149,7 @@ markmap:
 ## Hybrid Cloud for Storage
 
 ### Overview
+
 - Mix of cloud and on-prem infrastructure due to long migrations, compliance, or IT strategies.
 - AWS Storage Gateway bridges on-prem data and AWS cloud.
 - Exposes S3 data as NFS/SMB protocols for on-prem access.
@@ -146,6 +160,7 @@ markmap:
   - On-Premises Cache & Low-latency Files Access
 
 ### Storage Gateway Options
+
 - **S3 File Gateway**
   - Expose S3 buckets as NFS/SMB.
   - Supports caching of recently used data.

@@ -10,6 +10,7 @@ markmap:
 ## Serverless Overview
 
 ### Concept
+
 - Paradigm where developers don't manage servers.
 - Deploy code, infrastructure scales automatically.
 - Pay-per-use model.
@@ -17,6 +18,7 @@ markmap:
 - Servers still exist, but are abstracted away from the user.
 
 ### Key AWS Serverless Services
+
 - AWS Lambda
 - Amazon DynamoDB
 - Amazon API Gateway
@@ -32,12 +34,15 @@ markmap:
 ## AWS Lambda
 
 ### Definition
+
 - Virtual functions, compute service without provisioning/managing servers. Executes code on-demand, scales automatically.
 
 ### Lambda vs. EC2
+
 - No server management, time-limited execution, automated scaling (vs. continuous running, RAM/CPU limits, manual scaling for EC2).
 
 ### Benefits
+
 - **Easy Pricing**: Pay per request and compute time (GB-seconds), generous free tier.
 - **Integrations**: Works with numerous AWS services.
 - **Language Support**: Node.js, Python, Java, C#, Ruby, Go, PowerShell, Custom Runtime API.
@@ -45,6 +50,7 @@ markmap:
 - **Container Image Support**: Deploy functions packaged as container images (must implement Lambda Runtime API).
 
 ### Core Concepts
+
 - **Integrations**: Triggered by or interacts with API Gateway, Kinesis, DynamoDB, S3, CloudFront, EventBridge, CloudWatch Logs, SNS, SQS, Cognito, etc..
 - **Pricing**: Per call ($0.2/M after free tier) and per duration (GB-seconds, free tier).
 - **Cold Starts**: Initial delay when invoking a function on a new/idle instance while code/dependencies are loaded.
@@ -67,11 +73,13 @@ markmap:
     - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
 
 ### Networking
+
 - **Default**: Runs outside your VPC, can access public internet/AWS APIs. Cannot access private VPC resources.
 - **Lambda in VPC**: To access private resources (RDS, ElastiCache), deploy Lambda into specific VPC subnets with security groups. Creates Elastic Network Interfaces (ENIs) in your subnets. Needs NAT Gateway/VPC Endpoint for internet access from VPC.
 - **RDS Proxy**: Recommended when Lambda connects to RDS. Pools/shares DB connections, improves scalability, availability (faster failover), security (IAM Auth, Secrets Manager). Requires Lambda in VPC.
 
 ### Database Interactions
+
 - **Invoking Lambda from RDS**: Trigger Lambda functions from within RDS for PostgreSQL or Aurora MySQL (e.g., on data changes). Requires DB instance outbound network access and permissions.
   - Example: user registers (insert) → RDS → invoke Lambda → send mail via Amazon SES
 - **RDS Event Notifications**: Get notified about DB **instance** events (create, stop, failover etc.) via SNS or EventBridge. Does not notify on data changes.
@@ -79,9 +87,11 @@ markmap:
 ## Amazon DynamoDB
 
 ### Definition
+
 - Fully managed, highly available NoSQL key-value and document database. Serverless, multi-AZ replication, scalable, fast/consistent performance (ms latency).
 
 ### Core Concepts
+
 - **Tables**: Collections of Items.
 - **Items**: Rows/records in a table. Max size 400KB.
 - **Attributes**: Columns/fields within an item (can be added dynamically). Supports scalar, document, and set types.
@@ -91,6 +101,7 @@ markmap:
   - **On-Demand Mode**: Capacity scales automatically based on traffic. Pay per request, no planning needed. Good for unpredictable workloads.
 
 ### Features
+
 - **DAX (DynamoDB Accelerator)**: Fully managed in-memory cache for DynamoDB reads. Provides microsecond latency for cached items. API-compatible with DynamoDB. Helps avoid read throttling (`ProvisionedThroughputExceededException`). Default TTL 5 mins.
 - **DynamoDB Streams**: Time-ordered sequence of item-level changes (create, update, delete). 24-hour data retention. Can trigger Lambda functions. Prerequisite for Global Tables. Alternative integration via Kinesis Data Streams for longer retention/more consumers.
   - Application → table → DynamoDB Streams → processing layer (KCL adapter, Lambda) → SNS / DDB table; or → Kinesis Data Streams → Firehose → Redshift / S3 / OpenSearch
@@ -107,10 +118,12 @@ markmap:
 ## Amazon API Gateway
 
 ### Definition
+
 - Fully managed service to create, publish, maintain, monitor, and secure APIs at scale. Acts as a "front door" for applications.
 - Client → REST API → API Gateway → proxy request → Lambda → CRUD → DynamoDB
 
 ### Features
+
 - Exposes backend services (Lambda, HTTP, other AWS services) via RESTful or WebSocket APIs.
 - Handles API versioning, multiple environments (dev/test/prod).
 - Security: Authentication (IAM, Cognito, Custom Authorizers), Authorization, API Keys.
@@ -120,21 +133,25 @@ markmap:
 - Generates client SDKs.
 
 ### Integrations
+
 - **Lambda Function**: Invoke Lambda synchronously/asynchronously.
 - **HTTP Proxy**: Forward requests to backend HTTP endpoints (e.g., EC2, containers, on-prem).
 - **AWS Service Proxy**: Expose other AWS service actions directly (e.g., SQS SendMessage, Step Functions StartExecution).
 
 ### Endpoint Types
+
 - **Edge-Optimized (Default)**: Routed via CloudFront edge locations for lower latency globally. API Gateway itself remains regional. Requires ACM certificate in `us-east-1` for custom domains.
 - **Regional**: For clients within the same region as the API Gateway. Lower latency than Edge-Optimized if clients are regional. Requires ACM certificate in the API's region for custom domains.
 - **Private**: Accessible only from within a VPC via an Interface VPC Endpoint (ENI). Uses resource policies for access control.
 
 ### Security
+
 - **Authentication**: IAM (for internal/AWS access), Cognito User Pools (for app users), Lambda Custom Authorizers (custom logic).
 - **Authorization**: IAM permissions, Resource Policies.
 - **Custom Domains**: Use own domain name with HTTPS via ACM certificates.
 
 ## AWS Step Functions
+
 - **Definition**: Serverless function orchestrator to build visual workflows.
 - **Features**
   - Coordinate components (Lambda, ECS, EC2, API Gateway, SQS, on-prem, etc.).
@@ -148,9 +165,11 @@ markmap:
   - microservice coordination, any multi-step process.
 
 ## Customization at the Edge (CloudFront)
+
 - **Concept**: Execute code closer to users at CloudFront edge locations to reduce latency and customize CDN behavior.
 
 ### Types
+
 - **CloudFront Functions**
   - Lightweight, high-performance JavaScript functions.
   - Use Cases: Header manipulation, URL rewrites/redirects, cache key normalization, simple request validation/authorization.
@@ -164,10 +183,12 @@ markmap:
   - Deployed via `us-east-1` region, replicated globally.
 
 ## Amazon Cognito
+
 - **Definition**: Provides identity management for web and mobile applications. Handles user authentication, authorization, and user management. Scales to millions of users.
 - **Cognito vs. IAM**: Use Cognito for application users (external), IAM for AWS resources/users/roles (internal).
 
 ### Components
+
 - **Cognito User Pools (CUP)**
   - Acts as a user directory.
   - Provides sign-up/sign-in functionality (username/password, social IdPs like Facebook/Google/Apple, SAML, OpenID Connect).
@@ -182,6 +203,7 @@ markmap:
 ## Serverless Solution Architectures
 
 ### Mobile App (TodoList Example)
+
 - Frontend: Mobile client.
 - Authentication: Cognito User Pools (sign-in), Cognito Identity Pools (generate temp AWS creds for S3 access).
 - API: API Gateway (HTTPS REST endpoint).
@@ -191,6 +213,7 @@ markmap:
 - Storage: S3 (direct user file storage via Cognito Identity Pools).
 
 ### Serverless Website (Blog Example)
+
 - Frontend Delivery: CloudFront (serves static content from S3, caches API responses).
 - Static Content: S3 (using Origin Access Control - OAC - for security).
 - API: API Gateway → Lambda → DynamoDB.
@@ -202,12 +225,14 @@ markmap:
   - Image Uploads: S3 Trigger → Lambda (thumbnail generation). Optional SQS/SNS for decoupling.
 
 ### Microservices Architecture
+
 - Design: Decompose application into smaller, independent services.
 - Patterns: Mix synchronous (API Gateway, ALB) and asynchronous (SQS, Kinesis, SNS, Lambda triggers) communication.
 - Benefits of Serverless: Reduced operational overhead, auto-scaling, easier environment cloning, generated SDKs (API Gateway).
 - Example: Route 53 → service1 (ELB → ECS → DynamoDB), service2 (API Gateway → Lambda → ElastiCache), service3 (ELB → EC2 Auto Scaling → RDS)
 
 ### Software Update Offloading
+
 - Problem: High load/cost on origin servers (EC2/ASG) when distributing large, static update files.
 - Solution: Place CloudFront in front of the existing application (ALB/EC2).
 - Benefit: CloudFront caches static files at the edge, drastically reducing requests to the origin, lowering EC2 load and network costs without application changes.

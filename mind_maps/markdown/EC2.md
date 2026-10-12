@@ -10,12 +10,14 @@ markmap:
 ## EC2 Basics
 
 ### Key Concepts
+
 - Renting Virtual Machines: Instances
 - Storing Data: EBS, EFS, Instance Store
 - Distributing Load: ELB
 - Scaling Services: ASG
 
 ### Instance Configuration
+
 - Operating System: Linux, Windows, MacOS
 - Compute Power: CPU
 - Memory: RAM
@@ -25,6 +27,7 @@ markmap:
 - Bootstrap Script: EC2 User Data
 
 ### EC2 User Data
+
 - Automate boot tasks: Install updates, software, download files
 - Runs **only once** at the first start
 - Root user privileges
@@ -32,17 +35,20 @@ markmap:
 ## EC2 Instance Types
 
 ### Naming Convention: e.g. m5.2xlarge
+
 - m: instance type
 - 5: generation
 - 2xlarge: size within the instance type
 
 ### General Purpose
+
 - **Balanced between: compute, memory and networking**
 - Great for diversity of workloads
   - *Web servers*
   - *Code repositories*
 
 ### Compute Optimized
+
 - **High performance processors**
 - Great for compute-intensive tasks
   - *Batch processing workloads*
@@ -51,6 +57,7 @@ markmap:
   - *Science modeling & Machine learning*
 
 ### Memory Optimized
+
 - **Large data sets in memory**
 - Fast performance for workloads that process large datasets in memory
   - *High performance, relation/non-relation database*
@@ -59,6 +66,7 @@ markmap:
   - *Application performing real-time processing for big unstructured data*
 
 ### Storage Optimized
+
 - **High, sequential read/write access**
 - Great for storage-intensive tasks that required high, sequential read and write access to large datasets on local storage
   - High frequency online transaction processing (OLTP)
@@ -70,12 +78,14 @@ markmap:
 ## EC2 Networking
 
 ### IP Addressing
+
 - Private IP: within VPC
 - Public IP: internet accessible
 - IPv4 & IPv6
 - Elastic IP (static public IP)
 
 ### Elastic Network Interfaces (ENI)
+
 - Virtual network card
 - Attributes: private IPs, Elastic IP, Public IP, Security Group, MAC Address
 - Can be moved between instances (for failover)
@@ -83,6 +93,7 @@ markmap:
 ## EC2 Storages
 
 ### EC2 Instance Store
+
 - Directly attached hardware
 - High performance
   - Better IO performance
@@ -92,6 +103,7 @@ markmap:
   - Backup and Replication are our responsibility
 
 ### Elastic Block Store - EBS
+
 - Network drive attached to instance
 - Persistent data storage
 - Bound to a specific Availability Zone (AZ)
@@ -128,6 +140,7 @@ markmap:
   - EBS Encryption leverages keys from KMS (AES-256)
 
 ### Elastic File System - EFS
+
 - Managed NFS for multiple EC2 instances
 - Multi-AZ capable
 - Scalable and highly available
@@ -136,15 +149,18 @@ markmap:
 - Storage tiers: standard, infrequently accessed, archive
 
 ## EC2 Security Group
+
 - Virtual firewall for EC2 Instances
 - Control inbound and outbound rules
 - Allows rules only
 - Stateful
 
 ## EC2 Instance Management
+
 - Instance states: Running, Stopped, Terminated, Hibernated
 
 ### EC2 Hibernate
+
 - "Sleeping" mode
 - Preserve in-memory (RAM) state
 - Faster boot times
@@ -152,6 +168,7 @@ markmap:
 - Flow: Running → hibernate → Stopping (RAM dumped to root EBS) → Stopped → start → Running
 
 ### Amazon Machine Image - AMI
+
 - Customization of an EC2 instance
   - Can add our own software, configuration, operating system, monitoring, …
   - Faster boot / configuration time since all softwares are pre-packaged
@@ -162,20 +179,24 @@ markmap:
 ## EC2 Purchasing Options
 
 ### On-demand Instances
+
 - Pay per second (Linux/Window OS) / hour (others OS)
 - No commitment
 - Short-term and un-predicted workloads
 
 ### Reserved Instances - RI
+
 - Discount for long-term commitment (1 or 3 years)
 - Convertible Reserved Instance: can change instance type, instance family, OS, scope and tenancy
 - Steady-state usage applications: databases
 
 ### Saving Plans
+
 - Discount based on usage commitment (1 or 3 years)
 - Locked to a specific instance family and AWS region
 
 ### Spot Instances
+
 - Up to 90% discount compared to On-demand
 - Can be interrupted
 - Spot Instance requests, Spot Fleets
@@ -185,21 +206,25 @@ markmap:
   - Image processing
 
 ### Dedicated Hosts
+
 - Entire physical server dedicated to you
 - The most expensive option
 - Useful for software that have complicated licensing model (BYOL - Bring Your Own License)
 - Useful for companies that have strong regulatory or compliance needs
 
 ### Dedicated Instances
+
 - Instances run on dedicated hardware
 - May share hardware with other instances in the same account
 
 ### Capacity Reservations
+
 - Reserve capacity in a specific AZ
 - No commitment
 - Short-term, uninterrupted workloads that need to be in a specific AZ
 
 ### Thinking Purchasing Options In Booking Hotel Ways
+
 - **On demand**: coming and staying in resort whenever we like, we pay the full price.
 - **Reserved**: like planning ahead and if we plan to stay for a long time, we may get a discount.
 - **Saving Plans**: pay a certain amount per hour for certain period and stay in any room type (e.g. King, Suite, Sea View, …)
@@ -210,6 +235,7 @@ markmap:
 ## EC2 Placement Group
 
 ### Cluster Placement Groups
+
 - Low latency within a single AZ
 - Pros / Cons
   - Pros: great network
@@ -219,6 +245,7 @@ markmap:
   - Application requires low latency and high network throughput
 
 ### Spread Placement Groups
+
 - Instances are spread across AZ, high availability
 - Pros / Cons
   - Pros: Reduced risk of simultaneous failure
@@ -228,6 +255,7 @@ markmap:
   - Critical applications where each instance must be isolated from failure from each other
 
 ### Partition Placement Groups
+
 - Instances across different partitions (racks)
 - Up to 7 partitions per AZ, up to 100s of EC2 instances
 - The instance in a partition do not share racks with the instances in the other partitions
@@ -237,6 +265,7 @@ markmap:
 ## ELB & ASG
 
 ### High Availability
+
 - Survive data center loss
 - Run application in at least 2 AZ
 - Often paired with horizontal scaling
@@ -244,6 +273,7 @@ markmap:
 - Active (horizontal scaling)
 
 ### High Scalability
+
 - **Vertical Scalability**
   - Increase instance size
   - Suitable for non-distributed systems.
@@ -258,6 +288,7 @@ markmap:
 ## Elastic Load Balancer - ELB
 
 ### Overview
+
 - Forward traffics to multiple servers
 - Spreads load across instances
 - Expose a single point of access (DNS) to our application.
@@ -266,11 +297,13 @@ markmap:
 - Separate public and private traffic
 
 ### Health Checks
+
 - Crucial for knowing instance availability
 - Performed on a port and route (e.g. /health)
 - Unhealthy if response is not 200
 
 ### Types of Load Balancers
+
 - **Classic Load Balancer - CLB**
   - Old generation: v1
   - Protocols: HTTP, HTTPS, TCP, SSL
@@ -305,10 +338,12 @@ markmap:
   - Target groups: EC2 Instances, Private IP Addresses
 
 ### Security Groups
+
 - Control inbound and outbound traffic
 - Users → HTTPS/HTTP from anywhere → Load Balancer → HTTP restricted to load balancer → EC2
 
 ### Sticky Sessions (Session Affinity)
+
 - Direct same client to the same instance
 - Application-based or Load balancer-generated cookies
 - May cause load imbalance
@@ -323,10 +358,12 @@ markmap:
     - Generated by the load balancer
 
 ### Cross-Zone Load Balancing
+
 - Distribute traffic evenly across all instances in all AZs
 - Enabled by default for ALB, disabled for NLB and CLB
 
 ### SSL Certificates
+
 - Encrypt traffic between clients and load balancer
   - Users → HTTPS (encrypted) over www → Load Balancer → HTTP over private VPC → EC2
 - Managed by ACM (AWS Certificate Manager)
@@ -334,12 +371,14 @@ markmap:
 - Server Name Indication (SNI) for multiple SSL certificates on one listener
 
 ### Connection Draining / Deregistration Delay
+
 - Time to complete in-flight requests before de-registering instance
 - Prevents new requests to de-registering instances
 
 ## Auto Scaling Group - ASG
 
 ### Overview
+
 - Scales out (add instances) for increased load
 - Scales in (remove instances) for decreased load
 - Maintain minimum and maximum number of instances
@@ -349,6 +388,7 @@ markmap:
 - Capacity: Minimum ≤ Desired ≤ Maximum (scale out as needed)
 
 ### Launch Template
+
 - AMI + Instance Type
 - EC2 User Data
 - EBS Volume
@@ -360,6 +400,7 @@ markmap:
 - Initial / Min / Max Capacity
 
 ### Scaling Policies
+
 - Based on CloudWatch alarms
 - **Cooldown Period**
   - Time after scaling activity before further scaling

@@ -10,6 +10,7 @@ markmap:
 ## DNS Fundamentals
 
 ### Overview
+
 - Translates human-friendly domain names (e.g., www.google.com) into machine-friendly IP addresses (e.g. 8.9.10.11).
 - Core component of the Internet's infrastructure with a hierarchical naming structure.
 - **Structure of URL**: `https://api.example.com`
@@ -21,6 +22,7 @@ markmap:
   - Full Qualified Domain Name - FQDN (Sub-domain + root): api.example.com
 
 ### Terminologies
+
 - **Domain Registrar**: Entities like Amazon Route 53 and GoDaddy that sell domain names.
 - **DNS Records**: Include A, AAAA, CNAME, NS, and several advanced record types (CAA, DS, MX, etc.).
 - **Zone File**: A collection of DNS records for a given domain.
@@ -29,27 +31,32 @@ markmap:
 - **Second Level Domain (SLD)**: e.g., amazon.com, google.com.
 
 ### DNS Lookup Process
+
 1. User enter a domain name in the browser
 2. Check the DNS Cache (Local Cache Lookup)
 3. Query the Local DNS Resolver
 4. Query External DNS Servers (Hierarchical Process)
 5. Return the Result to the Resolver
 6. Browser Connects to the Web Server
+
 - Diagram: Web browser → Local DNS server (assigned by company/ISP) → Root DNS server (managed by ICANN) → TLD DNS server `.com` (managed by IANA) → SLD DNS server `example.com` (managed by domain registrar, e.g. Amazon Registrar) → IP returned (with TTL) → browser accesses web server
 
 ## Route 53 Overview
 
 ### Definition & Purpose
+
 - A highly available, scalable, and fully managed authoritative DNS service provided by AWS.
 - Functions as both a DNS service and a Domain Registrar.
 - Offers a 100% availability Service Level Agreement - SLA along with integrated health checking for automated DNS failover.
 - The name "53" is a reference to the standard DNS port.
 
 ### Key Capacities
+
 - Dynamic DNS *record management* and *routing policies*.
 - Native integration with AWS resources such as ELB, CloudFront, API Gateway, etc.
 
 ## Hosted Zones
+
 - **Concept & Role**: A container that holds DNS records defining how to route traffic for a domain and its subdomains.
 - **Cost Consideration**: Typically around $0.50 per month per hosted zone.
 - **Types of Hosted Zones**
@@ -61,12 +68,14 @@ markmap:
 ## DNS Records
 
 ### Record Components
+
 - **Domain/Subdomain Name**: e.g., example.com or www.example.com.
 - **Record Type**: e.g., A, AAAA, CNAME, NS, etc.
 - **Value**: Contains information such as an IP address or an AWS resource endpoint.
 - **Routing Policy**: Defines how responses to DNS queries are formulated.
 
 ### Supported Record Types
+
 - **TTL (Time To Live)**: Duration for which the record remains cached by DNS resolvers.
 - **A Record**: Maps a hostname to an IPv4 address.
 - **AAAA Record**: Maps a hostname to an IPv6 address.
@@ -77,11 +86,13 @@ markmap:
 ## CNAME vs. Alias Record
 
 ### CNAME Record
+
 - Map one hostname to another hostname.
 - Cannot be used at the zone apex (e.g., example.com).
 - Suitable for subdomain redirection (e.g., app.mydomain.com to another external hostname - blabla.anything.com).
 
 ### Alias Record
+
 - Designed to point a hostname directly to AWS resources. e.g. mycoolcompany.com to my-elb-1234567890.us-west-2.elb.amazonaws.com
 - Can be used for both subdomains and the zone apex.
 - Automatically track changes in the AWS resource's IP addresses.
@@ -91,6 +102,7 @@ markmap:
 ## Health Checks and Failover Mechanisms
 
 ### Health Check Overview
+
 - Monitors endpoint health (e.g., web servers, AWS resources) using around 15 global checkers.
 - Operates on
   - Defined thresholds (default healthy/unhealthy threshold = 3 checks).
@@ -104,21 +116,25 @@ markmap:
 - Diagram: health checkers send HTTP requests to `/health` on ALBs; ALB must allow incoming requests from Route 53 health checkers' IP address range
 
 ### Calculated Health Checks
+
 - Combine results from multiple child health checks using Boolean logic (OR, AND, NOT).
 - Useful for maintenance and ensuring overall service stability even if some endpoints are momentarily offline.
 - Diagram: parent health checker ← child health checkers monitoring EC2 instances
 
 ### Active-Passive Failover
+
 - Enables automated failover by routing traffic to a standby resource if the primary resource fails its health checks.
 - Diagram: DNS requests → Route 53 + health checker (mandatory) → EC2 primary; on failure → EC2 secondary (disaster recovery)
 
 ## Routing Policies
 
 ### Purpose & Distinctions
+
 - Define how Route 53 responds to DNS queries based on various criteria.
 - Note that DNS "routing" isn't the same as traffic routing performed by a load balancer.
 
 ### Routing Policy Types
+
 - **Simple Routing**
   - Directs traffic to a single resource.
   - When multiple resource values exist, records are returned at random. (a random one is chosen by the client)

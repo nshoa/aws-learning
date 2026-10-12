@@ -10,6 +10,7 @@ markmap:
 ## Amazon CloudWatch
 
 ### CloudWatch Metrics
+
 - **Overview**
   - Collects and tracks metrics (variables like CPUUtilization, NetworkIn) for AWS services.
   - Metrics exist within Namespaces.
@@ -24,6 +25,7 @@ markmap:
   - Flow: CloudWatch Metrics → *stream near-real time* → Kinesis Data Firehose → S3 (→ Athena) / Redshift / OpenSearch
 
 ### CloudWatch Logs
+
 - **Overview**: Centralized log collection and monitoring service.
 - **Structure**
   - **Log Groups**: Containers for log streams (e.g., representing an application).
@@ -51,6 +53,7 @@ markmap:
   - Flow: Accounts A/B/C (regions 1/2/3) CloudWatch Logs → Subscription Filters → Kinesis Data Streams → Kinesis Data Firehose → *near real-time* → S3
 
 ### CloudWatch Agent
+
 - **CloudWatch Logs Agent (Legacy)**: Sends log files from EC2/on-prem servers to CloudWatch Logs.
 - **CloudWatch Unified Agent (Current)**
   - Collects system-level metrics (RAM, Disk IO, Netstat, Processes, CPU details etc.) *in addition* to logs.
@@ -58,6 +61,7 @@ markmap:
   - Centralized configuration via SSM Parameter Store.
 
 ### CloudWatch Alarms
+
 - **Overview**: Trigger actions based on metric thresholds or log metric filters.
 - **States**: OK, ALARM, INSUFFICIENT_DATA.
 - **Evaluation Period**: Configurable time window for checking the metric. Supports high-resolution (10s, 30s) for custom metrics.
@@ -73,6 +77,7 @@ markmap:
   - Flow: CloudWatch Alarm (`StatusCheckFailed_System`) monitors EC2 instance → EC2 Instance Recovery; alert → SNS Topic
 
 ### CloudWatch Monitoring Insights
+
 - **Container Insights**: Collects, aggregates, summarizes metrics and logs from container platforms (ECS, EKS, Kubernetes on EC2, Fargate).
 - **Lambda Insights**: Provides detailed metrics and diagnostics (e.g., cold starts, memory usage) for Lambda functions via a Lambda Layer.
 - **Contributor Insights**: Analyzes log data to identify top contributors (Top-N talkers) impacting performance (e.g., high-traffic IPs, error-prone URLs).
@@ -81,9 +86,11 @@ markmap:
 ## Amazon EventBridge (formerly CloudWatch Events)
 
 ### Overview
+
 - Serverless event bus service for integrating applications using events.
 
 ### Core Concepts
+
 - **Event Sources**: AWS Services, Custom Applications, SaaS Partners (via Partner Event Buses).
 - **Event Buses**: Default (AWS events), Partner, Custom. Supports cross-account access via resource policies.
 - **Rules**: Match incoming events based on patterns (filtering) and route them to targets.
@@ -92,12 +99,14 @@ markmap:
 - Example destinations: Compute (Lambda, AWS Batch, ECS Task), Integration (SQS, SNS, Kinesis Data Streams), Orchestration (Step Functions, CodePipeline, CodeBuild), Maintenance (Systems Manager, EC2 Actions)
 
 ### Use Cases
+
 - **Scheduling**: Run scheduled tasks (Cron jobs).
   - Event (time-based), e.g. schedule every hour → Lambda
 - **Event-Driven Architecture**: React to events from AWS services (e.g., S3 PUT, EC2 state change, CloudTrail API call) or custom applications.
   - Event (event-based), e.g. IAM root user sign-in event → SNS topic (email)
 
 ### Features
+
 - **Schema Registry**: Discovers and registers event schemas, allows downloading code bindings.
 - **Archive & Replay**: Archive events from a bus to S3, replay them later for testing or recovery.
 - **Resource-based Policies**: Control cross-account/region access to event buses.
@@ -105,10 +114,12 @@ markmap:
 ## AWS CloudTrail
 
 ### Overview
+
 - Logs API calls made within an AWS account for governance, compliance, operational auditing, and risk auditing. Enabled by default.
 - Flow: SDK / CLI / Console / IAM users & roles → CloudTrail console (inspect & audit) → CloudWatch Logs / S3 bucket
 
 ### Key Features
+
 - **Event History**: Records actions taken by users, roles, or AWS services via Console, SDK, CLI. Stored for 90 days.
 - **Trails**: Configurations that enable delivery of CloudTrail events to S3 and optionally CloudWatch Logs for long-term storage and analysis. Can be multi-region (default) or single-region.
 - **Event Types**
@@ -123,14 +134,17 @@ markmap:
   - Flow: User → `DeleteTable` API call → DynamoDB → log API call → CloudTrail → event → EventBridge → alert → SNS
 
 ### Use Cases
+
 - Security analysis, resource change tracking, troubleshooting operational issues, compliance verification. Finding "who terminated an EC2 instance".
 
 ## AWS Config
 
 ### Overview
+
 - Assesses, audits, and evaluates the configurations of AWS resources. Tracks configuration changes over time. Primarily for compliance and configuration history.
 
 ### Key Features
+
 - **Configuration Recorder**: Records configuration details of supported resources.
 - **Configuration History**: View timeline of configuration changes for resources.
 - **Compliance Evaluation (Config Rules)**
@@ -144,9 +158,11 @@ markmap:
 - **Resource Relationship View**: Explore how resources are related.
 
 ### Use Cases
+
 - Compliance auditing (e.g., "Is SSH unrestricted?", "Are S3 buckets public?"), tracking configuration drift, security analysis, operational troubleshooting.
 
 ## Comparison: CloudTrail vs. CloudWatch vs. Config
+
 - **CloudTrail**: Focuses on **API activity** (Who did what, when?). Audit trail.
 - **CloudWatch**: Focuses on **performance & operation** (Metrics, Logs, Events, Alarms).
 - **Config**: Focuses on **resource configuration & compliance** (What did my resource look like? Is it compliant?). Tracks changes over time.
