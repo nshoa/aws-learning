@@ -1,67 +1,108 @@
-### S3 Bucket Policies
+# S3 Lab: Bucket Policies
 
-[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner · **Est. time:** 15 min · **Est. cost:** Free tier
 
-**Ref:** [Udemy DVA-C01](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729152#lecture-article)
+**Reference:** [Udemy DVA-C01 - S3 Bucket Policies](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729152#lecture-article)
 
----
+## Contents
 
-### Lab Objectives
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
-- [ ]  Understand the difference between Block Public Access and Bucket Policies.
-- [ ]  Create a JSON policy to grant public read access.
-- [ ]  Attach the policy to an S3 bucket.
+## Objectives
 
----
+- [ ] Understand the difference between **Block Public Access** and **Bucket Policies**.
+- [ ] Write a JSON policy that grants public read access.
+- [ ] Attach the policy to a bucket and confirm anonymous access works.
+
+## Prerequisites
+
+- An AWS account with S3 permissions.
+- An S3 bucket you own. Create one in the **S3 Console** > **Create bucket** with default
+  settings (bucket names are globally unique).
+- AWS CLI configured (`aws configure`) for the verification commands.
+
+## Steps
 
 ### 1. Disable Block Public Access
 
 Before a public policy can take effect, the "safety switch" must be turned off.
 
-1. Go to your **S3 Bucket** > **Permissions** tab.
+1. Open your bucket > **Permissions** tab.
 2. Under **Block public access (bucket settings)**, click **Edit**.
 3. **Uncheck** "Block all public access".
 4. Click **Save changes** and type `confirm`.
 
----
+### 2. Attach a Public Read Policy
 
-### 2. Attach Public Read Policy
+1. Scroll down to **Bucket policy** and click **Edit**.
+2. Paste the following policy, replacing `YOUR-BUCKET-NAME` with your bucket name. It lets
+   anyone on the internet read (`s3:GetObject`) every object in the bucket:
 
-1. Scroll down to the **Bucket policy** section and click **Edit**.
-2. Paste the following JSON (This policy allows anyone on the internet to view objects):
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "PublicReadGetObject",
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "s3:GetObject",
+         "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+       }
+     ]
+   }
+   ```
 
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
-        }
-    ]
-}
-```
+3. Click **Save changes**. A red **Publicly accessible** label now appears on the bucket.
 
-1. **Important:** Replace `YOUR-BUCKET-NAME` with your actual bucket name.
-2. Click **Save changes**.
-    - *Observation:* A red "Public" label should now appear next to your bucket name.
+> 💡 The `/*` at the end of the ARN matters: `s3:GetObject` applies to **objects**, so the
+> resource must be `bucket/*`, not just the bucket ARN.
 
----
+### 3. Upload a Test Object
 
-### 3. Verify Access
+1. Upload a file (for example `test.jpg`) to the bucket.
+2. Open the object and copy its **Object URL**.
 
-1. Upload a file (e.g., `test.jpg`) to the bucket.
-2. Click on the file to view its **Object URL**.
-3. Open the URL in an Incognito/Private browser window.
-    - *Result:* The file should load successfully without requiring AWS login.
+## Verification
 
----
+- Open the **Object URL** in a private/incognito window. The file loads without an AWS login.
+- From a terminal (no credentials needed, it is an anonymous request):
 
-### 🧹 Cleanup
+  ```bash
+  curl -sI https://YOUR-BUCKET-NAME.s3.amazonaws.com/test.jpg | head -n 1
+  # Expected: HTTP/1.1 200 OK
+  ```
 
-- [ ]  Delete the Bucket Policy.
-- [ ]  Re-enable **Block all public access** (check the box).
-- [ ]  Delete any uploaded test objects.
+- Confirm S3 itself considers the bucket public:
+
+  ```bash
+  aws s3api get-bucket-policy-status --bucket YOUR-BUCKET-NAME
+  # Expected: "IsPublic": true
+  ```
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `403 Forbidden` on the Object URL | Block Public Access is still on | Repeat step 1, then save the policy again |
+| "Policy has invalid resource" when saving | Resource is the bucket ARN without `/*` | Use `arn:aws:s3:::YOUR-BUCKET-NAME/*` |
+| "Access denied" when saving the policy | Account-level Block Public Access is enabled | Check **S3** > **Block Public Access settings for this account** |
+
+## Cleanup
+
+> 💸 Delete billable resources to avoid surprise charges.
+
+- [ ] Delete the bucket policy.
+- [ ] Re-enable **Block all public access**.
+- [ ] Delete the test objects (and the bucket, if you created it only for this lab).
+
+## References
+
+- [Bucket policy examples (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html)
+- [Blocking public access to your Amazon S3 storage (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html)

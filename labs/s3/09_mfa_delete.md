@@ -1,100 +1,135 @@
-### AWS Lab: S3 MFA Delete Configuration
+# S3 Lab: MFA Delete
 
-[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Intermediate · **Est. time:** 20 min · **Est. cost:** Free tier
 
-**Ref:** [Udemy DVA-C01 - MFA Delete](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743660#lecture-article)
+**Reference:** [Udemy DVA-C01 - MFA Delete](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743660#lecture-article)
 
-### Lab Objectives
+## Contents
 
-- [ ]  Enable S3 Versioning and MFA Delete.
-- [ ]  Configure AWS CLI with Root Account credentials.
-- [ ]  Verify that deletions fail without MFA tokens.
-- [ ]  Disable MFA Delete and verify standard deletion.
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
----
+## Objectives
 
-### 1. Bucket Preparation
+- [ ] Enable **MFA Delete** on a versioned bucket (CLI only, as the root user).
+- [ ] Show that permanently deleting a version fails without an MFA code.
+- [ ] Disable MFA Delete again and confirm normal deletes work.
 
-1. Navigate to the **S3 Console** and click **Create bucket**.
-2. Provide a unique **Bucket name**.
-3. Under **Bucket Versioning**, select **Enable**.
-4. Click **Create bucket**.
-5. Upload a sample file to this bucket to serve as a test object.
+## Prerequisites
 
----
+- Access to the **root user** of an AWS account, with an **MFA device** already assigned to
+  it. Only the root user can change MFA Delete.
+- AWS CLI installed.
 
-### 2. Root Access and CLI Setup
+> ⚠️ This lab creates a **root access key**, which AWS strongly advises against keeping.
+> Create it only for this lab and delete it in [Cleanup](#cleanup) straight away.
 
-1. Log in to the AWS Console as the **Root User**.
-2. Navigate to **IAM** -> **My Security Credentials**.
-3. Create a new **Access Key** (Access Key ID and Secret Access Key).
-4. Open your local terminal and run `aws configure --profile root-mfa`.
-5. Provide the Root credentials and set the default region.
-6. Note your **MFA Device ARN** from the IAM security credentials page (e.g., `arn:aws:iam::123456789012:mfa/root-account-mfa-device`).
+## Steps
 
----
+### 1. Prepare a Versioned Bucket
 
-### 3. Enabling MFA Delete
+1. In the **S3 Console**, click **Create bucket** and enter a unique name.
+2. Set **Bucket Versioning** to **Enable** and click **Create bucket**.
+3. Upload a test file, for example `test.txt`.
 
-1. MFA Delete can only be enabled via the AWS CLI.
-2. Execute the following command to enable the feature:
+### 2. Configure the CLI as Root
+
+1. Signed in as root, open the account menu (top right) > **Security credentials**.
+2. Under **Access keys**, click **Create access key** and copy the key pair.
+3. On the same page, note the **MFA device ARN** (identifier), for example
+   `arn:aws:iam::123456789012:mfa/root-account-mfa-device`.
+4. Configure a dedicated profile:
+
+   ```bash
+   aws configure --profile root-mfa
+   ```
+
+### 3. Enable MFA Delete
+
+MFA Delete cannot be enabled from the console. Run the following, where `123456` is the
+current code from your MFA device:
 
 ```bash
-aws s3api put-bucket-versioning \\
-    --bucket YOUR_BUCKET_NAME \\
-    --versioning-configuration Status=Enabled,MFADelete=Enabled \\
-    --mfa "YOUR_MFA_DEVICE_ARN MFA_CODE" \\
-    --profile root-mfa
+aws s3api put-bucket-versioning \
+  --bucket YOUR-BUCKET-NAME \
+  --versioning-configuration Status=Enabled,MFADelete=Enabled \
+  --mfa "YOUR-MFA-DEVICE-ARN 123456" \
+  --profile root-mfa
 ```
 
-3. Verify the status by running: `aws s3api get-bucket-versioning --bucket YOUR_BUCKET_NAME`.
+![MFA Delete enabled](../shared_assets/s3/09_mfa-delete-enabled.png)
 
-`[Screenshot: Terminal or S3 console output showing MFADelete enabled]`
+### 4. Test the Restriction
 
-![MFA Delete Enabled](../shared_assets/s3/09_mfa-delete-enabled.png)
+1. Get the version ID of the test file:
 
----
+   ```bash
+   aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix test.txt \
+     --query 'Versions[0].VersionId' --output text --profile root-mfa
+   ```
 
-### 4. Testing Deletion Restrictions
+2. Try to **permanently delete** that version without MFA. It fails:
 
-1. Attempt to delete the test object via the **S3 Console** or **CLI** without providing an MFA code.
-2. Observe the failure or notice that the version is not permanently removed.
-3. Attempt to disable versioning via the console; notice the option is restricted due to MFA Delete being active.
+   ```bash
+   aws s3api delete-object --bucket YOUR-BUCKET-NAME --key test.txt \
+     --version-id YOUR-VERSION-ID --profile root-mfa
+   # Expected: An error occurred (AccessDenied) ... MFA Authentication must be used for this request
+   ```
 
-`[Screenshot: Deletetion failure or console message stating versioning cannot be disabled]`
+3. A **normal delete** (no version ID) still works and only adds a delete marker. MFA Delete
+   protects against *permanent* deletion and against suspending versioning.
+4. In the console, try to permanently delete the version or suspend versioning. Both are
+   blocked, because the console cannot send MFA codes.
 
-![MFA Delete Enabled](../shared_assets/s3/09_mfa-delete-failure.png)
+![MFA Delete failure](../shared_assets/s3/09_mfa-delete-failure.png)
 
----
+### 5. Disable MFA Delete
 
-### 5. Disabling MFA Delete
+```bash
+aws s3api put-bucket-versioning \
+  --bucket YOUR-BUCKET-NAME \
+  --versioning-configuration Status=Enabled,MFADelete=Disabled \
+  --mfa "YOUR-MFA-DEVICE-ARN 123456" \
+  --profile root-mfa
+```
 
-1. To return the bucket to normal, execute the disable command:
+Repeat the `delete-object --version-id` command from step 4.2: it now succeeds.
 
-    ```bash
-    aws s3api put-bucket-versioning \
-    --bucket YOUR_BUCKET_NAME \
-    --versioning-configuration Status=Enabled,MFADelete=Disabled \
-    --mfa "YOUR_MFA_DEVICE_ARN MFA_CODE" \
-    --profile root-mfa
-    ```
+> 🔒 Before sharing screenshots, redact the root access key, account ID, MFA device ARN and
+> MFA codes.
 
-2. Test deleting the object again. The deletion should now proceed successfully without an MFA prompt.
+## Verification
 
----
+- Check the bucket's MFA Delete status:
 
-### 🔒 Security: What to Hide
+  ```bash
+  aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME --profile root-mfa
+  # After step 3: "Status": "Enabled", "MFADelete": "Enabled"
+  # After step 5: "Status": "Enabled", "MFADelete": "Disabled"
+  ```
 
-Ensure you redact the following from your documentation:
+## Troubleshooting
 
-- **Root Access Key ID** and **Secret Access Key**.
-- **AWS Account ID** and **MFA Device ARN**.
-- **MFA Token Codes** used in terminal commands.
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `AccessDenied` when enabling MFA Delete | The command is not using root credentials | Use the `root-mfa` profile; IAM users, even admins, cannot change MFA Delete |
+| "The MFA token is invalid" / "MultiFactorAuthentication failed" | Wrong device ARN or an expired code | Copy the ARN from **Security credentials** and use a fresh code |
+| `delete-object` succeeds without MFA | No `--version-id`, so it only created a delete marker | Pass `--version-id` to test a permanent delete |
 
----
+## Cleanup
 
-### 🧹 Cleanup
+> ⚠️ Do the access key step even if you skip the others.
 
-- [ ]  Delete test objects and the S3 bucket.
-- [ ]  Deactivate and delete the Root Access Key.
-- [ ]  Remove the CLI profile from `~/.aws/credentials`.
+- [ ] Make sure MFA Delete is **Disabled** (step 5), then empty and delete the bucket.
+- [ ] **Deactivate and delete the root access key** (account menu > **Security credentials**).
+- [ ] Remove the `root-mfa` profile from `~/.aws/credentials` and `~/.aws/config`.
+
+## References
+
+- [Configuring MFA delete (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/MultiFactorAuthenticationDelete.html)
+- [Root user best practices (AWS docs)](https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html)

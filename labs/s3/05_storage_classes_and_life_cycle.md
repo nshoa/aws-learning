@@ -1,54 +1,103 @@
-### S3 Storage Classes & Lifecycle
+# S3 Lab: Storage Classes & Lifecycle Rules
 
-[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner · **Est. time:** 15 min · **Est. cost:** Low — infrequent-access classes bill a minimum of 30 days per object
 
-**Ref:** [Udemy DVA-C01](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743672#lecture-article)
+**Reference:** [Udemy DVA-C01 - S3 Storage Classes & Lifecycle](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743672#lecture-article)
 
----
+## Contents
 
-### 🎯 Lab Objectives
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
-- [ ]  Upload an object directly to a non-default storage class.
-- [ ]  Manually transition an existing object's storage tier.
-- [ ]  Automate transitions using **Lifecycle Rules**.
+## Objectives
 
----
+- [ ] Upload an object directly into a non-default storage class.
+- [ ] Change the storage class of an existing object.
+- [ ] Automate transitions with a **Lifecycle rule**.
 
-### 1. Upload with Specific Class
+## Prerequisites
 
-1. Go to your **S3 Bucket** > click **Upload**.
-2. Add any file.
-3. Scroll down to **Properties** > **Storage class**.
-4. Select `Standard-IA` (Infrequent Access) or `Intelligent-Tiering`.
-5. Click **Upload**.
-    - *Result:* The object is initialized in the selected class, bypassing the default "Standard" tier.
+- An AWS account with S3 permissions.
+- An S3 bucket you own (**S3 Console** > **Create bucket**, default settings).
+- AWS CLI configured (`aws configure`) for the verification commands.
 
----
+## Steps
 
-### 2. Manual Storage Class Change
+### 1. Upload into a Specific Storage Class
 
-1. Select your uploaded object in the bucket list.
-2. Click **Actions** > **Edit storage class**.
-3. Choose a new tier (e.g., change from `Standard-IA` to `One Zone-IA`).
-4. Click **Save changes**.
-    - *Note:* S3 creates a "copy" of the object metadata to apply the new storage tier.
+1. Open your bucket and click **Upload**, then add any file.
+2. Expand **Properties** > **Storage class** and select **Standard-IA**.
+3. Click **Upload**. The object is stored in Standard-IA from the start instead of Standard.
 
----
+> 💸 Standard-IA and One Zone-IA bill at least **30 days** of storage and at least **128 KB**
+> per object, even if you delete it sooner. That is fine for a lab with small files, but it
+> is why these classes are a poor fit for short-lived data.
 
-### 3. Automation: Lifecycle Rules
+### 2. Change an Object's Storage Class
 
-1. Go to **Management** tab > **Lifecycle rules** > **Create lifecycle rule**.
-2. **Rule Name:** `ArchiveOldLogs`.
-3. **Scope:** Apply to all objects (or use a prefix like `logs/`).
-4. **Lifecycle Rule Actions:** - Move current versions of objects between storage classes.
-5. **Transitions:**
-    - Move to `Standard-IA` after **30 days**.
-    - Move to `Glacier Flexible Retrieval` after **90 days**.
+1. Select the object and choose **Actions** > **Edit storage class**.
+2. Choose **One Zone-IA** and click **Save changes**.
+
+S3 applies the change by **copying the whole object** with the new storage class, so the
+object gets a new *Last modified* date (and a new version, if versioning is on).
+
+### 3. Automate with a Lifecycle Rule
+
+1. Go to the **Management** tab > **Lifecycle rules** > **Create lifecycle rule**.
+2. **Rule name:** `ArchiveOldLogs`.
+3. **Rule scope:** Limit to a prefix, `logs/` (or apply to all objects and acknowledge
+   the warning).
+4. **Lifecycle rule actions:** check **Transition current versions of objects between
+   storage classes**.
+5. Add two transitions:
+   - **Standard-IA** after **30** days.
+   - **Glacier Flexible Retrieval** after **90** days.
 6. Click **Create rule**.
 
----
+> 💡 Transitions run asynchronously once a day, so nothing visible happens during the lab:
+> this step is about configuring the rule correctly. S3 also requires objects to be at least
+> 30 days old before moving to Standard-IA, which is why 30 is the smallest value accepted.
 
-### 🧹 Cleanup
+## Verification
 
-- [ ]  Delete lifecycle rules.
-- [ ]  Delete test objects to stop storage charges.
+- Check an object's storage class (Standard objects omit the field):
+
+  ```bash
+  aws s3api head-object --bucket YOUR-BUCKET-NAME --key YOUR-FILE --query StorageClass
+  # Expected after step 1: "STANDARD_IA"
+  # Expected after step 2: "ONEZONE_IA"
+  ```
+
+- Confirm the lifecycle rule:
+
+  ```bash
+  aws s3api get-bucket-lifecycle-configuration --bucket YOUR-BUCKET-NAME \
+    --query 'Rules[].{ID:ID,Status:Status,Transitions:Transitions}'
+  # Expected: ArchiveOldLogs, Enabled, transitions at 30 days (STANDARD_IA) and 90 days (GLACIER)
+  ```
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `head-object` returns `null` for `StorageClass` | The object is in Standard (the field is omitted) | Re-check the class chosen during upload |
+| Rule rejects a Standard-IA transition under 30 days | Minimum age for Standard-IA/One Zone-IA transitions is 30 days | Use 30 days or more |
+| Objects have not moved after creating the rule | Lifecycle actions run asynchronously and only for objects older than the threshold | Expected — verify the rule configuration instead |
+
+## Cleanup
+
+> 💸 Delete billable resources to avoid surprise charges.
+
+- [ ] Delete the lifecycle rule.
+- [ ] Delete the test objects (the 30-day minimum charge for IA classes still applies).
+- [ ] Delete the bucket if you created it only for this lab.
+
+## References
+
+- [Understanding and managing Amazon S3 storage classes (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html)
+- [Transitioning objects using Amazon S3 Lifecycle (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html)
