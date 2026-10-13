@@ -26,7 +26,7 @@ so it reads fine on GitHub and also renders as an interactive mind map with [Mar
 ## View as an interactive mind map
 
 - **Website:** <https://nshoa.github.io/aws-learning/mind-maps/> has every map as an interactive page (click to expand, scroll to zoom).
-  It is rebuilt and deployed by [`.github/workflows/pages.yml`](https://github.com/nshoa/aws-learning/blob/main/.github/workflows/pages.yml) whenever the repo's docs change on `main`.
+    It is rebuilt and deployed by [`.github/workflows/pages.yml`](https://github.com/nshoa/aws-learning/blob/main/.github/workflows/pages.yml) whenever the repo's docs change on `main`.
 - **Build locally:** `make site`, then open `_site/mind-maps/index.html`.
 - **VS Code:** install the *Markmap* extension and open any file.
 

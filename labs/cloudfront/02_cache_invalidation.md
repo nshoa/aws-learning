@@ -23,11 +23,11 @@
 ## Prerequisites
 
 - The distribution and private bucket from
-  [Distribution with an S3 Origin (OAC)](01_cloudfront_distribution_with_s3_origin.md),
-  still deployed.
+    [Distribution with an S3 Origin (OAC)](01_cloudfront_distribution_with_s3_origin.md),
+    still deployed.
 - AWS CLI configured (`aws configure`) and `curl`.
 - Your distribution domain (`d111111abcdef8.cloudfront.net`) and distribution ID
-  (`EDISTRIBUTIONID`), from the CloudFront console.
+    (`EDISTRIBUTIONID`), from the CloudFront console.
 
 ## Steps
 
@@ -37,30 +37,30 @@ Make sure `index.html` is in CloudFront's cache **before** changing it, otherwis
 nothing stale to observe.
 
 1. Make sure your local `index.html` contains the text `Version 1`, and upload it to the
-   bucket.
+    bucket.
 2. Request it through CloudFront until it is a cache hit:
 
-   ```bash
-   curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
-   # Repeat until: x-cache: Hit from cloudfront
-   ```
+    ```bash
+    curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
+    # Repeat until: x-cache: Hit from cloudfront
+    ```
 
 ### 2. Update the Origin
 
 1. Change the local text to `Version 2` and upload `index.html` to the bucket again.
 2. Confirm the **origin** has the new content. The bucket is private, so copying the
-   **Object URL** returns Access Denied. Use either of these instead:
-   - In the S3 console, select `index.html` and click **Open**. The console opens a
-     temporary **pre-signed URL** (note the `X-Amz-...` query string), which works on a
-     private bucket.
-   - From the CLI, with your credentials:
+    **Object URL** returns Access Denied. Use either of these instead:
+    - In the S3 console, select `index.html` and click **Open**. The console opens a
+        temporary **pre-signed URL** (note the `X-Amz-...` query string), which works on a
+        private bucket.
+    - From the CLI, with your credentials:
 
-     ```bash
-     aws s3 cp s3://YOUR-BUCKET-NAME/index.html - | grep -o 'Version [0-9]'
-     # Expected: Version 2
-     ```
+        ```bash
+        aws s3 cp s3://YOUR-BUCKET-NAME/index.html - | grep -o 'Version [0-9]'
+        # Expected: Version 2
+        ```
 
-   ![Updated index.html opened from S3 with a pre-signed URL](../shared_assets/cloudfront/02-s3-object-url-with-new-content.png)
+    ![Updated index.html opened from S3 with a pre-signed URL](../shared_assets/cloudfront/02-s3-object-url-with-new-content.png)
 
 ### 3. Observe the Stale Cache
 
@@ -73,11 +73,11 @@ edge location keeps its cached copy until the TTL expires (24 hours by default w
 ### 4. Invalidate the Cache
 
 1. Open the **CloudFront Console** > your distribution > **Invalidations** tab >
-   **Create invalidation**.
+    **Create invalidation**.
 2. **Object paths:** `/index.html` (or `/*` to clear everything, which still counts as one
-   path).
+    path).
 3. Click **Create invalidation** and wait for the status to change from **InProgress** to
-   **Completed**.
+    **Completed**.
 
 The CLI equivalent:
 
@@ -91,23 +91,23 @@ aws cloudfront create-invalidation --distribution-id EDISTRIBUTIONID --paths "/i
 
 - The next request misses the cache and fetches Version 2 from the origin:
 
-  ```bash
-  curl -s https://d111111abcdef8.cloudfront.net/index.html | grep -o 'Version [0-9]'
-  # Expected: Version 2
+    ```bash
+    curl -s https://d111111abcdef8.cloudfront.net/index.html | grep -o 'Version [0-9]'
+    # Expected: Version 2
 
-  curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
-  # First request after the invalidation: x-cache: Miss from cloudfront
-  ```
+    curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
+    # First request after the invalidation: x-cache: Miss from cloudfront
+    ```
 
-  ![CloudFront URL showing the updated index.html content after invalidation](../shared_assets/cloudfront/02-cloudfront-url-with-new-content-after-invalidation.png)
+    ![CloudFront URL showing the updated index.html content after invalidation](../shared_assets/cloudfront/02-cloudfront-url-with-new-content-after-invalidation.png)
 
 - Check the invalidation status:
 
-  ```bash
-  aws cloudfront list-invalidations --distribution-id EDISTRIBUTIONID \
-    --query 'InvalidationList.Items[].{Id:Id,Status:Status}'
-  # Expected: "Status": "Completed"
-  ```
+    ```bash
+    aws cloudfront list-invalidations --distribution-id EDISTRIBUTIONID \
+      --query 'InvalidationList.Items[].{Id:Id,Status:Status}'
+    # Expected: "Status": "Completed"
+    ```
 
 ## Troubleshooting
 
@@ -122,7 +122,7 @@ aws cloudfront create-invalidation --distribution-id EDISTRIBUTIONID --paths "/i
 > 💸 This cleans up the resources from both CloudFront labs.
 
 - [ ] **Disable** the distribution, wait until it finishes deploying, then **Delete** it.
-  (Invalidation history cannot be deleted; it goes away with the distribution.)
+    (Invalidation history cannot be deleted; it goes away with the distribution.)
 - [ ] Delete the OAC (**CloudFront** > **Origin access**).
 - [ ] Empty and delete the S3 bucket.
 

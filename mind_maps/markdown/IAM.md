@@ -17,24 +17,24 @@ markmap:
 ### Principals
 
 - **Users**
-  - End users (people, applications) needing long-term credentials. Have password for Console access, Access Keys for programmatic access (CLI/SDK).
+    - End users (people, applications) needing long-term credentials. Have password for Console access, Access Keys for programmatic access (CLI/SDK).
 - **Groups**
-  - Collections of IAM Users. Cannot contain other groups. Simplifies permission management by assigning policies to groups.
-  - Example: a user can belong to several groups (e.g. Developers, Audit Team, Operations); a user may also belong to no group.
+    - Collections of IAM Users. Cannot contain other groups. Simplifies permission management by assigning policies to groups.
+    - Example: a user can belong to several groups (e.g. Developers, Audit Team, Operations); a user may also belong to no group.
 - **Roles**
-  - Intended to be assumed by trusted entities (Users, AWS Services, Applications, other AWS accounts). Provide temporary security credentials. Do not have standard long-term credentials like passwords or access keys.
-    - Use Cases: Granting AWS service permissions (e.g., EC2 Role, Lambda Role), Cross-Account Access, Identity Federation.
+    - Intended to be assumed by trusted entities (Users, AWS Services, Applications, other AWS accounts). Provide temporary security credentials. Do not have standard long-term credentials like passwords or access keys.
+        - Use Cases: Granting AWS service permissions (e.g., EC2 Role, Lambda Role), Cross-Account Access, Identity Federation.
 
 ### Permissions
 
 - **Policies**
-  - JSON documents defining permissions. Attached to Users, Groups, or Roles (Identity-based) or Resources (Resource-based).
-    - Structure: Version, Statement (containing Sid, Effect, Principal, Action, Resource, Condition).
-    - `Effect`: Allow or Deny.
-    - `Action`: API calls allowed/denied (e.g., `s3:GetObject`, `ec2:RunInstances`).
-    - `Resource`: ARN(s) the actions apply to.
-    - `Principal`: (Mainly in Resource-based policies) The user, account, service, or entity allowed/denied access.
-    - `Condition`: Optional criteria for policy enforcement (e.g., time, source IP, MFA status).
+    - JSON documents defining permissions. Attached to Users, Groups, or Roles (Identity-based) or Resources (Resource-based).
+        - Structure: Version, Statement (containing Sid, Effect, Principal, Action, Resource, Condition).
+        - `Effect`: Allow or Deny.
+        - `Action`: API calls allowed/denied (e.g., `s3:GetObject`, `ec2:RunInstances`).
+        - `Resource`: ARN(s) the actions apply to.
+        - `Principal`: (Mainly in Resource-based policies) The user, account, service, or entity allowed/denied access.
+        - `Condition`: Optional criteria for policy enforcement (e.g., time, source IP, MFA status).
 
 ### Security Features
 
@@ -66,12 +66,12 @@ markmap:
 - If no explicit Deny, an explicit **Allow** is required from all applicable policy types (SCP, Resource, Identity, Permissions Boundary, Session).
 - If no explicit Allow matches, access is implicitly denied.
 - Evaluation flow
-  - **Deny evaluation**: Decision starts with Deny → evaluate all applicable policies → is there an explicit Deny? yes → *Final decision: Deny (explicit deny)*
-  - **Organizations SCPs**: Is the principal's account a member of an organization with an applicable SCP? yes → is there an Allow? no → *Deny*
-  - **Resource-based policies**: Does the requested resource have a resource-based policy? yes → is there an Allow? yes → see the Resource-based policies section
-  - **Identity-based policies**: Does the principal have an identity-based policy? → is there an Allow? no → *Deny*
-  - **IAM permissions boundaries**: Does the principal have a permissions boundary? yes → is there an Allow? no → *Deny*
-  - **Session policies**: Is the principal a session principal? no → *Allow*; yes → is there a session policy? → is there an Allow? yes → *Allow*, no → *Deny*
+    - **Deny evaluation**: Decision starts with Deny → evaluate all applicable policies → is there an explicit Deny? yes → *Final decision: Deny (explicit deny)*
+    - **Organizations SCPs**: Is the principal's account a member of an organization with an applicable SCP? yes → is there an Allow? no → *Deny*
+    - **Resource-based policies**: Does the requested resource have a resource-based policy? yes → is there an Allow? yes → see the Resource-based policies section
+    - **Identity-based policies**: Does the principal have an identity-based policy? → is there an Allow? no → *Deny*
+    - **IAM permissions boundaries**: Does the principal have a permissions boundary? yes → is there an Allow? no → *Deny*
+    - **Session policies**: Is the principal a session principal? no → *Allow*; yes → is there a session policy? → is there an Allow? yes → *Allow*, no → *Deny*
 
 ### IAM Conditions
 
@@ -88,9 +88,9 @@ markmap:
 ### Cross-Account Access
 
 - **Using IAM Roles**
-  - Create a role in Account B trusting Account A. User in Account A assumes the role, getting Account B permissions (and losing Account A permissions temporarily).
+    - Create a role in Account B trusting Account A. User in Account A assumes the role, getting Account B permissions (and losing Account A permissions temporarily).
 - **Using Resource-based Policies**
-  - Resource in Account B explicitly grants access to Principal in Account A via its policy. Principal keeps their Account A permissions.
+    - Resource in Account B explicitly grants access to Principal in Account A via its policy. Principal keeps their Account A permissions.
 
 ## AWS Organizations
 
@@ -115,12 +115,12 @@ markmap:
 - Affect all principals (including root user) in member accounts; do *not* apply to the Management Account.
 - Evaluated based on hierarchy; explicit Deny overrides Allow.
 - Example hierarchy
-  - Root (FullAWSAccess, Deny Athena) → Management Account; OU (Sandbox): Accounts A, B, C; OU (Workloads) → OU (Test): Account D, OU (Prod): Accounts E, F
-  - **Management Account**: can do anything (no SCP apply)
-  - **Account A**: can do anything, except S3 (explicit Deny from Sandbox OU), except EC2 (explicit Deny)
-  - **Account B & C**: can do anything, except S3 (explicit Deny from Sandbox OU)
-  - **Account D**: can access EC2
-  - **Prod OU & Account E & F**: can do anything
+    - Root (FullAWSAccess, Deny Athena) → Management Account; OU (Sandbox): Accounts A, B, C; OU (Workloads) → OU (Test): Account D, OU (Prod): Accounts E, F
+    - **Management Account**: can do anything (no SCP apply)
+    - **Account A**: can do anything, except S3 (explicit Deny from Sandbox OU), except EC2 (explicit Deny)
+    - **Account B & C**: can do anything, except S3 (explicit Deny from Sandbox OU)
+    - **Account D**: can access EC2
+    - **Prod OU & Account E & F**: can do anything
 
 ## AWS IAM Identity Center (formerly AWS SSO)
 
@@ -176,6 +176,6 @@ markmap:
 
 - **Landing Zone**: Automates the creation of a baseline multi-account environment.
 - **Guardrails**: High-level governance rules applied across accounts:
-  - *Preventive Guardrails*: Use SCPs to enforce restrictions (e.g., disallow actions in specific regions).
-  - *Detective Guardrails*: Use AWS Config rules to detect non-compliance (e.g., unencrypted S3 buckets, untagged resources).
+    - *Preventive Guardrails*: Use SCPs to enforce restrictions (e.g., disallow actions in specific regions).
+    - *Detective Guardrails*: Use AWS Config rules to detect non-compliance (e.g., unencrypted S3 buckets, untagged resources).
 - **Compliance Dashboard**: Centralized view of account compliance status against guardrails.

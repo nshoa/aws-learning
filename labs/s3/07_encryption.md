@@ -32,7 +32,7 @@
 1. In the **S3 Console**, click **Create bucket** and enter a unique name.
 2. Set **Bucket Versioning** to **Enable**.
 3. Under **Default encryption**, keep **Server-side encryption with Amazon S3 managed keys
-   (SSE-S3)**.
+    (SSE-S3)**.
 4. Click **Create bucket**.
 
 ![S3 encryption and versioning settings](../shared_assets/s3/07_s3-encryption-versioning.png)
@@ -40,7 +40,7 @@
 ### 2. Upload an Object
 
 1. Open the bucket and **Upload** a test file. Leave **Server-side encryption** as
-   **Use bucket settings for default encryption**.
+    **Use bucket settings for default encryption**.
 2. Open the object > **Properties** > **Server-side encryption settings** shows **SSE-S3**.
 
 ### 3. Switch the Object to SSE-KMS
@@ -58,28 +58,28 @@ versioning is on, the SSE-S3 copy remains as a previous version.
 
 - Check the encryption of the current version:
 
-  ```bash
-  aws s3api head-object --bucket YOUR-BUCKET-NAME --key YOUR-FILE \
-    --query '{SSE: ServerSideEncryption, KeyId: SSEKMSKeyId}'
-  # Expected after step 2: "SSE": "AES256", "KeyId": null
-  # Expected after step 3: "SSE": "aws:kms", "KeyId": "arn:aws:kms:..."
-  ```
+    ```bash
+    aws s3api head-object --bucket YOUR-BUCKET-NAME --key YOUR-FILE \
+      --query '{SSE: ServerSideEncryption, KeyId: SSEKMSKeyId}'
+    # Expected after step 2: "SSE": "AES256", "KeyId": null
+    # Expected after step 3: "SSE": "aws:kms", "KeyId": "arn:aws:kms:..."
+    ```
 
 - Confirm the object now has two versions:
 
-  ```bash
-  aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix YOUR-FILE \
-    --query 'length(Versions)'
-  # Expected: 2
-  ```
+    ```bash
+    aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix YOUR-FILE \
+      --query 'length(Versions)'
+    # Expected: 2
+    ```
 
 - Confirm the bucket default:
 
-  ```bash
-  aws s3api get-bucket-encryption --bucket YOUR-BUCKET-NAME \
-    --query 'ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault'
-  # Expected: "SSEAlgorithm": "AES256"
-  ```
+    ```bash
+    aws s3api get-bucket-encryption --bucket YOUR-BUCKET-NAME \
+      --query 'ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault'
+    # Expected: "SSEAlgorithm": "AES256"
+    ```
 
 ## Troubleshooting
 

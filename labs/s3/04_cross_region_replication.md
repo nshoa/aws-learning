@@ -40,43 +40,43 @@ cannot be configured unless both buckets are versioned.
 ### 2. Create the Replication Rule
 
 1. Open the **source** bucket > **Management** tab > **Replication rules** >
-   **Create replication rule**.
+    **Create replication rule**.
 2. **Rule name:** `crr-to-us-west-2`, **Status:** Enabled.
 3. **Rule scope:** Apply to all objects in the bucket.
 4. **Destination:** Choose a bucket in this account > select your `us-west-2` bucket.
 5. **IAM role:** Create new role (S3 adds the permissions it needs).
 6. Leave **Delete marker replication** unchecked for now, and click **Save**.
 7. When asked whether to replicate existing objects, choose **No**. Replication rules
-   only apply to objects uploaded **after** the rule exists; existing objects need
-   **S3 Batch Replication**.
+    only apply to objects uploaded **after** the rule exists; existing objects need
+    **S3 Batch Replication**.
 
 ### 3. Test Uploads and Deletes
 
 1. Upload `index.html` to the **source** bucket. Within a minute it appears in the
-   destination bucket.
+    destination bucket.
 2. Delete `index.html` in the source bucket (with **Show versions** off). The source gets a
-   **delete marker**, but the object is still visible in the destination, because delete
-   markers are not replicated unless you enable **Delete marker replication**.
+    **delete marker**, but the object is still visible in the destination, because delete
+    markers are not replicated unless you enable **Delete marker replication**.
 
 ## Verification
 
 - After step 3.1 (before deleting), check the replication status on both sides:
 
-  ```bash
-  aws s3api head-object --bucket SOURCE-BUCKET --key index.html --query ReplicationStatus
-  # Expected: "COMPLETED" (may show "PENDING" for a few seconds)
+    ```bash
+    aws s3api head-object --bucket SOURCE-BUCKET --key index.html --query ReplicationStatus
+    # Expected: "COMPLETED" (may show "PENDING" for a few seconds)
 
-  aws s3api head-object --bucket DESTINATION-BUCKET --key index.html --query ReplicationStatus --region us-west-2
-  # Expected: "REPLICA"
-  ```
+    aws s3api head-object --bucket DESTINATION-BUCKET --key index.html --query ReplicationStatus --region us-west-2
+    # Expected: "REPLICA"
+    ```
 
 - After step 3.2, the destination still has the object and no delete marker:
 
-  ```bash
-  aws s3api list-object-versions --bucket DESTINATION-BUCKET --prefix index.html \
-    --region us-west-2 --query 'length(DeleteMarkers || `[]`)'
-  # Expected: 0
-  ```
+    ```bash
+    aws s3api list-object-versions --bucket DESTINATION-BUCKET --prefix index.html \
+      --region us-west-2 --query 'length(DeleteMarkers || `[]`)'
+    # Expected: 0
+    ```
 
 ## Troubleshooting
 

@@ -23,7 +23,7 @@
 ## Prerequisites
 
 - Access to the **root user** of an AWS account, with an **MFA device** already assigned to
-  it. Only the root user can change MFA Delete.
+    it. Only the root user can change MFA Delete.
 - AWS CLI installed.
 
 > ⚠️ This lab creates a **root access key**, which AWS strongly advises against keeping.
@@ -42,12 +42,12 @@
 1. Signed in as root, open the account menu (top right) > **Security credentials**.
 2. Under **Access keys**, click **Create access key** and copy the key pair.
 3. On the same page, note the **MFA device ARN** (identifier), for example
-   `arn:aws:iam::123456789012:mfa/root-account-mfa-device`.
+    `arn:aws:iam::123456789012:mfa/root-account-mfa-device`.
 4. Configure a dedicated profile:
 
-   ```bash
-   aws configure --profile root-mfa
-   ```
+    ```bash
+    aws configure --profile root-mfa
+    ```
 
 ### 3. Enable MFA Delete
 
@@ -68,23 +68,23 @@ aws s3api put-bucket-versioning \
 
 1. Get the version ID of the test file:
 
-   ```bash
-   aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix test.txt \
-     --query 'Versions[0].VersionId' --output text --profile root-mfa
-   ```
+    ```bash
+    aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix test.txt \
+      --query 'Versions[0].VersionId' --output text --profile root-mfa
+    ```
 
 2. Try to **permanently delete** that version without MFA. It fails:
 
-   ```bash
-   aws s3api delete-object --bucket YOUR-BUCKET-NAME --key test.txt \
-     --version-id YOUR-VERSION-ID --profile root-mfa
-   # Expected: An error occurred (AccessDenied) ... MFA Authentication must be used for this request
-   ```
+    ```bash
+    aws s3api delete-object --bucket YOUR-BUCKET-NAME --key test.txt \
+      --version-id YOUR-VERSION-ID --profile root-mfa
+    # Expected: An error occurred (AccessDenied) ... MFA Authentication must be used for this request
+    ```
 
 3. A **normal delete** (no version ID) still works and only adds a delete marker. MFA Delete
-   protects against *permanent* deletion and against suspending versioning.
+    protects against *permanent* deletion and against suspending versioning.
 4. In the console, try to permanently delete the version or suspend versioning. Both are
-   blocked, because the console cannot send MFA codes.
+    blocked, because the console cannot send MFA codes.
 
 ![MFA Delete failure](../shared_assets/s3/09_mfa-delete-failure.png)
 
@@ -107,11 +107,11 @@ Repeat the `delete-object --version-id` command from step 4.2: it now succeeds.
 
 - Check the bucket's MFA Delete status:
 
-  ```bash
-  aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME --profile root-mfa
-  # After step 3: "Status": "Enabled", "MFADelete": "Enabled"
-  # After step 5: "Status": "Enabled", "MFADelete": "Disabled"
-  ```
+    ```bash
+    aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME --profile root-mfa
+    # After step 3: "Status": "Enabled", "MFADelete": "Enabled"
+    # After step 5: "Status": "Enabled", "MFADelete": "Disabled"
+    ```
 
 ## Troubleshooting
 

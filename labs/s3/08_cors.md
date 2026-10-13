@@ -24,7 +24,7 @@
 
 - An AWS account with S3 permissions.
 - Familiarity with the [Static Website Hosting lab](02_static_website_hosting.md): both
-  buckets in this lab are set up the same way.
+    buckets in this lab are set up the same way.
 - AWS CLI configured (`aws configure`) and `curl` for the verification commands.
 
 ## Steps
@@ -33,30 +33,30 @@
 
 1. Create a bucket, for example `bucket-primary` in `us-east-1`.
 2. Enable **Static website hosting** with index document `index.html`, turn off
-   **Block all public access**, and add a public-read bucket policy (see the
-   [Static Website Hosting lab](02_static_website_hosting.md), steps 1–3).
+    **Block all public access**, and add a public-read bucket policy (see the
+    [Static Website Hosting lab](02_static_website_hosting.md), steps 1–3).
 3. Create a local `extra-page.html` containing any HTML fragment, for example
-   `<p>This came from extra-page.html</p>`.
+    `<p>This came from extra-page.html</p>`.
 4. Create a local `index.html` that fetches it with a **relative** path:
 
-   ```html
-   <!doctype html>
-   <html>
-     <body>
-       <h1>Primary bucket</h1>
-       <div id="extra">Loading...</div>
-       <script>
-         fetch("extra-page.html")
-           .then((response) => response.text())
-           .then((html) => { document.getElementById("extra").innerHTML = html; })
-           .catch((error) => { console.error(error); });
-       </script>
-     </body>
-   </html>
-   ```
+    ```html
+    <!doctype html>
+    <html>
+      <body>
+        <h1>Primary bucket</h1>
+        <div id="extra">Loading...</div>
+        <script>
+          fetch("extra-page.html")
+            .then((response) => response.text())
+            .then((html) => { document.getElementById("extra").innerHTML = html; })
+            .catch((error) => { console.error(error); });
+        </script>
+      </body>
+    </html>
+    ```
 
 5. Upload both files and open the primary **Bucket website endpoint**. The extra page
-   content appears, because the request is same-origin.
+    content appears, because the request is same-origin.
 
 ![Configure primary bucket settings](../shared_assets/s3/08_setup-primary-bucket.png)
 
@@ -66,17 +66,17 @@
 
 1. Create a second bucket, for example `bucket-secondary` in `us-west-2`.
 2. Enable **Static website hosting**, turn off **Block all public access**, and add a
-   public-read bucket policy, exactly as for the primary bucket.
+    public-read bucket policy, exactly as for the primary bucket.
 3. Upload `extra-page.html` only.
 4. Copy the secondary **Bucket website endpoint**.
 
 ### 3. Trigger the CORS Error
 
 1. In your local `index.html`, change the fetch URL to the full secondary URL:
-   `fetch("http://bucket-secondary.s3-website-us-west-2.amazonaws.com/extra-page.html")`.
+    `fetch("http://bucket-secondary.s3-website-us-west-2.amazonaws.com/extra-page.html")`.
 2. Upload the updated `index.html` to the **primary** bucket.
 3. Reload the primary website endpoint and open the browser **Developer Tools** (F12)
-   > **Console**. You see: *Access to fetch at ... has been blocked by CORS policy*.
+    > **Console**. You see: *Access to fetch at ... has been blocked by CORS policy*.
 
 ![CORS error screenshot](../shared_assets/s3/08_cors-error.png)
 
@@ -85,21 +85,21 @@
 CORS is configured on the bucket **being requested** (secondary), not on the page's bucket.
 
 1. Open the **secondary** bucket > **Permissions** > **Cross-origin resource sharing
-   (CORS)** > **Edit**.
+    (CORS)** > **Edit**.
 2. Paste the following, replacing the origin with your **primary** website endpoint
-   (scheme + host, no path and no trailing slash):
+    (scheme + host, no path and no trailing slash):
 
-   ```json
-   [
-     {
-       "AllowedHeaders": ["*"],
-       "AllowedMethods": ["GET"],
-       "AllowedOrigins": ["http://bucket-primary.s3-website-us-east-1.amazonaws.com"],
-       "ExposeHeaders": [],
-       "MaxAgeSeconds": 3000
-     }
-   ]
-   ```
+    ```json
+    [
+      {
+        "AllowedHeaders": ["*"],
+        "AllowedMethods": ["GET"],
+        "AllowedOrigins": ["http://bucket-primary.s3-website-us-east-1.amazonaws.com"],
+        "ExposeHeaders": [],
+        "MaxAgeSeconds": 3000
+      }
+    ]
+    ```
 
 3. Click **Save changes**.
 4. Hard-refresh the primary website (Ctrl+Shift+R / Cmd+Shift+R). The fetch succeeds.
@@ -112,21 +112,21 @@ CORS is configured on the bucket **being requested** (secondary), not on the pag
 ## Verification
 
 - Ask the secondary bucket for the page while presenting the primary origin, the way a
-  browser does:
+    browser does:
 
-  ```bash
-  curl -sI -H "Origin: http://bucket-primary.s3-website-us-east-1.amazonaws.com" \
-    http://bucket-secondary.s3-website-us-west-2.amazonaws.com/extra-page.html \
-    | grep -i '^access-control-allow-origin'
-  # Before step 4: no output
-  # After step 4:  Access-Control-Allow-Origin: http://bucket-primary.s3-website-us-east-1.amazonaws.com
-  ```
+    ```bash
+    curl -sI -H "Origin: http://bucket-primary.s3-website-us-east-1.amazonaws.com" \
+      http://bucket-secondary.s3-website-us-west-2.amazonaws.com/extra-page.html \
+      | grep -i '^access-control-allow-origin'
+    # Before step 4: no output
+    # After step 4:  Access-Control-Allow-Origin: http://bucket-primary.s3-website-us-east-1.amazonaws.com
+    ```
 
 - Confirm the saved rules:
 
-  ```bash
-  aws s3api get-bucket-cors --bucket bucket-secondary
-  ```
+    ```bash
+    aws s3api get-bucket-cors --bucket bucket-secondary
+    ```
 
 ## Troubleshooting
 

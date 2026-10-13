@@ -36,7 +36,7 @@
 3. Select **Enable** and set **Index document** to `index.html`.
 4. Click **Save changes**.
 5. Copy the **Bucket website endpoint** shown at the bottom of the Properties tab, for
-   example `http://YOUR-BUCKET-NAME.s3-website-us-east-1.amazonaws.com`.
+    example `http://YOUR-BUCKET-NAME.s3-website-us-east-1.amazonaws.com`.
 
 ### 2. Allow Public Access
 
@@ -52,20 +52,20 @@ By default S3 blocks all public access, which also blocks a public website.
 1. Still in **Permissions**, scroll to **Bucket policy** and click **Edit**.
 2. Paste the following policy, replacing `YOUR-BUCKET-NAME` with your bucket name:
 
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Sid": "PublicReadGetObject",
-         "Effect": "Allow",
-         "Principal": "*",
-         "Action": "s3:GetObject",
-         "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
-       }
-     ]
-   }
-   ```
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "PublicReadGetObject",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+        }
+      ]
+    }
+    ```
 
 3. Click **Save changes**.
 
@@ -82,17 +82,17 @@ By default S3 blocks all public access, which also blocks a public website.
 - Open the **Bucket website endpoint** in a browser. The page renders and the images load.
 - From a terminal:
 
-  ```bash
-  curl -sI http://YOUR-BUCKET-NAME.s3-website-us-east-1.amazonaws.com | head -n 1
-  # Expected: HTTP/1.1 200 OK
-  ```
+    ```bash
+    curl -sI http://YOUR-BUCKET-NAME.s3-website-us-east-1.amazonaws.com | head -n 1
+    # Expected: HTTP/1.1 200 OK
+    ```
 
 - Confirm the website configuration:
 
-  ```bash
-  aws s3api get-bucket-website --bucket YOUR-BUCKET-NAME
-  # Expected: "IndexDocument": { "Suffix": "index.html" }
-  ```
+    ```bash
+    aws s3api get-bucket-website --bucket YOUR-BUCKET-NAME
+    # Expected: "IndexDocument": { "Suffix": "index.html" }
+    ```
 
 ## Troubleshooting
 

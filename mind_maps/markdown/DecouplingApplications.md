@@ -73,64 +73,64 @@ markmap:
 ### Core Concepts
 
 - **Producers**
-  - Messages are sent using the `SendMessage` API.
-  - Messages are stored in SQS until consumed and deleted.
-  - Retention: default 4 days and up to 14 days
-  - Attributes (e.g., order ID, customer ID) can be sent with the message.
+    - Messages are sent using the `SendMessage` API.
+    - Messages are stored in SQS until consumed and deleted.
+    - Retention: default 4 days and up to 14 days
+    - Attributes (e.g., order ID, customer ID) can be sent with the message.
 - **Consumers**
-  - Consumers *poll* the queue, retrieving up to 10 messages at a time.
-  - Consumers process the messages and delete them with the `DeleteMessage` API.
-  - Multiple consumers can process messages in parallel for higher throughput.
-  - Message visibility timeout ensures no message is processed by multiple consumers simultaneously.
-  - Example: poll/receive messages → consumer → insert into RDS → `DeleteMessage`
+    - Consumers *poll* the queue, retrieving up to 10 messages at a time.
+    - Consumers process the messages and delete them with the `DeleteMessage` API.
+    - Multiple consumers can process messages in parallel for higher throughput.
+    - Message visibility timeout ensures no message is processed by multiple consumers simultaneously.
+    - Example: poll/receive messages → consumer → insert into RDS → `DeleteMessage`
 
 ### Features
 
 - **Visibility Timeout**
-  - Message becomes invisible after being polled
-  - Default: 30 seconds
-  - Purpose: Prevent multiple consumers from processing the same message simultaneously
-  - Behavior: Message becomes visible again if not deleted within the timeout
-  - Risk: Potential for double processing if timeout is too short or consumer crashes
-  - Adjustment: Can be changed (`ChangeMessageVisibility` API)
+    - Message becomes invisible after being polled
+    - Default: 30 seconds
+    - Purpose: Prevent multiple consumers from processing the same message simultaneously
+    - Behavior: Message becomes visible again if not deleted within the timeout
+    - Risk: Potential for double processing if timeout is too short or consumer crashes
+    - Adjustment: Can be changed (`ChangeMessageVisibility` API)
 - **Long Polling**
-  - Consumer waits for messages if the queue is empty
-  - Wait Time: 1 to 20 seconds (20s preferred)
-  - Benefits: Reduces API calls, increases efficiency, lowers latency
-  - Configuration: Queue level or API level (`WaitTimeSeconds`)
+    - Consumer waits for messages if the queue is empty
+    - Wait Time: 1 to 20 seconds (20s preferred)
+    - Benefits: Reduces API calls, increases efficiency, lowers latency
+    - Configuration: Queue level or API level (`WaitTimeSeconds`)
 - **Dead-Letter Queues (DLQ)**
-  - Handles messages that fail processing multiple times
+    - Handles messages that fail processing multiple times
 
 ### Queue Types
 
 - **Standard Queue (Default)**
-  - Unlimited throughput
-  - At-least-once delivery
-  - Best-effort ordering
+    - Unlimited throughput
+    - At-least-once delivery
+    - Best-effort ordering
 - **FIFO (First-In, First-Out) Queue**
-  - Ordering: Guaranteed First-In, First-Out
-  - Delivery: Exactly-once processing (achieved via deduplication)
-  - Deduplication ID: Used to prevent duplicate messages
-  - Message Group ID: Ensures ordering within a specific group of messages (mandatory)
-  - Throughput: Limited (300 msg/s standard, 3000 msg/s with batching)
+    - Ordering: Guaranteed First-In, First-Out
+    - Delivery: Exactly-once processing (achieved via deduplication)
+    - Deduplication ID: Used to prevent duplicate messages
+    - Message Group ID: Ensures ordering within a specific group of messages (mandatory)
+    - Throughput: Limited (300 msg/s standard, 3000 msg/s with batching)
 
 ### Use Cases & Patterns
 
 - Scaling consumers independently using Auto Scaling Groups (ASG) based on queue length (`ApproximateNumberOfMessagesVisible` metric)
-  - CloudWatch metric (queue length) → alarm for breach → ASG scales EC2 instances polling the queue
+    - CloudWatch metric (queue length) → alarm for breach → ASG scales EC2 instances polling the queue
 - Decoupling microservices or application tiers
-  - Front-end web app → `SendMessage` → SQS queue (infinitely scalable) → `ReceiveMessages` → back-end web app
+    - Front-end web app → `SendMessage` → SQS queue (infinitely scalable) → `ReceiveMessages` → back-end web app
 - Buffering requests (e.g., database writes) to handle load spikes
-  - Enqueue → SQS → dequeue → insert into DynamoDB / Aurora / RDS
+    - Enqueue → SQS → dequeue → insert into DynamoDB / Aurora / RDS
 
 ### Security
 
 - Access Control: IAM policies
 - Resource Policies: SQS Access Policies (similar to S3 Bucket Policies) for cross-account access or granting service permissions (e.g., SNS, S3)
 - Encryption
-  - Encryption In-flight: HTTPS
-  - Encryption At-rest: KMS keys
-  - Client-Side Encryption: Option for clients
+    - Encryption In-flight: HTTPS
+    - Encryption At-rest: KMS keys
+    - Client-Side Encryption: Option for clients
 
 ## Amazon SNS (Simple Notification Service)
 
@@ -183,23 +183,23 @@ markmap:
 ### Features
 
 - **Fan Out Pattern (SNS + SQS)**
-  - Publish once to SNS, deliver to multiple SQS queues
-  - Provides decoupling and persistence (via SQS)
-  - Allows delayed processing and retries (via SQS)
-  - SQS queue policy must allow SNS to write
-  - Supports Cross-Region delivery to SQS queues
-  - Example: Buying Service → SNS Topic → SQS (Fraud Service) + SQS (Shipping Service)
+    - Publish once to SNS, deliver to multiple SQS queues
+    - Provides decoupling and persistence (via SQS)
+    - Allows delayed processing and retries (via SQS)
+    - SQS queue policy must allow SNS to write
+    - Supports Cross-Region delivery to SQS queues
+    - Example: Buying Service → SNS Topic → SQS (Fraud Service) + SQS (Shipping Service)
 - **Message Filtering**
-  - Subscribers can define a filter policy (JSON format)
-  - Receive only messages matching the policy attributes
-  - Subscriptions without filters receive all messages
-  - Example: new transaction → SNS topic → filter `State: Placed` → SQS (placed orders); `State: Cancelled` → SQS + email (cancelled orders); `State: Declined` → SQS (declined orders); no filter → SQS (all)
+    - Subscribers can define a filter policy (JSON format)
+    - Receive only messages matching the policy attributes
+    - Subscriptions without filters receive all messages
+    - Example: new transaction → SNS topic → filter `State: Placed` → SQS (placed orders); `State: Cancelled` → SQS + email (cancelled orders); `State: Declined` → SQS (declined orders); no filter → SQS (all)
 - **FIFO Topics**
-  - Guarantees First-In, First-Out ordering
-  - Requires Message Group ID for ordering
-  - Supports content-based or explicit Deduplication ID for exactly-once publishing
-  - Throughput limited (same as SQS FIFO)
-  - Can have SQS Standard and FIFO queues as subscribers
+    - Guarantees First-In, First-Out ordering
+    - Requires Message Group ID for ordering
+    - Supports content-based or explicit Deduplication ID for exactly-once publishing
+    - Throughput limited (same as SQS FIFO)
+    - Can have SQS Standard and FIFO queues as subscribers
 
 ### Use Cases & Integrations
 
@@ -213,9 +213,9 @@ markmap:
 - Access Control: IAM policies
 - Resource Policies: SQS Access Policies (similar to S3 Bucket Policies) for cross-account access or granting service permissions (e.g., SNS, S3)
 - Encryption
-  - Encryption In-flight: HTTPS
-  - Encryption At-rest: KMS keys
-  - Client-Side Encryption: Option for clients
+    - Encryption In-flight: HTTPS
+    - Encryption At-rest: KMS keys
+    - Client-Side Encryption: Option for clients
 
 ## Amazon Kinesis
 
@@ -229,68 +229,68 @@ markmap:
 - Purpose: Collect, process, and store real-time data streams
 - Data Types: Clickstreams, IoT device data, logs, metrics
 - **Core Concepts**
-  - Stream: Ordered sequence of data records
-  - Shard: Base throughput unit within a stream
-  - Partition Key: Determines which shard a data record goes to; guarantees order for records with the same key
-  - Producers: Applications, Kinesis Agent, KPL (Kinesis Producer Library), IoT devices
-  - Consumers: Applications (using KCL - Kinesis Client Library or API), Lambda, Kinesis Data Firehose, Kinesis Data Analytics (Managed Flink)
+    - Stream: Ordered sequence of data records
+    - Shard: Base throughput unit within a stream
+    - Partition Key: Determines which shard a data record goes to; guarantees order for records with the same key
+    - Producers: Applications, Kinesis Agent, KPL (Kinesis Producer Library), IoT devices
+    - Consumers: Applications (using KCL - Kinesis Client Library or API), Lambda, Kinesis Data Firehose, Kinesis Data Analytics (Managed Flink)
 - **Attributes & Features**
-  - Record Size: Up to 1MB
-  - Retention Period: Default 24 hours, max 365 days
-  - Replay Capability: Consumers can re-read data from the stream
-  - Ordering: Guaranteed within a partition key (shard level)
-  - Real-time processing
+    - Record Size: Up to 1MB
+    - Retention Period: Default 24 hours, max 365 days
+    - Replay Capability: Consumers can re-read data from the stream
+    - Ordering: Guaranteed within a partition key (shard level)
+    - Real-time processing
 - **Capacity Modes**
-  - **Provisioned Mode**
-    - Manually manage number of shards
-    - Each shard: 1MB/s or 1000 records/s IN, 2MB/s OUT
-    - Pay per shard-hour
-  - **On-Demand Mode**
-    - Automatic scaling based on usage
-    - No shard provisioning
-    - Default 4MB/s IN
-    - Pay per stream-hour and data GB IN/OUT
+    - **Provisioned Mode**
+        - Manually manage number of shards
+        - Each shard: 1MB/s or 1000 records/s IN, 2MB/s OUT
+        - Pay per shard-hour
+    - **On-Demand Mode**
+        - Automatic scaling based on usage
+        - No shard provisioning
+        - Default 4MB/s IN
+        - Pay per stream-hour and data GB IN/OUT
 - **Security**
-  - In-flight (HTTPS)
-  - At-rest (KMS)
+    - In-flight (HTTPS)
+    - At-rest (KMS)
 
 ### Amazon Data Firehose (Formerly Kinesis Data Firehose)
 
 - Purpose: Easily load streaming data into data stores and analytics tools (ETL focus)
 - Diagram: sources (applications, clients, SDK, Kinesis Agent, Kinesis Data Streams, CloudWatch logs & events, AWS IoT) → record up to 1MB → Firehose (optional Lambda data transformation) → batch writes → AWS destinations (S3, Redshift via COPY through S3, OpenSearch), 3rd-party partners, custom HTTP endpoints; all or failed data → S3 backup bucket
 - **Core Concepts**
-  - Delivery Stream: The Firehose resource that captures, transforms, and loads data
-  - Sources: Kinesis Data Streams, Direct PUT (SDK, Agent), CloudWatch Logs/Events, AWS IoT
-  - Destinations: Amazon S3, Amazon Redshift (via S3), Amazon OpenSearch Service, Custom HTTP Endpoints, 3rd Party Partners (Splunk, MongoDB, Datadog, NewRelic etc.)
+    - Delivery Stream: The Firehose resource that captures, transforms, and loads data
+    - Sources: Kinesis Data Streams, Direct PUT (SDK, Agent), CloudWatch Logs/Events, AWS IoT
+    - Destinations: Amazon S3, Amazon Redshift (via S3), Amazon OpenSearch Service, Custom HTTP Endpoints, 3rd Party Partners (Splunk, MongoDB, Datadog, NewRelic etc.)
 - **Attributes & Features**
-  - Fully Managed & Serverless
-  - Automatic Scaling
-  - Near Real-Time delivery (buffering involved)
-  - Buffering: Configurable by size (e.g., 1MB-128MB) or time (e.g., 60s-900s)
-  - Data Transformation: Optional, using AWS Lambda functions (e.g., CSV to JSON)
-  - Data Format Conversion: Supports converting input (e.g., JSON) to Parquet or ORC for S3 delivery
-  - Compression: Supports Gzip, Snappy, ZIP (for S3)
-  - S3 Backup: Option to back up all or only failed data to an S3 bucket
-  - No Data Storage within Firehose itself
-  - No Replay Capability
-  - Pay for data ingested
+    - Fully Managed & Serverless
+    - Automatic Scaling
+    - Near Real-Time delivery (buffering involved)
+    - Buffering: Configurable by size (e.g., 1MB-128MB) or time (e.g., 60s-900s)
+    - Data Transformation: Optional, using AWS Lambda functions (e.g., CSV to JSON)
+    - Data Format Conversion: Supports converting input (e.g., JSON) to Parquet or ORC for S3 delivery
+    - Compression: Supports Gzip, Snappy, ZIP (for S3)
+    - S3 Backup: Option to back up all or only failed data to an S3 bucket
+    - No Data Storage within Firehose itself
+    - No Replay Capability
+    - Pay for data ingested
 
 ### Comparison: Data Firehose versus Kinesis Data Streams
 
 - **Data Streams**
-  - Streaming data collection
-  - Real-time
-  - Data storage (1-365 days)
-  - Replay capability
-  - Requires consumer development (KCL/API/Lambda)
-  - Manual (provisioned) or auto (on-demand) scaling
+    - Streaming data collection
+    - Real-time
+    - Data storage (1-365 days)
+    - Replay capability
+    - Requires consumer development (KCL/API/Lambda)
+    - Manual (provisioned) or auto (on-demand) scaling
 - **Data Firehose**
-  - Load streaming data into S3 / Redshift / OpenSearch / 3rd party / custom HTTP
-  - Near real-time
-  - No storage
-  - No replay
-  - Fully managed loading
-  - Automatic scaling
+    - Load streaming data into S3 / Redshift / OpenSearch / 3rd party / custom HTTP
+    - Near real-time
+    - No storage
+    - No replay
+    - Fully managed loading
+    - Automatic scaling
 
 ## Amazon Message Broker - MQ
 

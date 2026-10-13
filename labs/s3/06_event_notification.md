@@ -42,38 +42,38 @@ S3 has no permission to write to your queue until the queue's resource policy al
 
 1. Open the queue > **Access policy** tab > **Edit**.
 2. Replace the policy with the following, filling in your queue ARN, bucket name and
-   account ID:
+    account ID:
 
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Sid": "AllowS3ToSendMessage",
-         "Effect": "Allow",
-         "Principal": { "Service": "s3.amazonaws.com" },
-         "Action": "SQS:SendMessage",
-         "Resource": "YOUR-SQS-QUEUE-ARN",
-         "Condition": {
-           "ArnLike": { "aws:SourceArn": "arn:aws:s3:::YOUR-BUCKET-NAME" },
-           "StringEquals": { "aws:SourceAccount": "YOUR-ACCOUNT-ID" }
-         }
-       }
-     ]
-   }
-   ```
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "AllowS3ToSendMessage",
+          "Effect": "Allow",
+          "Principal": { "Service": "s3.amazonaws.com" },
+          "Action": "SQS:SendMessage",
+          "Resource": "YOUR-SQS-QUEUE-ARN",
+          "Condition": {
+            "ArnLike": { "aws:SourceArn": "arn:aws:s3:::YOUR-BUCKET-NAME" },
+            "StringEquals": { "aws:SourceAccount": "YOUR-ACCOUNT-ID" }
+          }
+        }
+      ]
+    }
+    ```
 
 3. Click **Save**.
 
 ### 3. Configure the Event Notification
 
 1. Open your bucket > **Properties** tab > **Event notifications** > **Create event
-   notification**.
+    notification**.
 2. **Event name:** `NewObjectUpload`.
 3. **Event types:** check **All object create events** (`s3:ObjectCreated:*`).
 4. **Destination:** **SQS queue**, then choose `s3-notification-queue`.
 5. Click **Save changes**. S3 validates the destination by sending an `s3:TestEvent`
-   message to the queue.
+    message to the queue.
 
 ### 4. Trigger an Event
 
@@ -86,14 +86,14 @@ Upload any file to the bucket.
 
 - Receive messages from the queue:
 
-  ```bash
-  aws sqs receive-message --queue-url YOUR-QUEUE-URL --max-number-of-messages 10 \
-    --query 'Messages[].Body' --output text
-  ```
+    ```bash
+    aws sqs receive-message --queue-url YOUR-QUEUE-URL --max-number-of-messages 10 \
+      --query 'Messages[].Body' --output text
+    ```
 
-  Expect the `s3:TestEvent` message from step 3, and an event whose
-  `"eventName"` is `"ObjectCreated:Put"` with your object key under `"s3"."object"."key"`.
-  In the console: queue > **Send and receive messages** > **Poll for messages**.
+    Expect the `s3:TestEvent` message from step 3, and an event whose
+    `"eventName"` is `"ObjectCreated:Put"` with your object key under `"s3"."object"."key"`.
+    In the console: queue > **Send and receive messages** > **Poll for messages**.
 
 ## Troubleshooting
 

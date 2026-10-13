@@ -29,7 +29,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 ## Conventions
 
 - Screenshots live in [`shared_assets/<service>/`](https://github.com/nshoa/aws-learning/tree/main/labs/shared_assets) and are
-  referenced with **relative paths** so they render on GitHub.
+    referenced with **relative paths** so they render on GitHub.
 - 🔒 Redact account IDs, distribution IDs, and personal bucket names before
-  committing screenshots or policy JSON.
+    committing screenshots or policy JSON.
 - 💸 Always finish the **Cleanup** section — most labs use billable resources.

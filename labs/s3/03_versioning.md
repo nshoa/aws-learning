@@ -43,33 +43,33 @@
 1. Upload `index.html`.
 2. Edit the local file (change some text) and upload it again with the same name.
 3. Turn on **Show versions** in the object list. There are now two versions of
-   `index.html`, each with its own **Version ID**; the newest is the current version.
+    `index.html`, each with its own **Version ID**; the newest is the current version.
 
 ### 3. Delete and Restore an Object
 
 1. With **Show versions** turned **off**, select `index.html` and click **Delete**.
 2. Turn **Show versions** on. S3 did not erase anything: it added a **Delete marker** as the
-   new current version, and the older versions are still there.
+    new current version, and the older versions are still there.
 3. To "undelete", select the **Delete marker** row and delete it (permanently). The previous
-   version becomes current again.
+    version becomes current again.
 
 ## Verification
 
 - List every version and delete marker of the object:
 
-  ```bash
-  aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix index.html \
-    --query '{Versions: Versions[].[VersionId,IsLatest], DeleteMarkers: DeleteMarkers[].[VersionId,IsLatest]}'
-  # After step 3.2: two Versions, one DeleteMarker with IsLatest = true
-  # After step 3.3: two Versions, no DeleteMarkers, newest Version IsLatest = true
-  ```
+    ```bash
+    aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix index.html \
+      --query '{Versions: Versions[].[VersionId,IsLatest], DeleteMarkers: DeleteMarkers[].[VersionId,IsLatest]}'
+    # After step 3.2: two Versions, one DeleteMarker with IsLatest = true
+    # After step 3.3: two Versions, no DeleteMarkers, newest Version IsLatest = true
+    ```
 
 - Confirm versioning is on:
 
-  ```bash
-  aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME
-  # Expected: "Status": "Enabled"
-  ```
+    ```bash
+    aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME
+    # Expected: "Status": "Enabled"
+    ```
 
 ## Troubleshooting
 
@@ -84,7 +84,7 @@
 > 💸 Every version is stored and billed separately.
 
 - [ ] Turn on **Show versions**, select all versions and delete markers, and delete them
-  permanently (or use **Empty bucket**).
+    permanently (or use **Empty bucket**).
 - [ ] Delete the bucket if you created it only for this lab.
 
 ## References

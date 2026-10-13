@@ -25,7 +25,7 @@
 
 - An AWS account with EC2 permissions, using the **default VPC**.
 - A terminal with `ssh` and `curl`; AWS CLI configured (`aws configure`) for the
-  verification commands.
+    verification commands.
 
 > 💡 Prefer Infrastructure as Code? The same setup is automated in the
 > [CloudFormation lab](../cloud_formation/README.md).
@@ -38,7 +38,7 @@
 2. **Name:** `my-first-instance`.
 3. **AMI:** Amazon Linux 2023 (free tier eligible).
 4. **Instance type:** `t2.micro` or `t3.micro`, whichever is marked free tier eligible in
-   your region.
+    your region.
 5. **Key pair:** create one (or select an existing one) and download the `.pem` file.
 
 ### 2. Configure the Security Group
@@ -73,28 +73,28 @@ Click **Launch instance**.
 ## Verification
 
 1. Wait until **Instance state** is `Running` and the **Status check** column shows all
-   checks passed. Copy the **Public IPv4 address**.
+    checks passed. Copy the **Public IPv4 address**.
 2. Check the web server (give User Data a minute or two to finish after boot):
 
-   ```bash
-   curl -s http://<public-ip>
-   # Expected: <h1>Hello from ip-172-31-...</h1>
-   ```
+    ```bash
+    curl -s http://<public-ip>
+    # Expected: <h1>Hello from ip-172-31-...</h1>
+    ```
 
 3. Connect over SSH:
 
-   ```bash
-   chmod 400 my-key.pem
-   ssh -i my-key.pem ec2-user@<public-ip>
-   ```
+    ```bash
+    chmod 400 my-key.pem
+    ssh -i my-key.pem ec2-user@<public-ip>
+    ```
 
 4. Confirm the instance from the CLI:
 
-   ```bash
-   aws ec2 describe-instances --filters "Name=tag:Name,Values=my-first-instance" \
-     --query 'Reservations[].Instances[].{State:State.Name,Type:InstanceType,IP:PublicIpAddress}'
-   # Expected: "State": "running", "Type": "t2.micro" (or t3.micro), and the public IP
-   ```
+    ```bash
+    aws ec2 describe-instances --filters "Name=tag:Name,Values=my-first-instance" \
+      --query 'Reservations[].Instances[].{State:State.Name,Type:InstanceType,IP:PublicIpAddress}'
+    # Expected: "State": "running", "Type": "t2.micro" (or t3.micro), and the public IP
+    ```
 
 ## Troubleshooting
 

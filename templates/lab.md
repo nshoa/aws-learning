@@ -49,7 +49,7 @@
 
 - <How to confirm it worked: a URL to open, a command to run, the expected output.>
 - Capture a screenshot to `labs/shared_assets/<service>/<name>.png` and embed it with
-  `![alt text](../shared_assets/<service>/<name>.png)`.
+    `![alt text](../shared_assets/<service>/<name>.png)`.
 
 ## Troubleshooting
 

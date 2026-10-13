@@ -86,7 +86,7 @@ markmap:
 ### Ingestion Patterns
 
 - DynamoDB → DynamoDB Stream → Lambda → OpenSearch.
-  - App uses API to search items in OpenSearch, then API to retrieve items from DynamoDB
+    - App uses API to search items in OpenSearch, then API to retrieve items from DynamoDB
 - CloudWatch Logs → Subscription Filter → Lambda (real-time) → OpenSearch.
 - CloudWatch Logs → Subscription Filter → Kinesis Data Firehose (near real-time) → OpenSearch.
 - Kinesis Data Streams → Lambda (real-time) → OpenSearch.
@@ -148,10 +148,10 @@ markmap:
 - Fully serverless ETL (Extract, Transform, Load) service.
 - Discovers, prepares, moves, and integrates data from multiple sources.
 - **Use Cases**
-  - Data cleansing, transformation, cataloging
-    - S3 bucket / Amazon RDS → *extract* → Glue ETL (*transform*) → *load* → Redshift data warehouse
-  - ETL pipeline orchestration, converting data formats (e.g., JSON to Parquet for Athena).
-    - S3 put → input S3 bucket → event notification → Lambda (or EventBridge) → trigger Glue ETL job → import CSV → Parquet → output S3 bucket → analyze with Athena
+    - Data cleansing, transformation, cataloging
+        - S3 bucket / Amazon RDS → *extract* → Glue ETL (*transform*) → *load* → Redshift data warehouse
+    - ETL pipeline orchestration, converting data formats (e.g., JSON to Parquet for Athena).
+        - S3 put → input S3 bucket → event notification → Lambda (or EventBridge) → trigger Glue ETL job → import CSV → Parquet → output S3 bucket → analyze with Athena
 
 ### Components
 

@@ -51,12 +51,12 @@ object gets a new *Last modified* date (and a new version, if versioning is on).
 1. Go to the **Management** tab > **Lifecycle rules** > **Create lifecycle rule**.
 2. **Rule name:** `ArchiveOldLogs`.
 3. **Rule scope:** Limit to a prefix, `logs/` (or apply to all objects and acknowledge
-   the warning).
+    the warning).
 4. **Lifecycle rule actions:** check **Transition current versions of objects between
-   storage classes**.
+    storage classes**.
 5. Add two transitions:
-   - **Standard-IA** after **30** days.
-   - **Glacier Flexible Retrieval** after **90** days.
+    - **Standard-IA** after **30** days.
+    - **Glacier Flexible Retrieval** after **90** days.
 6. Click **Create rule**.
 
 > 💡 Transitions run asynchronously once a day, so nothing visible happens during the lab:
@@ -67,19 +67,19 @@ object gets a new *Last modified* date (and a new version, if versioning is on).
 
 - Check an object's storage class (Standard objects omit the field):
 
-  ```bash
-  aws s3api head-object --bucket YOUR-BUCKET-NAME --key YOUR-FILE --query StorageClass
-  # Expected after step 1: "STANDARD_IA"
-  # Expected after step 2: "ONEZONE_IA"
-  ```
+    ```bash
+    aws s3api head-object --bucket YOUR-BUCKET-NAME --key YOUR-FILE --query StorageClass
+    # Expected after step 1: "STANDARD_IA"
+    # Expected after step 2: "ONEZONE_IA"
+    ```
 
 - Confirm the lifecycle rule:
 
-  ```bash
-  aws s3api get-bucket-lifecycle-configuration --bucket YOUR-BUCKET-NAME \
-    --query 'Rules[].{ID:ID,Status:Status,Transitions:Transitions}'
-  # Expected: ArchiveOldLogs, Enabled, transitions at 30 days (STANDARD_IA) and 90 days (GLACIER)
-  ```
+    ```bash
+    aws s3api get-bucket-lifecycle-configuration --bucket YOUR-BUCKET-NAME \
+      --query 'Rules[].{ID:ID,Status:Status,Transitions:Transitions}'
+    # Expected: ArchiveOldLogs, Enabled, transitions at 30 days (STANDARD_IA) and 90 days (GLACIER)
+    ```
 
 ## Troubleshooting
 

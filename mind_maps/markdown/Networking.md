@@ -53,11 +53,11 @@ markmap:
 
 - A segment of a VPC's IP address range within a specific Availability Zone (AZ).
 - AWS reserves 5 IP addresses per subnet (first 4, last 1).
-  - .0: Network Address
-  - .1: VPC Router
-  - .2: AWS DNS
-  - .3: Future Use
-  - .255: Broadcast Address (not supported, reserved)
+    - .0: Network Address
+    - .1: VPC Router
+    - .2: AWS DNS
+    - .3: Future Use
+    - .255: Broadcast Address (not supported, reserved)
 - Determine required subnet size based on needed IPs (e.g., need 29 IPs → requires /26, not /27).
 
 ### Route Tables
@@ -85,7 +85,7 @@ markmap:
 - Newly created NACLs deny all traffic by default.
 - Useful for blocking specific IP addresses at the subnet level.
 - **Ephemeral Ports**: Remember to allow return traffic on ephemeral port ranges (e.g., 1024-65535) for stateless NACLs.
-  - Example: client 11.22.33.44:50105 → web server 55.66.77.88:443; response goes back to the client's ephemeral port 50105
+    - Example: client 11.22.33.44:50105 → web server 55.66.77.88:443; response goes back to the client's ephemeral port 50105
 
 ### Security Groups vs. NACLs
 
@@ -164,26 +164,26 @@ markmap:
 - Redundant and scalable.
 - **Troubleshooting**: Check VPC DNS settings and Route Tables.
 - Types
-  - **Interface Endpoints**
-    - Provisions an ENI with a private IP.
-    - Requires a Security Group.
-    - Supports most AWS services.
-    - Charged per hour + data processed.
-    - Preferred for on-prem, cross-VPC, or cross-region access.
-  - **Gateway Endpoints**
-    - Provisions a gateway target for route tables.
-    - Does not use Security Groups.
-    - Supports S3 and DynamoDB only.
-    - Free.
+    - **Interface Endpoints**
+        - Provisions an ENI with a private IP.
+        - Requires a Security Group.
+        - Supports most AWS services.
+        - Charged per hour + data processed.
+        - Preferred for on-prem, cross-VPC, or cross-region access.
+    - **Gateway Endpoints**
+        - Provisions a gateway target for route tables.
+        - Does not use Security Groups.
+        - Supports S3 and DynamoDB only.
+        - Free.
 
 ### Site-to-Site VPN
 
 - Securely connect on-premises network or datacenter to a VPC over the public internet.
 - Components
-  - **Virtual Private Gateway (VGW)**: VPN concentrator on AWS side, attached to the VPC.
-  - **Customer Gateway (CGW)**: Physical device or software app on customer side. Uses public IP (or NAT-T public IP).
-  - Requires route propagation enabled in VPC route tables.
-  - Often used as a backup for Direct Connect.
+    - **Virtual Private Gateway (VGW)**: VPN concentrator on AWS side, attached to the VPC.
+    - **Customer Gateway (CGW)**: Physical device or software app on customer side. Uses public IP (or NAT-T public IP).
+    - Requires route propagation enabled in VPC route tables.
+    - Often used as a backup for Direct Connect.
 
 ### AWS VPN CloudHub
 
@@ -198,11 +198,11 @@ markmap:
 - Use cases: High bandwidth needs, consistent network experience, hybrid environments.
 - Requires VGW on the VPC.
 - Can access public (S3) and private (EC2) resources.
-  - Private Virtual Interface → VPC resources; Public Virtual Interface → public AWS services (S3, Glacier)
+    - Private Virtual Interface → VPC resources; Public Virtual Interface → public AWS services (S3, Glacier)
 - Supports IPv4 and IPv6.
 - Connection Types
-  - **Dedicated**: 1/10/100 Gbps physical port.
-  - **Hosted**: 50 Mbps to 10 Gbps via DX Partners.
+    - **Dedicated**: 1/10/100 Gbps physical port.
+    - **Hosted**: 50 Mbps to 10 Gbps via DX Partners.
 - Encryption: Data is not encrypted by default but is private. Use DX + VPN for IPsec encryption.
 - Resiliency: Achieved via multiple connections to one or more DX locations.
 
@@ -230,14 +230,14 @@ markmap:
 - Logs ACCEPT and REJECT actions based on SGs/NACLs.
 - Destinations: S3, CloudWatch Logs, Kinesis Data Firehose.
 - Can be queried using Athena (on S3) or CloudWatch Logs Insights.
-  - Flow Logs → CloudWatch Logs → Contributor Insights → top 10 IP addresses
-  - Flow Logs → CloudWatch Logs → metric filter → CloudWatch Alarm → SNS
-  - Flow Logs → S3 → Athena → QuickSight
+    - Flow Logs → CloudWatch Logs → Contributor Insights → top 10 IP addresses
+    - Flow Logs → CloudWatch Logs → metric filter → CloudWatch Alarm → SNS
+    - Flow Logs → S3 → Athena → QuickSight
 - **Troubleshooting SG/NACL Issues**
-  - Inbound REJECT ⇒ NACL or SG problem.
-  - Inbound ACCEPT, Outbound REJECT ⇒ NACL problem.
-  - Outbound REJECT ⇒ NACL or SG problem.
-  - Outbound ACCEPT, Inbound REJECT ⇒ NACL problem.
+    - Inbound REJECT ⇒ NACL or SG problem.
+    - Inbound ACCEPT, Outbound REJECT ⇒ NACL problem.
+    - Outbound REJECT ⇒ NACL or SG problem.
+    - Outbound ACCEPT, Inbound REJECT ⇒ NACL problem.
 
 ### VPC Traffic Mirroring
 

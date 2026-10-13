@@ -48,12 +48,12 @@
 ### 3. (Optional) Create an Access Key for CLI Testing
 
 1. Open `dev-alice` > **Security credentials** > **Create access key** > **Command Line
-   Interface (CLI)**, and copy the key pair.
+    Interface (CLI)**, and copy the key pair.
 2. Configure a profile:
 
-   ```bash
-   aws configure --profile dev-alice
-   ```
+    ```bash
+    aws configure --profile dev-alice
+    ```
 
 ### 4. Concept: Explicit Deny Wins
 
@@ -66,27 +66,27 @@ request is denied: an explicit `Deny` overrides any `Allow`.
 
 - Sign in as `dev-alice` with the sign-in URL in a private browser window, then try:
 
-  | Action | Expected result | Why |
-  |--------|-----------------|-----|
-  | Open **S3** and list buckets | ✅ Allowed | `AmazonS3ReadOnlyAccess` grants read actions |
-  | **Create** an S3 bucket | ❌ Access denied | The read-only policy has no `s3:CreateBucket` |
-  | Open **EC2** > **Instances** | ❌ Not authorized | No EC2 permissions were granted |
+    | Action | Expected result | Why |
+    |--------|-----------------|-----|
+    | Open **S3** and list buckets | ✅ Allowed | `AmazonS3ReadOnlyAccess` grants read actions |
+    | **Create** an S3 bucket | ❌ Access denied | The read-only policy has no `s3:CreateBucket` |
+    | Open **EC2** > **Instances** | ❌ Not authorized | No EC2 permissions were granted |
 
 - The same checks from the CLI (if you did step 3):
 
-  ```bash
-  aws sts get-caller-identity --profile dev-alice
-  # Expected: "Arn": "arn:aws:iam::<account-id>:user/dev-alice"
+    ```bash
+    aws sts get-caller-identity --profile dev-alice
+    # Expected: "Arn": "arn:aws:iam::<account-id>:user/dev-alice"
 
-  aws s3 ls --profile dev-alice
-  # Expected: your bucket list
+    aws s3 ls --profile dev-alice
+    # Expected: your bucket list
 
-  aws s3 mb s3://dev-alice-test-$RANDOM --profile dev-alice
-  # Expected: make_bucket failed ... An error occurred (AccessDenied)
+    aws s3 mb s3://dev-alice-test-$RANDOM --profile dev-alice
+    # Expected: make_bucket failed ... An error occurred (AccessDenied)
 
-  aws ec2 describe-instances --profile dev-alice
-  # Expected: An error occurred (UnauthorizedOperation)
-  ```
+    aws ec2 describe-instances --profile dev-alice
+    # Expected: An error occurred (UnauthorizedOperation)
+    ```
 
 ## Troubleshooting
 
@@ -99,7 +99,7 @@ request is denied: an explicit `Deny` overrides any `Allow`.
 ## Cleanup
 
 - [ ] Delete `dev-alice`'s access key (if created) and the `dev-alice` profile from
-  `~/.aws/credentials`.
+    `~/.aws/credentials`.
 - [ ] Delete the user `dev-alice`.
 - [ ] Delete the group `ReadOnly-Developers`.
 

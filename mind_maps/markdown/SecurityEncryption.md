@@ -20,15 +20,15 @@ markmap:
 ### Encryption at Rest
 
 - **Server-Side Encryption (SSE)**
-  - Data is encrypted *after* being received by the server/service.
-  - Data is decrypted by the server *before* being sent to the client.
-  - Requires the server to manage or have access to encryption keys.
-  - Flow: Object → HTTPS → AWS service (e.g. S3): object + data key → encryption → stored; encrypted object + data key → decryption → HTTPS → Object
+    - Data is encrypted *after* being received by the server/service.
+    - Data is decrypted by the server *before* being sent to the client.
+    - Requires the server to manage or have access to encryption keys.
+    - Flow: Object → HTTPS → AWS service (e.g. S3): object + data key → encryption → stored; encrypted object + data key → decryption → HTTPS → Object
 - **Client-Side Encryption**
-  - Data is encrypted by the client *before* sending it to the server.
-  - Server stores the data in its encrypted form and cannot decrypt it.
-  - Data must be decrypted by the receiving client.
-  - Flow: Client: object + data key (client-side) → encryption → *store* in any storage service (FTP, S3, …) → *retrieve* → encrypted object + data key → decryption → object
+    - Data is encrypted by the client *before* sending it to the server.
+    - Server stores the data in its encrypted form and cannot decrypt it.
+    - Data must be decrypted by the receiving client.
+    - Flow: Client: object + data key (client-side) → encryption → *store* in any storage service (FTP, S3, …) → *retrieve* → encrypted object + data key → decryption → object
 
 ## AWS KMS (Key Management Service)
 
@@ -39,12 +39,12 @@ markmap:
 ### KMS Keys (formerly CMKs - Customer Master Keys)
 
 - **Key Types**
-  - **Symmetric (AES-256)**: Single key for encryption/decryption. Used by most integrated AWS services. Key material never leaves KMS unencrypted.
-  - **Asymmetric (RSA, ECC)**: Public/Private key pair for encryption/decryption OR signing/verification. Public key is downloadable.
+    - **Symmetric (AES-256)**: Single key for encryption/decryption. Used by most integrated AWS services. Key material never leaves KMS unencrypted.
+    - **Asymmetric (RSA, ECC)**: Public/Private key pair for encryption/decryption OR signing/verification. Public key is downloadable.
 - **Key Management Options**
-  - **AWS Owned Keys**: Used internally by AWS services (e.g., SSE-S3 default). Not manageable by user. Free.
-  - **AWS Managed Keys**: Created by AWS for specific services (e.g., `aws/ebs`, `aws/rds`). Managed by AWS but visible to user. Automatic rotation (1 year). Free.
-  - **Customer Managed Keys (CMK)**: Created by the user (or imported). Full control over key policy, lifecycle, rotation. Charged per key/month + API usage. Supports optional automatic rotation (1 year) or manual rotation. Imported keys support manual rotation only.
+    - **AWS Owned Keys**: Used internally by AWS services (e.g., SSE-S3 default). Not manageable by user. Free.
+    - **AWS Managed Keys**: Created by AWS for specific services (e.g., `aws/ebs`, `aws/rds`). Managed by AWS but visible to user. Automatic rotation (1 year). Free.
+    - **Customer Managed Keys (CMK)**: Created by the user (or imported). Full control over key policy, lifecycle, rotation. Charged per key/month + API usage. Supports optional automatic rotation (1 year) or manual rotation. Imported keys support manual rotation only.
 
 ### KMS Key Policies
 
@@ -55,16 +55,16 @@ markmap:
 ### Multi-Region Keys
 
 - Replicate keys with identical key material and ID across multiple regions.
-  - Example: multi-Region primary key in `us-east-1` (`mrk-1234abcd…`) syncs to replica keys in `us-east-2` and `eu-west-1` with the same key ID.
+    - Example: multi-Region primary key in `us-east-1` (`mrk-1234abcd…`) syncs to replica keys in `us-east-2` and `eu-west-1` with the same key ID.
 - Allows encrypting in one region and decrypting in another seamlessly.
 - Use Cases: Global client-side encryption (e.g., with DynamoDB/Aurora Global Tables), DR, multi-region applications.
-  - DynamoDB Global Table: (1) encrypt attribute with primary MRK in us-east-1 → (2) put encrypted attribute → (3) global table replication → (4) get encrypted attribute in ap-southeast-2 → (5) decrypt with replica MRK
-  - Aurora Global Database: same flow for an encrypted column
+    - DynamoDB Global Table: (1) encrypt attribute with primary MRK in us-east-1 → (2) put encrypted attribute → (3) global table replication → (4) get encrypted attribute in ap-southeast-2 → (5) decrypt with replica MRK
+    - Aurora Global Database: same flow for an encrypted column
 
 ### Cross-Account / Cross-Region Use Cases
 
 - **Copying Encrypted Snapshots/AMIs**: Requires sharing the KMS key via policy and re-encrypting in the target account/region.
-  - EBS volume encrypted with KMS Key A (eu-west-2) → snapshot → KMS ReEncrypt with KMS Key B → snapshot/volume in ap-southeast-2
+    - EBS volume encrypted with KMS Key A (eu-west-2) → snapshot → KMS ReEncrypt with KMS Key B → snapshot/volume in ap-southeast-2
 - **S3 Cross-Region Replication (CRR) with SSE-KMS**: Requires IAM role with decrypt/encrypt permissions for source/target keys.
 
 ## Secrets Management

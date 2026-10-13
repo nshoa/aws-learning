@@ -74,7 +74,7 @@ markmap:
 - Purpose: Enables quick and secure migration of databases to AWS.
 - Characteristics: Resilient and self-healing. The source database remains available during migration.
 - Architecture: An EC2 instance runs the DMS replication tasks, connecting a source DB to a target DB.
-  - Source DB → EC2 Instance running DMS → Target DB
+    - Source DB → EC2 Instance running DMS → Target DB
 
 ### Supported Migrations
 
@@ -107,8 +107,8 @@ markmap:
 - Usage: Not needed for migrating the same DB engine (e.g., On-Premise PostgreSQL to RDS PostgreSQL).
 - Scenario question: For Oracle on-premises to Aurora migration, use SCT for schema conversion and DMS for data migration.
 - Examples
-  - OLTP: SQL Server or Oracle to MySQL, PostgreSQL, Aurora.
-  - OLAP: Teradata or Oracle to Redshift.
+    - OLTP: SQL Server or Oracle to MySQL, PostgreSQL, Aurora.
+    - OLAP: Teradata or Oracle to Redshift.
 
 ### Continuous Data Replication (CDC)
 
@@ -202,10 +202,10 @@ markmap:
 
 - Purpose: Plans migration projects by gathering information about on-premises data centers. Gathers server utilization and dependency mappings.
 - **Agentless Discovery (AWS Agentless Discovery Connector)**
-  - Gathers: VM inventory, configuration, and performance history (CPU, memory, disk usage).
+    - Gathers: VM inventory, configuration, and performance history (CPU, memory, disk usage).
 - **Agent-based Discovery (AWS Application Discovery Agent)**
-  - Gathers: System configuration, system performance, running processes, and details of network connections between systems.
-  - Data Management: Resulting data can be viewed within AWS Migration Hub.
+    - Gathers: System configuration, system performance, running processes, and details of network connections between systems.
+    - Data Management: Resulting data can be viewed within AWS Migration Hub.
 
 ## Other Migration & DR Considerations
 
@@ -219,17 +219,17 @@ markmap:
 
 - Scenario: Transferring 200 TB with a 100 Mbps internet connection.
 - **Over Internet / Site-to-Site VPN**
-  - Setup: Immediate.
-  - Time: ~185 days for 200TB at 100 Mbps.
+    - Setup: Immediate.
+    - Time: ~185 days for 200TB at 100 Mbps.
 - **Over Direct Connect (1 Gbps)**
-  - Setup: Long (over a month).
-  - Time: ~18.5 days for 200TB at 1 Gbps.
+    - Setup: Long (over a month).
+    - Time: ~18.5 days for 200TB at 1 Gbps.
 - **Ongoing Replication/Transfers**
-  - Site-to-Site VPN or Direct Connect with DMS or DataSync.
+    - Site-to-Site VPN or Direct Connect with DMS or DataSync.
 - **Over Snowball**
-  - Process: Uses 2-3 Snowballs in parallel.
-  - Time: ~1 week for end-to-end transfer.
-  - Combination: Can be combined with DMS.
+    - Process: Uses 2-3 Snowballs in parallel.
+    - Time: ~1 week for end-to-end transfer.
+    - Combination: Can be combined with DMS.
 
 ### VMware Cloud on AWS
 
@@ -237,6 +237,6 @@ markmap:
 - Architecture: Customer Data Center (with On-Premises vCenter, vSphere, NSX, VSAN) connects to VMware Cloud on AWS (running on Amazon EC2 bare metal), which can then integrate with other AWS services (S3, Direct Connect, FSx, RDS, Redshift).
 - Scenario question: Used when a company wants to extend their VMware-based on-premises data center to AWS while keeping their VMware technology stack.
 - Use Cases
-  - Migrate VMware vSphere-based workloads to AWS.
-  - Run production workloads.
-  - Implement a disaster recovery strategy.
+    - Migrate VMware vSphere-based workloads to AWS.
+    - Run production workloads.
+    - Implement a disaster recovery strategy.
