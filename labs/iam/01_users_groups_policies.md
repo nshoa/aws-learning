@@ -1,73 +1,110 @@
-### AWS Lab: IAM Users, Groups & Least-Privilege Policies
+# IAM Lab: Users, Groups & Least-Privilege Policies
 
-[← Labs index](../README.md) · **Service:** IAM · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** IAM · **Level:** Beginner · **Est. time:** 20 min · **Est. cost:** Free
 
-**Ref:** [Udemy SAA-C03 - IAM](https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/)
+**Reference:** [Udemy SAA-C03 - IAM](https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/)
 
----
+## Contents
 
-### Lab Objectives
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
-- [ ]  Create a **Group** and attach a managed policy to it.
-- [ ]  Create a **User** and add them to the group (permissions via group, not user).
-- [ ]  Verify **least privilege** by testing an allowed *and* a denied action.
-- [ ]  Understand why **explicit Deny** always wins.
+## Objectives
 
----
+- [ ] Create a **group** and attach a managed policy to it.
+- [ ] Create a **user** that gets its permissions from the group, not directly.
+- [ ] Prove **least privilege** by testing an allowed and a denied action.
+- [ ] Understand why an **explicit Deny** always wins.
+
+## Prerequisites
+
+- An AWS account and an IAM identity that can manage IAM users and groups.
+- AWS CLI configured (`aws configure`) for the optional CLI verification.
+
+## Steps
 
 ### 1. Create a Group with Permissions
 
-1. Go to the **IAM Console** > **User groups** > **Create group**.
+1. Open the **IAM Console** > **User groups** > **Create group**.
 2. **Group name:** `ReadOnly-Developers`.
-3. Under **Attach permissions policies**, search for and select
-   **`AmazonS3ReadOnlyAccess`**.
+3. Under **Attach permissions policies**, select **`AmazonS3ReadOnlyAccess`**.
 4. Click **Create group**.
 
-> 🔑 Best practice: attach policies to **groups**, not individual users. Users
-> inherit permissions from their group(s).
-
----
+> 🔑 Attach policies to **groups**, not individual users. Users inherit the permissions of
+> every group they belong to.
 
 ### 2. Create a User
 
-1. Go to **Users** > **Create user**.
-2. **User name:** `dev-alice`.
-3. Select **Provide user access to the AWS Management Console** (optional) and
-   set a password — or skip console access for a CLI-only user.
-4. On the permissions step, choose **Add user to group** and tick
-   `ReadOnly-Developers`.
-5. Finish and **download the credentials** (or copy the sign-in URL).
+1. Go to **Users** > **Create user**. **User name:** `dev-alice`.
+2. Check **Provide user access to the AWS Management Console** and set a password.
+3. On **Set permissions**, choose **Add user to group** and select `ReadOnly-Developers`.
+4. Click **Create user** and copy the **console sign-in URL**.
 
----
+### 3. (Optional) Create an Access Key for CLI Testing
 
-### 3. Test Least Privilege
+1. Open `dev-alice` > **Security credentials** > **Create access key** > **Command Line
+   Interface (CLI)**, and copy the key pair.
+2. Configure a profile:
 
-Sign in as `dev-alice` (use the account sign-in URL in a private browser window),
-then:
+   ```bash
+   aws configure --profile dev-alice
+   ```
 
-| Action | Expected result | Why |
-|--------|-----------------|-----|
-| Open **S3** and list buckets | ✅ Allowed | `AmazonS3ReadOnlyAccess` grants read |
-| Try to **create** an S3 bucket | ❌ Access Denied | Read-only policy has no `s3:CreateBucket` |
-| Open **EC2** and view instances | ❌ Access Denied | No EC2 permissions were granted |
+### 4. Concept: Explicit Deny Wins
 
-This is **least privilege** in action: the user can do *only* what the policy
-allows, nothing more.
+If a user has `AmazonS3ReadOnlyAccess` (Allow) **and** a policy that denies `s3:*`, every S3
+request is denied: an explicit `Deny` overrides any `Allow`.
 
----
+> **Default deny → an Allow grants access → an explicit Deny overrides everything.**
 
-### 4. (Concept) Explicit Deny Wins
+## Verification
 
-If you attach **both** `AmazonS3ReadOnlyAccess` (Allow) and a policy that
-**Denies** `s3:*`, the user is **denied** — an explicit `Deny` overrides any
-`Allow`. This is the core of IAM policy evaluation:
+- Sign in as `dev-alice` with the sign-in URL in a private browser window, then try:
 
-> **Default Deny → an Allow grants access → an explicit Deny overrides everything.**
+  | Action | Expected result | Why |
+  |--------|-----------------|-----|
+  | Open **S3** and list buckets | ✅ Allowed | `AmazonS3ReadOnlyAccess` grants read actions |
+  | **Create** an S3 bucket | ❌ Access denied | The read-only policy has no `s3:CreateBucket` |
+  | Open **EC2** > **Instances** | ❌ Not authorized | No EC2 permissions were granted |
 
----
+- The same checks from the CLI (if you did step 3):
 
-### 🧹 Cleanup
+  ```bash
+  aws sts get-caller-identity --profile dev-alice
+  # Expected: "Arn": "arn:aws:iam::<account-id>:user/dev-alice"
 
-- [ ]  Delete the user `dev-alice`.
-- [ ]  Delete the group `ReadOnly-Developers`.
-- [ ]  (If created) delete any access keys you generated.
+  aws s3 ls --profile dev-alice
+  # Expected: your bucket list
+
+  aws s3 mb s3://dev-alice-test-$RANDOM --profile dev-alice
+  # Expected: make_bucket failed ... An error occurred (AccessDenied)
+
+  aws ec2 describe-instances --profile dev-alice
+  # Expected: An error occurred (UnauthorizedOperation)
+  ```
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `dev-alice` can create buckets | The user has another policy attached (directly or via another group) | Check **Permissions** on the user and remove extra policies |
+| Console sign-in fails | Using the root sign-in page instead of the account sign-in URL | Use the URL from step 2, or choose **IAM user** and enter the account ID |
+| CLI says `InvalidClientTokenId` | Profile not configured, or the key was deleted | Re-run `aws configure --profile dev-alice` with an active key |
+
+## Cleanup
+
+- [ ] Delete `dev-alice`'s access key (if created) and the `dev-alice` profile from
+  `~/.aws/credentials`.
+- [ ] Delete the user `dev-alice`.
+- [ ] Delete the group `ReadOnly-Developers`.
+
+## References
+
+- [IAM user groups (AWS docs)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups.html)
+- [Policy evaluation logic (AWS docs)](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html)
+- [Security best practices in IAM (AWS docs)](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)

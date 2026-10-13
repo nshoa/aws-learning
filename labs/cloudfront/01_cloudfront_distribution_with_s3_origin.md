@@ -1,103 +1,133 @@
-### AWS Lab: CloudFront Distribution with S3 Origin (OAC)
+# CloudFront Lab: Distribution with an S3 Origin (OAC)
 
-[← Labs index](../README.md) · **Service:** CloudFront · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** CloudFront · **Level:** Beginner · **Est. time:** 30 min · **Est. cost:** Free tier
 
-**Ref:** [Udemy DVA-C01 - CloudFront with S3](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729726#overview)
+**Reference:** [Udemy DVA-C01 - CloudFront with S3](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19729726#overview)
 
-### Lab Objectives
+## Contents
 
-- [ ]  Deploy a private S3 bucket as an origin.
-- [ ]  Create a CloudFront Distribution.
-- [ ]  Secure the origin using Origin Access Control (OAC).
-- [ ]  Verify content delivery via the CloudFront Edge network.
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
----
+## Objectives
 
-### 1. S3 Origin Setup
+- [ ] Keep an S3 bucket **private** and use it as a CloudFront origin.
+- [ ] Create a CloudFront distribution secured with **Origin Access Control (OAC)**.
+- [ ] Confirm content is served through CloudFront while direct S3 access stays blocked.
 
-1. Create an S3 bucket with default settings (**Block All Public Access** enabled).
-2. Upload two files:
-    - `index.html` (Ensure it references the image file via a relative path).
-    - `image.jpg` (or any image file).
-3. Attempt to open the **Object URL** for both files in a private browser tab.
-4. Verify that you receive an **Access Denied** error, confirming the bucket is private.
+## Prerequisites
 
-`[Screenshot: S3 Object URL showing Access Denied error]`
+- An AWS account with S3 and CloudFront permissions.
+- A local `index.html` that shows an image with a relative path (for example
+  `<img src="image.jpg">`), and that `image.jpg`.
+- AWS CLI configured (`aws configure`) and `curl` for the verification commands.
+
+> 🔗 [Cache Invalidation](02_cache_invalidation.md) reuses this distribution. If you plan to
+> do it next, skip this lab's cleanup until you have finished it.
+
+## Steps
+
+### 1. Create a Private S3 Origin
+
+1. Create an S3 bucket with default settings (**Block all public access** stays on).
+2. Upload `index.html` and `image.jpg`.
+3. Open each object's **Object URL** in a private browser window. Both return
+   **Access Denied**, confirming the bucket is private.
 
 ![S3 Object URL showing Access Denied error](../shared_assets/cloudfront/01-s3-object-url-access-denied.png)
 
----
+### 2. Create the Distribution
 
-### 2. CloudFront Distribution Creation
+1. Open the **CloudFront Console** and click **Create distribution**.
+2. **Origin domain:** select your S3 bucket.
+3. **Origin access:** select **Origin access control settings (recommended)**, click
+   **Create new OAC**, keep the defaults and click **Create**.
+4. **Viewer protocol policy:** **Redirect HTTP to HTTPS**.
+5. **Default root object:** `index.html` (so the bare domain serves the page).
+6. Leave the other settings at their defaults and click **Create distribution**.
 
-1. Navigate to the **CloudFront Console** and click **Create distribution**.
-2. Under **Origin domain**, select your S3 bucket.
-3. Under **Origin access**, select **Origin access control settings (recommended)**.
-4. Click **Create control setting**, leave defaults, and click **Create**.
-5. Set **Viewer protocol policy** to **Redirect HTTP to HTTPS**.
-6. Leave all other settings as default and click **Create distribution**.
+> 💡 Depending on the console version, you may see an option to let CloudFront update the
+> bucket policy for you. If you use it, step 3 is already done: just confirm the policy in
+> the bucket's **Permissions** tab.
 
----
+### 3. Update the Bucket Policy
 
-### 3. Update S3 Bucket Policy
+1. After creation, a banner says *The S3 bucket policy needs to be updated*. Click
+   **Copy policy**.
+2. Open the bucket > **Permissions** > **Bucket policy** > **Edit**, paste the policy and
+   **Save changes**. It looks like this, with your bucket name, account ID and distribution
+   ID:
 
-1. Once the distribution is created, a banner will appear: "The S3 bucket policy needs to be updated".
-2. Click **Copy policy**.
-3. Navigate back to your S3 bucket **Permissions** tab.
-4. Edit the **Bucket policy** and paste the copied JSON:
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": {
+       "Sid": "AllowCloudFrontServicePrincipal",
+       "Effect": "Allow",
+       "Principal": { "Service": "cloudfront.amazonaws.com" },
+       "Action": "s3:GetObject",
+       "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*",
+       "Condition": {
+         "StringEquals": {
+           "AWS:SourceArn": "arn:aws:cloudfront::123456789012:distribution/EDISTRIBUTIONID"
+         }
+       }
+     }
+   }
+   ```
 
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": {
-        "Sid": "AllowCloudFrontServicePrincipal",
-        "Effect": "Allow",
-        "Principal": {
-            "Service": "cloudfront.amazonaws.com"
-        },
-        "Action": "s3:GetObject",
-        "Resource": "arn:aws:s3:::your-bucket-name/*",
-        "Condition": {
-            "StringEquals": {
-                "AWS:SourceArn": "arn:aws:cloudfront::123456789012:distribution/EDISTRIBUTIONID"
-            }
-        }
-    }
-}
-```
+The `AWS:SourceArn` condition means only **your** distribution can read the bucket.
 
-5. Click **Save changes**.
+> 🔒 Before sharing screenshots or policy JSON, redact the account ID, distribution ID and
+> any personal bucket names.
 
-> ✅ If you check **Allow private S3 bucket access to CloudFront** during distribution creation, CloudFront will automatically add the required bucket policy for you. You can still review it in the bucket’s **Permissions** tab to confirm it matches your distribution ARN.
+## Verification
 
----
+1. Wait for the distribution's **Last modified** to change from **Deploying** to a date.
+2. Copy the **Distribution domain name** (for example `d111111abcdef8.cloudfront.net`) and
+   open `https://<distribution-domain>/` in a browser. The page and the image load.
 
-### 4. Verification
+   ![index.html loading successfully via CloudFront domain](../shared_assets/cloudfront/01-index-html-loading-successfully-via-cloudfront-domain.png)
 
-1. Wait for the CloudFront Distribution status to change from **Deploying** to **Enabled**.
-2. Copy the **Distribution domain name** (e.g., `d111111abcdef8.cloudfront.net`).
-3. In your browser, navigate to: `https://<your-distribution-domain>/index.html`.
-4. Verify that the HTML page loads and the image is displayed correctly.
+3. From a terminal, request the page twice and watch the cache header:
 
-`[Screenshot: index.html loading successfully via CloudFront domain]`
+   ```bash
+   curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -iE '^HTTP|^x-cache'
+   # 1st request: HTTP/2 200 and "x-cache: Miss from cloudfront"
+   # 2nd request: HTTP/2 200 and "x-cache: Hit from cloudfront"
+   ```
 
-![index.html loading successfully via CloudFront domain](../shared_assets/cloudfront/01-index-html-loading-successfully-via-cloudfront-domain.png)
+4. Direct S3 access is still blocked:
 
----
+   ```bash
+   curl -sI https://YOUR-BUCKET-NAME.s3.amazonaws.com/index.html | head -n 1
+   # Expected: HTTP/1.1 403 Forbidden
+   ```
 
----
+## Troubleshooting
 
-### 🔒 Security: What to Hide
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| `403 AccessDenied` from the CloudFront URL | Bucket policy not added, or it names a different distribution | Repeat step 3 with the policy copied from **this** distribution |
+| `403` on `https://<domain>/` but `/index.html` works | No default root object | Set **Default root object** to `index.html` in the distribution settings |
+| Page loads but the image is broken | The `<img>` path is absolute, or the image was not uploaded | Use a relative path and upload `image.jpg` |
+| Changes to the bucket do not show up | CloudFront is serving a cached copy | See the [Cache Invalidation lab](02_cache_invalidation.md) |
 
-Ensure you redact the following from your documentation:
+## Cleanup
 
-- **AWS Account ID** inside the Bucket Policy.
-- **CloudFront Distribution ID** in the ARN.
-- **Full S3 Bucket Name** if it contains personal info.
+> 💸 Skip this if you are continuing to [Cache Invalidation](02_cache_invalidation.md); that
+> lab's cleanup covers these resources.
 
----
+- [ ] **Disable** the distribution, wait until it finishes deploying, then **Delete** it.
+- [ ] Delete the OAC (**CloudFront** > **Origin access**) once no distribution uses it.
+- [ ] Empty and delete the S3 bucket.
 
-### 🧹 Cleanup
+## References
 
-- [ ]  Delete the CloudFront Distribution (requires Disabling first).
-- [ ]  Delete the S3 Bucket and its objects.
+- [Restricting access to an Amazon S3 origin (AWS docs)](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+- [Specifying a default root object (AWS docs)](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/DefaultRootObject.html)

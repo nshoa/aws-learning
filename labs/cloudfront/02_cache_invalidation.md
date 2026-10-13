@@ -1,80 +1,132 @@
-### CloudFront Cache Invalidation
+# CloudFront Lab: Cache Invalidation
 
-[← Labs index](../README.md) · **Service:** CloudFront · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** CloudFront · **Level:** Beginner · **Est. time:** 20 min · **Est. cost:** Free tier (the first 1,000 invalidation paths each month are free)
 
-**Ref:** [Udemy DVA-C01 - CloudFront Invalidation](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/36528154#overview)
+**Reference:** [Udemy DVA-C01 - CloudFront Invalidation](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/36528154#overview)
 
-### Lab Objectives
+## Contents
 
-- [ ]  Modify origin content in S3.
-- [ ]  Observe Edge Location caching behavior.
-- [ ]  Perform a CloudFront Invalidation.
-- [ ]  Verify that updated content is served globally.
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
----
+## Objectives
 
-### 1. Update Origin Content
+- [ ] See CloudFront keep serving a cached object after the origin changes.
+- [ ] Create a **CloudFront invalidation**.
+- [ ] Confirm the updated content is served after invalidating.
 
-1. Ensure the setup from the previous **CloudFront with S3** lab is active.
-2. Open your local **index.html** and modify the text content (e.g., change "Version 1" to "Version 2").
-3. Navigate to the **S3 Console** and upload the new version of **index.html** to your origin bucket.
-4. Open the file via the **S3 Object URL** (or use the S3 Static Website endpoint if enabled) to confirm the change is live at the origin.
+## Prerequisites
 
-`[Screenshot: S3 Object URL showing the updated index.html content]`
+- The distribution and private bucket from
+  [Distribution with an S3 Origin (OAC)](01_cloudfront_distribution_with_s3_origin.md),
+  still deployed.
+- AWS CLI configured (`aws configure`) and `curl`.
+- Your distribution domain (`d111111abcdef8.cloudfront.net`) and distribution ID
+  (`EDISTRIBUTIONID`), from the CloudFront console.
 
-![S3 Object URL showing the updated index.html content](../shared_assets/cloudfront/02-s3-object-url-with-new-content.png)
+## Steps
 
----
+### 1. Cache Version 1
 
-### 2. Observe Caching Behavior
+Make sure `index.html` is in CloudFront's cache **before** changing it, otherwise there is
+nothing stale to observe.
 
-1. Open a browser and navigate to your **CloudFront Distribution Domain Name** (e.g., `https://d111111abcdef8.cloudfront.net/index.html`).
-2. Observe that the page still displays the **old content**.
-3. This occurs because the Edge Location has not reached the **Time To Live (TTL)** expiration and is serving the cached version of the object.
+1. Make sure your local `index.html` contains the text `Version 1`, and upload it to the
+   bucket.
+2. Request it through CloudFront until it is a cache hit:
 
-`[Screenshot: CloudFront URL showing the old index.html content]`
+   ```bash
+   curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
+   # Repeat until: x-cache: Hit from cloudfront
+   ```
+
+### 2. Update the Origin
+
+1. Change the local text to `Version 2` and upload `index.html` to the bucket again.
+2. Confirm the **origin** has the new content. The bucket is private, so copying the
+   **Object URL** returns Access Denied. Use either of these instead:
+   - In the S3 console, select `index.html` and click **Open**. The console opens a
+     temporary **pre-signed URL** (note the `X-Amz-...` query string), which works on a
+     private bucket.
+   - From the CLI, with your credentials:
+
+     ```bash
+     aws s3 cp s3://YOUR-BUCKET-NAME/index.html - | grep -o 'Version [0-9]'
+     # Expected: Version 2
+     ```
+
+   ![Updated index.html opened from S3 with a pre-signed URL](../shared_assets/cloudfront/02-s3-object-url-with-new-content.png)
+
+### 3. Observe the Stale Cache
+
+Open `https://d111111abcdef8.cloudfront.net/index.html`. It still shows **Version 1**: the
+edge location keeps its cached copy until the TTL expires (24 hours by default with the
+*CachingOptimized* policy).
 
 ![CloudFront URL showing the old index.html content](../shared_assets/cloudfront/02-cloudfront-url-with-old-content.png)
 
----
+### 4. Invalidate the Cache
 
-### 3. Perform CloudFront Invalidation
+1. Open the **CloudFront Console** > your distribution > **Invalidations** tab >
+   **Create invalidation**.
+2. **Object paths:** `/index.html` (or `/*` to clear everything, which still counts as one
+   path).
+3. Click **Create invalidation** and wait for the status to change from **InProgress** to
+   **Completed**.
 
-1. Navigate to the **CloudFront Console** and select your distribution.
-2. Click on the **Invalidations** tab.
-3. Click **Create invalidation**.
-4. In the **Object paths** box, enter:
-    - `/index.html` (to invalidate the specific file) OR
-    - `/*` (to clear the entire cache).
-5. Click **Create invalidation**.
-6. Monitor the status until it changes from **InProgress** to **Completed**.
+The CLI equivalent:
 
----
+```bash
+aws cloudfront create-invalidation --distribution-id EDISTRIBUTIONID --paths "/index.html"
+```
 
-### 4. Verification
+> 🔒 Before sharing screenshots, redact the distribution ID, account ID and bucket name.
 
-1. Return to your browser and refresh the **CloudFront Distribution Domain Name**.
-2. Verify that the updated "Version 2" content is now displayed.
-3. Because the cache was cleared, CloudFront was forced to fetch the latest version from the S3 origin.
+## Verification
 
-`[Screenshot: CloudFront URL showing the updated index.html content after invalidation]`
+- The next request misses the cache and fetches Version 2 from the origin:
 
-![CloudFront URL showing the updated index.html content after invalidation](../shared_assets/cloudfront/02-cloudfront-url-with-new-content-after-invalidation.png)
+  ```bash
+  curl -s https://d111111abcdef8.cloudfront.net/index.html | grep -o 'Version [0-9]'
+  # Expected: Version 2
 
----
+  curl -sI https://d111111abcdef8.cloudfront.net/index.html | grep -i '^x-cache'
+  # First request after the invalidation: x-cache: Miss from cloudfront
+  ```
 
-### 🔒 Security: What to Hide
+  ![CloudFront URL showing the updated index.html content after invalidation](../shared_assets/cloudfront/02-cloudfront-url-with-new-content-after-invalidation.png)
 
-Ensure you redact the following from your documentation:
+- Check the invalidation status:
 
-- **CloudFront Distribution ID**.
-- **AWS Account ID**.
-- **S3 Bucket Names**.
+  ```bash
+  aws cloudfront list-invalidations --distribution-id EDISTRIBUTIONID \
+    --query 'InvalidationList.Items[].{Id:Id,Status:Status}'
+  # Expected: "Status": "Completed"
+  ```
 
----
+## Troubleshooting
 
-### 🧹 Cleanup
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| Step 3 already shows Version 2 | The page was never cached before the update | Do step 1 first, so Version 1 is cached |
+| Still Version 1 after invalidating | Invalidation not finished, or your browser cached the page | Wait for **Completed**, then hard-refresh or use `curl` |
+| `aws s3 cp` returns `AccessDenied` | Your CLI identity lacks `s3:GetObject` on the bucket | Use credentials with read access to the bucket |
 
-- [ ]  Delete the Invalidation history (optional).
-- [ ]  Disable and delete the CloudFront Distribution.
-- [ ]  Delete the S3 bucket and its objects.
+## Cleanup
+
+> 💸 This cleans up the resources from both CloudFront labs.
+
+- [ ] **Disable** the distribution, wait until it finishes deploying, then **Delete** it.
+  (Invalidation history cannot be deleted; it goes away with the distribution.)
+- [ ] Delete the OAC (**CloudFront** > **Origin access**).
+- [ ] Empty and delete the S3 bucket.
+
+## References
+
+- [Invalidating files to remove content (AWS docs)](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html)
+- [Managing how long content stays in the cache (AWS docs)](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Expiration.html)

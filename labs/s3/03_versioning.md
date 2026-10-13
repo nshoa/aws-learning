@@ -1,52 +1,93 @@
-### S3 Versioning
+# S3 Lab: Versioning
 
-[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner
+[← Labs index](../README.md) · **Service:** S3 · **Level:** Beginner · **Est. time:** 15 min · **Est. cost:** Free tier
 
-**Ref:** [Udemy DVA-C01](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743652#lecture-article)
+**Reference:** [Udemy DVA-C01 - S3 Versioning](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/23743652#lecture-article)
 
----
+## Contents
 
-### Lab Objectives
+- [Objectives](#objectives)
+- [Prerequisites](#prerequisites)
+- [Steps](#steps)
+- [Verification](#verification)
+- [Troubleshooting](#troubleshooting)
+- [Cleanup](#cleanup)
+- [References](#references)
 
-- [ ]  Enable Versioning on an S3 bucket.
-- [ ]  Observe behavior when overwriting existing files.
-- [ ]  Understand the Delete Marker mechanism.
+## Objectives
 
----
+- [ ] Enable **Versioning** on an S3 bucket.
+- [ ] Observe what happens when you overwrite an existing object.
+- [ ] Understand the **Delete Marker** and use it to "undelete" an object.
+
+## Prerequisites
+
+- An AWS account with S3 permissions.
+- An S3 bucket you own (**S3 Console** > **Create bucket**, default settings).
+- A local `index.html` file.
+- AWS CLI configured (`aws configure`) for the verification commands.
+
+## Steps
 
 ### 1. Enable Versioning
 
-1. Select your S3 Bucket.
-2. Go to the **Properties** tab.
-3. Under **Bucket Versioning**, click **Edit** and select **Enable**.
-4. Click **Save changes**.
+1. Open your bucket > **Properties** tab.
+2. Under **Bucket Versioning**, click **Edit** and select **Enable**.
+3. Click **Save changes**.
 
----
+> 💡 Once enabled, versioning can only be **suspended**, never fully turned off. Objects
+> uploaded before enabling it keep the version ID `null`.
 
-### 2. Overwriting Objects (Upload Test)
+### 2. Overwrite an Object
 
-1. Upload a file named `index.html`.
-2. Edit the local `index.html` file and upload it again to the same bucket.
-3. **Observation:**
-    - S3 creates a new object version with a unique `version_id`.
-    - The new file becomes the "Current version."
-    - Accessing the object URL always returns the most recent version.
+1. Upload `index.html`.
+2. Edit the local file (change some text) and upload it again with the same name.
+3. Turn on **Show versions** in the object list. There are now two versions of
+   `index.html`, each with its own **Version ID**; the newest is the current version.
 
----
+### 3. Delete and Restore an Object
 
-### 3. Deleting Objects (Delete Marker Test)
+1. With **Show versions** turned **off**, select `index.html` and click **Delete**.
+2. Turn **Show versions** on. S3 did not erase anything: it added a **Delete marker** as the
+   new current version, and the older versions are still there.
+3. To "undelete", select the **Delete marker** row and delete it (permanently). The previous
+   version becomes current again.
 
-1. Select an image or file in your bucket.
-2. Click **Delete** and confirm.
-3. **Observation:**
-    - S3 does not erase the file; it creates a **Delete Marker** as the new "Current version."
-    - Accessing the file now results in a **404 Not Found** error.
-    - To "Undelete," toggle **Show versions**, delete the Delete Marker, and the previous version becomes active again.
+## Verification
 
----
+- List every version and delete marker of the object:
 
-### 🧹 Cleanup
+  ```bash
+  aws s3api list-object-versions --bucket YOUR-BUCKET-NAME --prefix index.html \
+    --query '{Versions: Versions[].[VersionId,IsLatest], DeleteMarkers: DeleteMarkers[].[VersionId,IsLatest]}'
+  # After step 3.2: two Versions, one DeleteMarker with IsLatest = true
+  # After step 3.3: two Versions, no DeleteMarkers, newest Version IsLatest = true
+  ```
 
-- [ ]  Toggle **Show versions** in the bucket.
-- [ ]  Select all versions and delete markers.
-- [ ]  Delete all objects permanently to avoid storage costs.
+- Confirm versioning is on:
+
+  ```bash
+  aws s3api get-bucket-versioning --bucket YOUR-BUCKET-NAME
+  # Expected: "Status": "Enabled"
+  ```
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| Only one version after re-uploading | Versioning was not enabled before the second upload | Enable it (step 1) and upload again |
+| Deleting removed a version permanently instead of adding a marker | **Show versions** was on, so a specific version was deleted | Turn **Show versions** off before a normal delete |
+| Object still shows `404` after "undelete" | A different delete marker is still current | Run the verification command and remove the marker with `IsLatest = true` |
+
+## Cleanup
+
+> 💸 Every version is stored and billed separately.
+
+- [ ] Turn on **Show versions**, select all versions and delete markers, and delete them
+  permanently (or use **Empty bucket**).
+- [ ] Delete the bucket if you created it only for this lab.
+
+## References
+
+- [Retaining multiple versions of objects with S3 Versioning (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html)
+- [Working with delete markers (AWS docs)](https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeleteMarker.html)
