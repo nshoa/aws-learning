@@ -1,0 +1,130 @@
+# MkDocs site for GitHub Pages: https://nshoa.github.io/aws-learning/
+# Build locally with `make site` (outputs to _site/), or preview with `make serve`. Deployed by .github/workflows/pages.yml.
+site_name: AWS Learning
+site_description: Mind maps, cheatsheets, hands-on labs and exam practice for AWS certifications.
+site_url: https://nshoa.github.io/aws-learning/
+repo_url: https://github.com/nshoa/aws-learning
+repo_name: nshoa/aws-learning
+edit_uri: edit/main/
+
+# The Markdown lives in the repo folders themselves, so the docs root is the repo root.
+docs_dir: .
+site_dir: _site
+
+# MkDocs excludes /templates/ by default; the doc templates are part of the site here.
+exclude_docs: |
+  !/templates/
+  /_site/
+  /.github/
+  /config/
+  /mind_maps/xminds/
+  /requirements*.txt
+  /Makefile
+  /mkdocs.yml
+  *.sh
+
+plugins:
+  - same-dir
+  - search
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+validation:
+  links:
+    # The READMEs link to folders (e.g. `labs/`), which GitHub renders as listings.
+    unrecognized_links: info
+
+nav:
+  - Home: README.md
+  - Mind Maps:
+      - mind_maps/README.md
+      - Interactive mind maps: https://nshoa.github.io/aws-learning/mind-maps/
+      - Outlines:
+          - mind_maps/markdown/README.md
+          - EC2: mind_maps/markdown/EC2.md
+          - Databases: mind_maps/markdown/Databases.md
+          - Route 53: mind_maps/markdown/Route53.md
+          - Amazon S3: mind_maps/markdown/S3.md
+          - CloudFront & Global Accelerator: mind_maps/markdown/CloudFrontGlobalAccelerator.md
+          - Storage Extra: mind_maps/markdown/StorageExtra.md
+          - Decoupling Applications: mind_maps/markdown/DecouplingApplications.md
+          - Containers: mind_maps/markdown/Containers.md
+          - Serverless Architecture: mind_maps/markdown/ServerlessArchitecture.md
+          - Data & Analytics: mind_maps/markdown/DataAnalytics.md
+          - Machine Learning: mind_maps/markdown/MachineLearning.md
+          - Monitoring & Audit: mind_maps/markdown/MonitoringAudit.md
+          - IAM: mind_maps/markdown/IAM.md
+          - Security & Encryption: mind_maps/markdown/SecurityEncryption.md
+          - Networking - VPC: mind_maps/markdown/Networking.md
+          - Disaster Recovery & Migration: mind_maps/markdown/DisasterRecoveryAndMigration.md
+  - Cheatsheets:
+      - cheatsheets/README.md
+      - EC2: cheatsheets/ec2.md
+      - IAM: cheatsheets/iam.md
+      - Lambda: cheatsheets/lambda.md
+      - RDS: cheatsheets/rds.md
+      - S3: cheatsheets/s3.md
+      - VPC: cheatsheets/vpc.md
+  - Labs:
+      - labs/README.md
+      - EC2:
+          - Launch an EC2 instance: labs/ec2/01_launch_ec2_instance.md
+      - IAM:
+          - Users, Groups & Policies: labs/iam/01_users_groups_policies.md
+      - S3:
+          - Bucket Policies: labs/s3/01_bucket_policies.md
+          - Static Website Hosting: labs/s3/02_static_website_hosting.md
+          - Versioning: labs/s3/03_versioning.md
+          - Cross-Region Replication: labs/s3/04_cross_region_replication.md
+          - Storage Classes & Lifecycle: labs/s3/05_storage_classes_and_life_cycle.md
+          - Event Notifications to SQS: labs/s3/06_event_notification.md
+          - Encryption: labs/s3/07_encryption.md
+          - CORS: labs/s3/08_cors.md
+          - MFA Delete: labs/s3/09_mfa_delete.md
+      - CloudFront:
+          - Distribution with S3 Origin (OAC): labs/cloudfront/01_cloudfront_distribution_with_s3_origin.md
+          - Cache Invalidation: labs/cloudfront/02_cache_invalidation.md
+      - CloudFormation: labs/cloud_formation/README.md
+  - Exam Practice: exam_practices/README.md
+  - Templates:
+      - templates/README.md
+      - Lab: templates/lab.md
+      - Cheatsheet: templates/cheatsheet.md
+      - Exam question: templates/exam-question.md
+      - Note: templates/note.md

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build the GitHub Pages site: one interactive Markmap page per mind map
-# plus an index page. Output goes to _site/ (git-ignored).
+# Build the interactive mind maps: one Markmap page per mind map plus an index.
+# `make site` runs this into _site/mind-maps/ after the MkDocs build.
 #
 # Usage: mind_maps/build_site.sh [output_dir]
 set -euo pipefail
@@ -54,7 +54,7 @@ cat > "$OUT_DIR/index.html" <<EOF
   <p>Interactive mind maps for the AWS Solutions Architect Associate course. Click a node to expand or collapse it; scroll to zoom.</p>
   <ol>
 ${items}  </ol>
-  <p><a href="https://github.com/nshoa/aws-learning/tree/main/mind_maps">Source on GitHub</a></p>
+  <p><a href="../">← AWS Learning home</a> · <a href="https://github.com/nshoa/aws-learning/tree/main/mind_maps">Source on GitHub</a></p>
 </body>
 </html>
 EOF

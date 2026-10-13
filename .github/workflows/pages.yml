@@ -1,11 +1,15 @@
-name: Mind map site
+name: Docs site
 
 on:
   push:
     branches: [main]
     paths:
-      - "mind_maps/markdown/**"
+      - "**/*.md"
+      - "labs/shared_assets/**"
+      - "mind_maps/images/**"
       - "mind_maps/build_site.sh"
+      - "mkdocs.yml"
+      - "requirements-docs.txt"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -18,16 +22,24 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  DISABLE_MKDOCS_2_WARNING: "true"
+
 jobs:
   build:
-    name: Build Markmap pages
+    name: Build MkDocs site and Markmap pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: bash mind_maps/build_site.sh _site
+      - run: pip install -r requirements-docs.txt
+      - run: mkdocs build
+      - run: bash mind_maps/build_site.sh _site/mind-maps
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
