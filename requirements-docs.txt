@@ -1,0 +1,6 @@
+# Docs site (MkDocs + Material) for GitHub Pages.
+# Install with:  pip install -r requirements-docs.txt
+# Pinned on purpose: MkDocs 2.0 drops plugin/theme support, so stay on 1.x.
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+mkdocs-same-dir==0.1.5

@@ -6,6 +6,9 @@ My study repository for AWS certifications — visual mind maps, quick-recall
 cheatsheets, hands-on labs, and exam practice. Built mostly while following
 Stephane Maarek's courses (SAA-C03 / DVA-C01).
 
+📖 **Read it as a website:** <https://nshoa.github.io/aws-learning/> (searchable, with
+[interactive mind maps](https://nshoa.github.io/aws-learning/mind-maps/)).
+
 ## 📚 What's inside
 
 | Section | What it is | Start here |
@@ -67,6 +70,8 @@ make lint      # cfn-lint + yamllint + markdownlint
 | `make yaml` | Lint all YAML (`yamllint`) |
 | `make markdown` | Lint all Markdown (`markdownlint`) |
 | `make lint` | All of the above |
+| `make site` | Build the website into `_site/` (needs `pip install -r requirements-docs.txt` and Node) |
+| `make serve` | Preview the website locally with live reload |
 
 ## ✍️ Adding content
 
