@@ -14,11 +14,11 @@ markmap:
 - Highly-secure, portable devices to collect and process data at the edge, and migrate data into and out of AWS.
 - Part of the AWS Snow Family for offline data transfers.
 - Effective solution for
-  - limited connectivity.
-  - bandwidth challenges.
-  - high network cost.
-  - shared bandwidth.
-  - connection stability.
+    - limited connectivity.
+    - bandwidth challenges.
+    - high network cost.
+    - shared bandwidth.
+    - connection stability.
 
 ### Usage Process
 
@@ -29,6 +29,8 @@ markmap:
 5. Data is loaded into an Amazon S3 bucket.
 6. Snowball is completely wiped after the process.
 
+<!-- end of numbered list -->
+
 - Flow: Client → AWS Snowball → *ship* → AWS Snowball → import/export → S3 Bucket
 
 ### Edge Computing
@@ -37,14 +39,14 @@ markmap:
 - Ideal for locations with limited or no internet access.
 - Supports running EC2 instances or AWS Lambda functions at the edge.
 - **Devices**
-  - **Snowcone**: 2 CPUs, 4GB memory, wired or wireless access.
-  - **Snowball Edge**
-    - Compute Optimized.
-    - Storage Optimized.
+    - **Snowcone**: 2 CPUs, 4GB memory, wired or wireless access.
+    - **Snowball Edge**
+        - Compute Optimized.
+        - Storage Optimized.
 - **Use cases**
-  - preprocess data.
-  - machine learning.
-  - media transcoding.
+    - preprocess data.
+    - machine learning.
+    - media transcoding.
 
 ### Integration with Glacier
 
@@ -58,10 +60,10 @@ markmap:
 
 - Fully managed service to launch third-party high-performance file systems on AWS.
 - Types
-  - FSx for Lustre.
-  - FSx for NetApp ONTAP.
-  - FSx for Windows File Server.
-  - FSx for OpenZFS.
+    - FSx for Lustre.
+    - FSx for NetApp ONTAP.
+    - FSx for Windows File Server.
+    - FSx for OpenZFS.
 
 ### FSx for Windows File Server
 
@@ -71,8 +73,8 @@ markmap:
 - Can be mounted on Linux EC2 instances.
 - Backup to S3, Multi-AZ capabilities, and on-premises accessibility.
 - Storage options
-  - SSD: Low latency for workloads like databases, analytics, and media processing.
-  - HDD: Ideal for broad workloads like CMS and home directories.
+    - SSD: Low latency for workloads like databases, analytics, and media processing.
+    - HDD: Ideal for broad workloads like CMS and home directories.
 
 ### FSx for Lustre
 
@@ -81,31 +83,31 @@ markmap:
 - Seamless integration with Amazon S3 for reading and writing data.
 - Supports on-premises deployment via VPN or AWS Direct Connect.
 - Storage options
-  - SSD: Low-latency, IOPS-intensive workloads.
-  - HDD: Throughput-intensive, large sequential workloads.
+    - SSD: Low-latency, IOPS-intensive workloads.
+    - HDD: Throughput-intensive, large sequential workloads.
 
 ### Other FSx Services
 
 - **FSx for NetApp ONTAP**
-  - Managed NetApp ONTAP compatible with NFS, SMB, and iSCSI.
-  - Offers snapshots, compression, replication, and data de-duplication.
-  - Works with Linux, Windows, macOS, and VMware environments.
-  - Provides point-in-time cloning.
-  - Clients: EC2, ECS, EKS, VMware Cloud on AWS, Amazon AppStream 2.0, Amazon WorkSpaces, On-Premises Server
+    - Managed NetApp ONTAP compatible with NFS, SMB, and iSCSI.
+    - Offers snapshots, compression, replication, and data de-duplication.
+    - Works with Linux, Windows, macOS, and VMware environments.
+    - Provides point-in-time cloning.
+    - Clients: EC2, ECS, EKS, VMware Cloud on AWS, Amazon AppStream 2.0, Amazon WorkSpaces, On-Premises Server
 - **FSx for OpenZFS**
-  - Managed ZFS file system supporting NFS protocol (v3, v4, v4.1, v4.2).
-  - Ideal for workloads running on Open ZFS.
-  - Offers high performance with 1,000,000 IOPS and 0.5ms latency.
-  - Supports snapshots, compression, and point-in-time cloning.
+    - Managed ZFS file system supporting NFS protocol (v3, v4, v4.1, v4.2).
+    - Ideal for workloads running on Open ZFS.
+    - Offers high performance with 1,000,000 IOPS and 0.5ms latency.
+    - Supports snapshots, compression, and point-in-time cloning.
 
 ### Deployment Options
 
 - **Scratch File System**
-  - Temporary storage with high burst throughput.
-  - Non-replicated storage; data does not persist on file server failures.
+    - Temporary storage with high burst throughput.
+    - Non-replicated storage; data does not persist on file server failures.
 - **Persistent File System**
-  - Long-term storage with replication within the same AZ.
-  - Replaces failed files in minutes.
+    - Long-term storage with replication within the same AZ.
+    - Replaces failed files in minutes.
 
 ## AWS Transfer Family
 
@@ -137,10 +139,10 @@ markmap:
 - **Instance Store**: Physical EC2 storage with extremely high IOPS.
 - **EFS**: Network File System (Linux, POSIX compliant).
 - **FSx**
-  - For Windows File Server: SMB, NTFS, MSSQL support.
-  - For Lustre: HPC workloads.
-  - For NetApp ONTAP: High interoperability.
-  - For OpenZFS: POSIX file system with advanced features.
+    - For Windows File Server: SMB, NTFS, MSSQL support.
+    - For Lustre: HPC workloads.
+    - For NetApp ONTAP: High interoperability.
+    - For OpenZFS: POSIX file system with advanced features.
 - **AWS Snow Family**: Physical devices for offline migration or processing large datasets.
 - **AWS Storage Gateway**: Hybrid bridge between on-prem and AWS storage.
 - **AWS Transfer Family**: FTP family protocols to store files in S3/EFS.
@@ -154,35 +156,35 @@ markmap:
 - AWS Storage Gateway bridges on-prem data and AWS cloud.
 - Exposes S3 data as NFS/SMB protocols for on-prem access.
 - Use cases
-  - Disaster Recovery
-  - Backup & Storage
-  - Tiered Storage
-  - On-Premises Cache & Low-latency Files Access
+    - Disaster Recovery
+    - Backup & Storage
+    - Tiered Storage
+    - On-Premises Cache & Low-latency Files Access
 
 ### Storage Gateway Options
 
 - **S3 File Gateway**
-  - Expose S3 buckets as NFS/SMB.
-  - Supports caching of recently used data.
-  - Bucket access controlled by IAM roles.
-  - SMB protocol integrates with Active Directory.
-  - Flow: Application server → NFS/SMB → S3 File Gateway → HTTPS → S3 (Standard, Standard-IA, One Zone-IA, Intelligent-Tiering) → lifecycle policy → S3 Glacier
+    - Expose S3 buckets as NFS/SMB.
+    - Supports caching of recently used data.
+    - Bucket access controlled by IAM roles.
+    - SMB protocol integrates with Active Directory.
+    - Flow: Application server → NFS/SMB → S3 File Gateway → HTTPS → S3 (Standard, Standard-IA, One Zone-IA, Intelligent-Tiering) → lifecycle policy → S3 Glacier
 - **FSx File Gateway**
-  - Native access to FSx for Windows File Server.
-  - Includes local caching.
-  - Ideal for group file sharing.
+    - Native access to FSx for Windows File Server.
+    - Includes local caching.
+    - Ideal for group file sharing.
 - **Volume Gateway**
-  - iSCSI protocol-backed block storage synced with S3.
-  - Cached Volumes: Low-latency access to recent data.
-  - Stored Volumes: On-premise datasets with scheduled S3 backups.
-  - Backed by S3 bucket + Amazon EBS snapshots
+    - iSCSI protocol-backed block storage synced with S3.
+    - Cached Volumes: Low-latency access to recent data.
+    - Stored Volumes: On-premise datasets with scheduled S3 backups.
+    - Backed by S3 bucket + Amazon EBS snapshots
 - **Tape Gateway**
-  - Virtual tape library (VTL) backed by Amazon S3 and Glacier.
-  - Works with backup software while using existing tape-based processes.
-  - Useful for backup/archival scenarios.
-  - Virtual tapes stored in S3; archived tapes stored in Glacier
+    - Virtual tape library (VTL) backed by Amazon S3 and Glacier.
+    - Works with backup software while using existing tape-based processes.
+    - Useful for backup/archival scenarios.
+    - Virtual tapes stored in S3; archived tapes stored in Glacier
 - **Storage Gateway - Hardware Appliance**
-  - Physical device for NFS, Volume, and Tape Gateways.
-  - Suitable for setups without virtualization infrastructure.
-  - SSD cache resources for faster local access.
-  - Gateway deployment options: VM (VMware, Hyper-V, KVM) or Hardware Appliance
+    - Physical device for NFS, Volume, and Tape Gateways.
+    - Suitable for setups without virtualization infrastructure.
+    - SSD cache resources for faster local access.
+    - Gateway deployment options: VM (VMware, Hyper-V, KVM) or Hardware Appliance

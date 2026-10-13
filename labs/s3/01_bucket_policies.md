@@ -24,7 +24,7 @@
 
 - An AWS account with S3 permissions.
 - An S3 bucket you own. Create one in the **S3 Console** > **Create bucket** with default
-  settings (bucket names are globally unique).
+    settings (bucket names are globally unique).
 - AWS CLI configured (`aws configure`) for the verification commands.
 
 ## Steps
@@ -42,22 +42,22 @@ Before a public policy can take effect, the "safety switch" must be turned off.
 
 1. Scroll down to **Bucket policy** and click **Edit**.
 2. Paste the following policy, replacing `YOUR-BUCKET-NAME` with your bucket name. It lets
-   anyone on the internet read (`s3:GetObject`) every object in the bucket:
+    anyone on the internet read (`s3:GetObject`) every object in the bucket:
 
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Sid": "PublicReadGetObject",
-         "Effect": "Allow",
-         "Principal": "*",
-         "Action": "s3:GetObject",
-         "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
-       }
-     ]
-   }
-   ```
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "PublicReadGetObject",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+        }
+      ]
+    }
+    ```
 
 3. Click **Save changes**. A red **Publicly accessible** label now appears on the bucket.
 
@@ -74,17 +74,17 @@ Before a public policy can take effect, the "safety switch" must be turned off.
 - Open the **Object URL** in a private/incognito window. The file loads without an AWS login.
 - From a terminal (no credentials needed, it is an anonymous request):
 
-  ```bash
-  curl -sI https://YOUR-BUCKET-NAME.s3.amazonaws.com/test.jpg | head -n 1
-  # Expected: HTTP/1.1 200 OK
-  ```
+    ```bash
+    curl -sI https://YOUR-BUCKET-NAME.s3.amazonaws.com/test.jpg | head -n 1
+    # Expected: HTTP/1.1 200 OK
+    ```
 
 - Confirm S3 itself considers the bucket public:
 
-  ```bash
-  aws s3api get-bucket-policy-status --bucket YOUR-BUCKET-NAME
-  # Expected: "IsPublic": true
-  ```
+    ```bash
+    aws s3api get-bucket-policy-status --bucket YOUR-BUCKET-NAME
+    # Expected: "IsPublic": true
+    ```
 
 ## Troubleshooting
 

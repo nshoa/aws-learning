@@ -12,53 +12,53 @@ markmap:
 ### CloudWatch Metrics
 
 - **Overview**
-  - Collects and tracks metrics (variables like CPUUtilization, NetworkIn) for AWS services.
-  - Metrics exist within Namespaces.
-  - Dimensions are attributes of metrics (e.g., InstanceId, Environment) - up to 30 per metric.
-  - Metrics have timestamps.
-  - Used to create monitoring Dashboards.
-  - Supports Custom Metrics (e.g., EC2 RAM pushed via CloudWatch Agent).
+    - Collects and tracks metrics (variables like CPUUtilization, NetworkIn) for AWS services.
+    - Metrics exist within Namespaces.
+    - Dimensions are attributes of metrics (e.g., InstanceId, Environment) - up to 30 per metric.
+    - Metrics have timestamps.
+    - Used to create monitoring Dashboards.
+    - Supports Custom Metrics (e.g., EC2 RAM pushed via CloudWatch Agent).
 - **Metric Streams**
-  - Stream metrics near real-time to destinations.
-  - Destinations: Kinesis Data Firehose (then to S3, Redshift, OpenSearch, etc.) or 3rd-party providers (Datadog, Splunk, etc.).
-  - Option to filter which metrics are streamed.
-  - Flow: CloudWatch Metrics → *stream near-real time* → Kinesis Data Firehose → S3 (→ Athena) / Redshift / OpenSearch
+    - Stream metrics near real-time to destinations.
+    - Destinations: Kinesis Data Firehose (then to S3, Redshift, OpenSearch, etc.) or 3rd-party providers (Datadog, Splunk, etc.).
+    - Option to filter which metrics are streamed.
+    - Flow: CloudWatch Metrics → *stream near-real time* → Kinesis Data Firehose → S3 (→ Athena) / Redshift / OpenSearch
 
 ### CloudWatch Logs
 
 - **Overview**: Centralized log collection and monitoring service.
 - **Structure**
-  - **Log Groups**: Containers for log streams (e.g., representing an application).
-  - **Log Streams**: Sequences of log events from a source (e.g., an EC2 instance, Lambda function, container).
+    - **Log Groups**: Containers for log streams (e.g., representing an application).
+    - **Log Streams**: Sequences of log events from a source (e.g., an EC2 instance, Lambda function, container).
 - **Features**
-  - **Log Retention**: Configurable expiration policies (never to 10 years).
-  - **Encryption**: Default encryption at rest, option for KMS CMK.
-  - **Log Sources**: SDK, CloudWatch Logs Agent, Unified Agent, Elastic Beanstalk, ECS, Lambda, VPC Flow Logs, API Gateway, CloudTrail, Route53 DNS queries.
-  - **Destinations/Integrations**: Amazon S3 (exports), Kinesis Data Streams, Kinesis Data Firehose, AWS Lambda, OpenSearch Service.
+    - **Log Retention**: Configurable expiration policies (never to 10 years).
+    - **Encryption**: Default encryption at rest, option for KMS CMK.
+    - **Log Sources**: SDK, CloudWatch Logs Agent, Unified Agent, Elastic Beanstalk, ECS, Lambda, VPC Flow Logs, API Gateway, CloudTrail, Route53 DNS queries.
+    - **Destinations/Integrations**: Amazon S3 (exports), Kinesis Data Streams, Kinesis Data Firehose, AWS Lambda, OpenSearch Service.
 - **Logs Insights**
-  - Query language to search and analyze log data across log groups.
-  - Auto-discovers fields from JSON logs/AWS service logs.
-  - Supports filtering, aggregations, sorting, saved queries, dashboard integration. Query across accounts. (Note: Not a real-time engine).
+    - Query language to search and analyze log data across log groups.
+    - Auto-discovers fields from JSON logs/AWS service logs.
+    - Supports filtering, aggregations, sorting, saved queries, dashboard integration. Query across accounts. (Note: Not a real-time engine).
 - **S3 Export**
-  - Batch export logs to S3 (`CreateExportTask` API).
-  - Can take up to 12 hours; not near-real-time.
+    - Batch export logs to S3 (`CreateExportTask` API).
+    - Can take up to 12 hours; not near-real-time.
 - **Logs Subscriptions**
-  - Stream log events in near real-time.
-  - Destinations: Kinesis Data Streams, Kinesis Data Firehose, Lambda.
-  - Uses Subscription Filters to select logs.
-  - Supports Cross-Account subscriptions (requires IAM Role & destination policy).
-  - Flow: CloudWatch Logs → Subscription Filter → Lambda (real-time → OpenSearch) / Kinesis Data Firehose (near real-time → OpenSearch, S3) / Kinesis Data Streams (→ KDF, KDA, EC2, Lambda)
+    - Stream log events in near real-time.
+    - Destinations: Kinesis Data Streams, Kinesis Data Firehose, Lambda.
+    - Uses Subscription Filters to select logs.
+    - Supports Cross-Account subscriptions (requires IAM Role & destination policy).
+    - Flow: CloudWatch Logs → Subscription Filter → Lambda (real-time → OpenSearch) / Kinesis Data Firehose (near real-time → OpenSearch, S3) / Kinesis Data Streams (→ KDF, KDA, EC2, Lambda)
 - **Log Aggregation**
-  - Use cross-account subscriptions to send logs from multiple accounts/regions to a central destination (e.g., central S3 bucket via Firehose).
-  - Flow: Accounts A/B/C (regions 1/2/3) CloudWatch Logs → Subscription Filters → Kinesis Data Streams → Kinesis Data Firehose → *near real-time* → S3
+    - Use cross-account subscriptions to send logs from multiple accounts/regions to a central destination (e.g., central S3 bucket via Firehose).
+    - Flow: Accounts A/B/C (regions 1/2/3) CloudWatch Logs → Subscription Filters → Kinesis Data Streams → Kinesis Data Firehose → *near real-time* → S3
 
 ### CloudWatch Agent
 
 - **CloudWatch Logs Agent (Legacy)**: Sends log files from EC2/on-prem servers to CloudWatch Logs.
 - **CloudWatch Unified Agent (Current)**
-  - Collects system-level metrics (RAM, Disk IO, Netstat, Processes, CPU details etc.) *in addition* to logs.
-  - Supports EC2 and on-premises servers.
-  - Centralized configuration via SSM Parameter Store.
+    - Collects system-level metrics (RAM, Disk IO, Netstat, Processes, CPU details etc.) *in addition* to logs.
+    - Supports EC2 and on-premises servers.
+    - Centralized configuration via SSM Parameter Store.
 
 ### CloudWatch Alarms
 
@@ -66,15 +66,15 @@ markmap:
 - **States**: OK, ALARM, INSUFFICIENT_DATA.
 - **Evaluation Period**: Configurable time window for checking the metric. Supports high-resolution (10s, 30s) for custom metrics.
 - **Targets/Actions**
-  - **EC2 Actions**: Stop, Terminate, Reboot, Recover instance.
-  - **Auto Scaling Actions**: Trigger scaling policies.
-  - **SNS Notifications**: Send alerts to an SNS topic (for email, SMS, Lambda triggers, etc.).
+    - **EC2 Actions**: Stop, Terminate, Reboot, Recover instance.
+    - **Auto Scaling Actions**: Trigger scaling policies.
+    - **SNS Notifications**: Send alerts to an SNS topic (for email, SMS, Lambda triggers, etc.).
 - **Composite Alarms**
-  - Combine the states of multiple alarms using AND/OR logic to reduce alarm noise.
-  - Example: CW Alarm A (monitor CPU) + CW Alarm B (monitor IOPS) on an EC2 instance → composite alarm → trigger SNS
+    - Combine the states of multiple alarms using AND/OR logic to reduce alarm noise.
+    - Example: CW Alarm A (monitor CPU) + CW Alarm B (monitor IOPS) on an EC2 instance → composite alarm → trigger SNS
 - **EC2 Instance Recovery**
-  - Trigger automatic recovery based on System Status Check failures.
-  - Flow: CloudWatch Alarm (`StatusCheckFailed_System`) monitors EC2 instance → EC2 Instance Recovery; alert → SNS Topic
+    - Trigger automatic recovery based on System Status Check failures.
+    - Flow: CloudWatch Alarm (`StatusCheckFailed_System`) monitors EC2 instance → EC2 Instance Recovery; alert → SNS Topic
 
 ### CloudWatch Monitoring Insights
 
@@ -101,9 +101,9 @@ markmap:
 ### Use Cases
 
 - **Scheduling**: Run scheduled tasks (Cron jobs).
-  - Event (time-based), e.g. schedule every hour → Lambda
+    - Event (time-based), e.g. schedule every hour → Lambda
 - **Event-Driven Architecture**: React to events from AWS services (e.g., S3 PUT, EC2 state change, CloudTrail API call) or custom applications.
-  - Event (event-based), e.g. IAM root user sign-in event → SNS topic (email)
+    - Event (event-based), e.g. IAM root user sign-in event → SNS topic (email)
 
 ### Features
 
@@ -123,15 +123,15 @@ markmap:
 - **Event History**: Records actions taken by users, roles, or AWS services via Console, SDK, CLI. Stored for 90 days.
 - **Trails**: Configurations that enable delivery of CloudTrail events to S3 and optionally CloudWatch Logs for long-term storage and analysis. Can be multi-region (default) or single-region.
 - **Event Types**
-  - **Management Events**: Operations on resources (e.g., `CreateSubnet`, `AttachRolePolicy`). Logged by default. Can separate Read/Write.
-  - **Data Events**: High-volume resource operations (e.g., S3 `GetObject`, Lambda `Invoke`). *Not* logged by default.
+    - **Management Events**: Operations on resources (e.g., `CreateSubnet`, `AttachRolePolicy`). Logged by default. Can separate Read/Write.
+    - **Data Events**: High-volume resource operations (e.g., S3 `GetObject`, Lambda `Invoke`). *Not* logged by default.
 - **CloudTrail Insights**
-  - Uses ML to detect unusual API activity patterns (e.g., spikes in provisioning, IAM actions) based on normal baselines. Analyzes management `write` events. Generates Insights events sent to S3/EventBridge.
-  - Flow: Management events → *continuous analysis* → CloudTrail Insights → *generate* → Insight events → CloudTrail console / S3 bucket / EventBridge event
+    - Uses ML to detect unusual API activity patterns (e.g., spikes in provisioning, IAM actions) based on normal baselines. Analyzes management `write` events. Generates Insights events sent to S3/EventBridge.
+    - Flow: Management events → *continuous analysis* → CloudTrail Insights → *generate* → Insight events → CloudTrail console / S3 bucket / EventBridge event
 - **Log File Integrity Validation**: Ensures logs haven't been tampered with.
 - **EventBridge Integration**
-  - CloudTrail events can trigger EventBridge rules for real-time alerting or automation (e.g., notify on `DeleteTable` API call).
-  - Flow: User → `DeleteTable` API call → DynamoDB → log API call → CloudTrail → event → EventBridge → alert → SNS
+    - CloudTrail events can trigger EventBridge rules for real-time alerting or automation (e.g., notify on `DeleteTable` API call).
+    - Flow: User → `DeleteTable` API call → DynamoDB → log API call → CloudTrail → event → EventBridge → alert → SNS
 
 ### Use Cases
 
@@ -148,10 +148,10 @@ markmap:
 - **Configuration Recorder**: Records configuration details of supported resources.
 - **Configuration History**: View timeline of configuration changes for resources.
 - **Compliance Evaluation (Config Rules)**
-  - Evaluate resource configurations against desired policies.
-  - Use AWS Managed Rules or create Custom Rules (Lambda).
-  - Triggered by configuration changes or scheduled.
-  - Does **not** prevent non-compliant actions, only reports them.
+    - Evaluate resource configurations against desired policies.
+    - Use AWS Managed Rules or create Custom Rules (Lambda).
+    - Triggered by configuration changes or scheduled.
+    - Does **not** prevent non-compliant actions, only reports them.
 - **Remediation Actions**: Automatically remediate non-compliant resources using SSM Automation documents.
 - **Notifications**: Send configuration changes or compliance status changes via SNS/EventBridge.
 - **Multi-Account Multi-Region Aggregation**: Centralize Config data and compliance status.

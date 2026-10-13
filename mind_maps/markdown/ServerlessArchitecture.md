@@ -56,21 +56,21 @@ markmap:
 - **Cold Starts**: Initial delay when invoking a function on a new/idle instance while code/dependencies are loaded.
 - **Provisioned Concurrency**: Keeps function instances initialized and ready, eliminating cold starts for predictable workloads. Can be managed by Application Auto Scaling.
 - **Lambda SnapStart**: Reduces cold start latency (up to 10x) for Java/Python/.NET by caching a snapshot of the initialized execution environment.
-  - SnapStart enabled: function is pre-initialized → Invoke → Shutdown
-  - SnapStart disabled: Init → Invoke → Shutdown
+    - SnapStart enabled: function is pre-initialized → Invoke → Shutdown
+    - SnapStart disabled: Init → Invoke → Shutdown
 - **Limits (Per Region)**
-  - Execution Time: Max 900 seconds (15 minutes).
-  - Memory: 128MB - 10GB.
-  - Concurrency: 1000 concurrent executions default (soft limit).
-  - Deployment Size: 50MB (zipped), 250MB (unzipped).
-  - Temp Storage (`/tmp`): 512MB - 10GB.
-  - Environment Variables: 4KB.
+    - Execution Time: Max 900 seconds (15 minutes).
+    - Memory: 128MB - 10GB.
+    - Concurrency: 1000 concurrent executions default (soft limit).
+    - Deployment Size: 50MB (zipped), 250MB (unzipped).
+    - Temp Storage (`/tmp`): 512MB - 10GB.
+    - Environment Variables: 4KB.
 - **Concurrency & Throttling**
-  - Limit applies across all functions in the account/region.
-  - Reserved Concurrency: Dedicate a portion of the account limit to a specific function.
-  - Throttling
-    - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
-    - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
+    - Limit applies across all functions in the account/region.
+    - Reserved Concurrency: Dedicate a portion of the account limit to a specific function.
+    - Throttling
+        - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
+        - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
 
 ### Networking
 
@@ -81,7 +81,7 @@ markmap:
 ### Database Interactions
 
 - **Invoking Lambda from RDS**: Trigger Lambda functions from within RDS for PostgreSQL or Aurora MySQL (e.g., on data changes). Requires DB instance outbound network access and permissions.
-  - Example: user registers (insert) → RDS → invoke Lambda → send mail via Amazon SES
+    - Example: user registers (insert) → RDS → invoke Lambda → send mail via Amazon SES
 - **RDS Event Notifications**: Get notified about DB **instance** events (create, stop, failover etc.) via SNS or EventBridge. Does not notify on data changes.
 
 ## Amazon DynamoDB
@@ -97,23 +97,23 @@ markmap:
 - **Attributes**: Columns/fields within an item (can be added dynamically). Supports scalar, document, and set types.
 - **Primary Key**: Uniquely identifies items. Defined at table creation. Can be Partition Key only, or Partition Key + Sort Key.
 - **Read/Write Capacity Modes**
-  - **Provisioned Mode**: Specify Read Capacity Units (RCU) and Write Capacity Units (WCU). Can be scaled manually or using Auto Scaling. Cost-effective for predictable workloads.
-  - **On-Demand Mode**: Capacity scales automatically based on traffic. Pay per request, no planning needed. Good for unpredictable workloads.
+    - **Provisioned Mode**: Specify Read Capacity Units (RCU) and Write Capacity Units (WCU). Can be scaled manually or using Auto Scaling. Cost-effective for predictable workloads.
+    - **On-Demand Mode**: Capacity scales automatically based on traffic. Pay per request, no planning needed. Good for unpredictable workloads.
 
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: Fully managed in-memory cache for DynamoDB reads. Provides microsecond latency for cached items. API-compatible with DynamoDB. Helps avoid read throttling (`ProvisionedThroughputExceededException`). Default TTL 5 mins.
 - **DynamoDB Streams**: Time-ordered sequence of item-level changes (create, update, delete). 24-hour data retention. Can trigger Lambda functions. Prerequisite for Global Tables. Alternative integration via Kinesis Data Streams for longer retention/more consumers.
-  - Application → table → DynamoDB Streams → processing layer (KCL adapter, Lambda) → SNS / DDB table; or → Kinesis Data Streams → Firehose → Redshift / S3 / OpenSearch
+    - Application → table → DynamoDB Streams → processing layer (KCL adapter, Lambda) → SNS / DDB table; or → Kinesis Data Streams → Firehose → Redshift / S3 / OpenSearch
 - **Global Tables**: Multi-region, active-active tables with low-latency access for globally distributed applications. Requires Streams enabled.
-  - Table US-EAST-1 ⇄ two-way replication ⇄ Table US-EAST-2
+    - Table US-EAST-1 ⇄ two-way replication ⇄ Table US-EAST-2
 - **TTL (Time To Live)**: Automatically deletes expired items based on a timestamp attribute. Reduces storage costs, helps with session management, compliance.
 - **Backups**
-  - **Point-in-Time Recovery (PITR)**: Continuous backups, restore to any second within the last 35 days. Creates a new table on restore.
-  - **On-Demand Backups**: Full backups for long-term retention, manually deleted. Creates a new table on restore. Can manage via AWS Backup.
+    - **Point-in-Time Recovery (PITR)**: Continuous backups, restore to any second within the last 35 days. Creates a new table on restore.
+    - **On-Demand Backups**: Full backups for long-term retention, manually deleted. Creates a new table on restore. Can manage via AWS Backup.
 - **S3 Integration**
-  - **Export to S3**: Export table data (PITR required) to S3 bucket (JSON or ION format) for analytics, auditing. Doesn't consume read capacity.
-  - **Import from S3**: Load data from S3 (CSV, JSON, ION) into a **new** DynamoDB table. Doesn't consume write capacity.
+    - **Export to S3**: Export table data (PITR required) to S3 bucket (JSON or ION format) for analytics, auditing. Doesn't consume read capacity.
+    - **Import from S3**: Load data from S3 (CSV, JSON, ION) into a **new** DynamoDB table. Doesn't consume write capacity.
 
 ## Amazon API Gateway
 
@@ -154,15 +154,15 @@ markmap:
 
 - **Definition**: Serverless function orchestrator to build visual workflows.
 - **Features**
-  - Coordinate components (Lambda, ECS, EC2, API Gateway, SQS, on-prem, etc.).
-  - Define workflows with sequences, parallel execution, conditions, error handling, timeouts.
-  - Supports human approval steps.
-  - State management for workflows.
+    - Coordinate components (Lambda, ECS, EC2, API Gateway, SQS, on-prem, etc.).
+    - Define workflows with sequences, parallel execution, conditions, error handling, timeouts.
+    - Supports human approval steps.
+    - State management for workflows.
 - **Use Cases**
-  - Order fulfillment
-  - data processing pipelines
-  - ETL orchestration
-  - microservice coordination, any multi-step process.
+    - Order fulfillment
+    - data processing pipelines
+    - ETL orchestration
+    - microservice coordination, any multi-step process.
 
 ## Customization at the Edge (CloudFront)
 
@@ -171,16 +171,16 @@ markmap:
 ### Types
 
 - **CloudFront Functions**
-  - Lightweight, high-performance JavaScript functions.
-  - Use Cases: Header manipulation, URL rewrites/redirects, cache key normalization, simple request validation/authorization.
-  - Triggers: Viewer Request, Viewer Response.
-  - Limits: <1ms execution, 2MB memory, 10KB package, no network/filesystem access.
+    - Lightweight, high-performance JavaScript functions.
+    - Use Cases: Header manipulation, URL rewrites/redirects, cache key normalization, simple request validation/authorization.
+    - Triggers: Viewer Request, Viewer Response.
+    - Limits: <1ms execution, 2MB memory, 10KB package, no network/filesystem access.
 - **Lambda@Edge**
-  - More powerful Node.js/Python Lambda functions running at the edge.
-  - Use Cases: Complex request/response manipulation, network calls to external services/AWS SDK, accessing request body, advanced AuthN/AuthZ.
-  - Triggers: Viewer Request, Viewer Response, Origin Request, Origin Response.
-  - Limits: 5-10s execution, up to 10GB memory, 1-50MB package, network/filesystem access.
-  - Deployed via `us-east-1` region, replicated globally.
+    - More powerful Node.js/Python Lambda functions running at the edge.
+    - Use Cases: Complex request/response manipulation, network calls to external services/AWS SDK, accessing request body, advanced AuthN/AuthZ.
+    - Triggers: Viewer Request, Viewer Response, Origin Request, Origin Response.
+    - Limits: 5-10s execution, up to 10GB memory, 1-50MB package, network/filesystem access.
+    - Deployed via `us-east-1` region, replicated globally.
 
 ## Amazon Cognito
 
@@ -190,15 +190,15 @@ markmap:
 ### Components
 
 - **Cognito User Pools (CUP)**
-  - Acts as a user directory.
-  - Provides sign-up/sign-in functionality (username/password, social IdPs like Facebook/Google/Apple, SAML, OpenID Connect).
-  - Features: Email/phone verification, MFA, password reset.
-  - Integrates with API Gateway & ALB for backend authentication.
+    - Acts as a user directory.
+    - Provides sign-up/sign-in functionality (username/password, social IdPs like Facebook/Google/Apple, SAML, OpenID Connect).
+    - Features: Email/phone verification, MFA, password reset.
+    - Integrates with API Gateway & ALB for backend authentication.
 - **Cognito Identity Pools (Federated Identities)**
-  - Provides temporary AWS credentials to authenticated users.
-  - Allows users to access AWS resources directly (e.g., user-specific S3 folder).
-  - Identity sources can be CUP, social IdPs, SAML, etc..
-  - Access controlled via IAM roles/policies assigned based on identity.
+    - Provides temporary AWS credentials to authenticated users.
+    - Allows users to access AWS resources directly (e.g., user-specific S3 folder).
+    - Identity sources can be CUP, social IdPs, SAML, etc..
+    - Access controlled via IAM roles/policies assigned based on identity.
 
 ## Serverless Solution Architectures
 
@@ -221,8 +221,8 @@ markmap:
 - Caching: CloudFront, DAX, API Gateway caching.
 - Uploads: Consider S3 Transfer Acceleration via CloudFront.
 - Event Handling
-  - New User Email: DynamoDB Stream → Lambda → SES.
-  - Image Uploads: S3 Trigger → Lambda (thumbnail generation). Optional SQS/SNS for decoupling.
+    - New User Email: DynamoDB Stream → Lambda → SES.
+    - Image Uploads: S3 Trigger → Lambda (thumbnail generation). Optional SQS/SNS for decoupling.
 
 ### Microservices Architecture
 
