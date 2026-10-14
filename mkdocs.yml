@@ -120,6 +120,8 @@ nav:
       - CloudFront:
           - Distribution with S3 Origin (OAC): labs/cloudfront/01_cloudfront_distribution_with_s3_origin.md
           - Cache Invalidation: labs/cloudfront/02_cache_invalidation.md
+      - SQS:
+          - Dead-Letter Queue & Redrive: labs/sqs/01_dead_letter_queue.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:

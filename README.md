@@ -15,7 +15,7 @@ Stephane Maarek's courses (SAA-C03 / DVA-C01).
 |---------|-----------|-----------|
 | 🧠 [Mind Maps](mind_maps/) | XMind visual maps for **16 topic areas** (EC2, S3, VPC, IAM, …) — the big picture | [mind_maps/README.md](mind_maps/README.md) |
 | 📒 [Cheatsheets](cheatsheets/) | One-page service summaries for fast exam recall | [cheatsheets/README.md](cheatsheets/README.md) |
-| 🧪 [Labs](labs/) | Step-by-step console & CLI labs (EC2, IAM, S3, CloudFront, CloudFormation) | [labs/README.md](labs/README.md) |
+| 🧪 [Labs](labs/) | Step-by-step console & CLI labs (EC2, IAM, S3, CloudFront, SQS, CloudFormation) | [labs/README.md](labs/README.md) |
 | 📝 [Exam Practice](exam_practices/) | Practice questions & reasoning, by certification | [exam_practices/README.md](exam_practices/README.md) |
 | 🧩 [Templates](templates/) | Reusable doc templates + house style (for humans & LLMs) | [templates/README.md](templates/README.md) |
 
