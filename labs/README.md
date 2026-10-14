@@ -24,6 +24,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **S3** | [09 - MFA Delete](s3/09_mfa_delete.md) | Protect versions from permanent deletion | Intermediate | 20 min |
 | **CloudFront** | [01 - Distribution with S3 Origin (OAC)](cloudfront/01_cloudfront_distribution_with_s3_origin.md) | CDN over a private bucket | Beginner | 30 min |
 | **CloudFront** | [02 - Cache Invalidation](cloudfront/02_cache_invalidation.md) | Invalidate cached objects (needs CloudFront 01) | Beginner | 20 min |
+| **SQS** | [01 - Dead-Letter Queue & Redrive](sqs/01_dead_letter_queue.md) | DLQ with max receives, DLQ redrive | Beginner | 15 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
