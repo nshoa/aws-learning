@@ -64,7 +64,7 @@ markmap:
 
 - Throughput: Unlimited
 - Number of Messages: Unlimited
-- Message Size Limit: 256KB
+- Message Size Limit: 1 MiB (1,024 KB; previously 256 KB)
 - Message Retention: Default 4 days, max 14 days
 - Latency: Low (<10 ms publish/receive)
 - Delivery: At-least-once (duplicates possible)
@@ -122,6 +122,10 @@ markmap:
     - Front-end web app → `SendMessage` → SQS queue (infinitely scalable) → `ReceiveMessages` → back-end web app
 - Buffering requests (e.g., database writes) to handle load spikes
     - Enqueue → SQS → dequeue → insert into DynamoDB / Aurora / RDS
+- Sending large messages (beyond the message size limit, e.g. 1 GB): **SQS Extended Client** (Java library)
+    - Producer → send the large payload to an S3 bucket
+    - Producer → send a small metadata message (pointer to the S3 object) to the SQS queue
+    - Consumer → receive the metadata message → retrieve the large payload from S3
 
 ### Security
 
