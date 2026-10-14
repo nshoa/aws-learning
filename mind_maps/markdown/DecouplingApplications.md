@@ -126,6 +126,7 @@ markmap:
     - Producer → send the large payload to an S3 bucket
     - Producer → send a small metadata message (pointer to the S3 object) to the SQS queue
     - Consumer → receive the metadata message → retrieve the large payload from S3
+    - ![SQS Extended Client: producer sends the large message to S3 and a small metadata message to SQS; consumer retrieves the large message from S3](../images/SQSExtendedClient.png)
 
 ### Security
 

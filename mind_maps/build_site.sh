@@ -12,13 +12,28 @@ OUT_DIR="${1:-_site}"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
+# Copy only the images the Markdown actually embeds (the full set is ~58 MB).
+mkdir -p "$OUT_DIR/images"
+grep -rhoE '\.\./images/[^") ]+' "$SRC_DIR" | sort -u | while read -r ref; do
+  cp "$SRC_DIR/$ref" "$OUT_DIR/images/"
+done
+
 items=""
 for md in "$SRC_DIR"/*.md; do
   name="$(basename "$md" .md)"
   [ "$name" = "README" ] && continue
 
-  npx --yes "markmap-cli@${MARKMAP_VERSION}" "$md" \
+  # Images are referenced as ../images/ (valid on GitHub and MkDocs); the Markmap page
+  # sits next to a copy of them, so point the render at images/ instead.
+  render_src="$(mktemp -t "${name}.XXXXXX.md")"
+  sed 's|\.\./images/|images/|g' "$md" > "$render_src"
+  npx --yes "markmap-cli@${MARKMAP_VERSION}" "$render_src" \
     --offline --no-open -o "$OUT_DIR/${name}.html"
+  rm -f "$render_src"
+
+  # Markmap draws images at natural size; cap them so a screenshot does not dwarf the map.
+  sed -i.bak 's|</head>|<style>.markmap-foreign img{max-width:600px;height:auto}</style></head>|' "$OUT_DIR/${name}.html"
+  rm -f "$OUT_DIR/${name}.html.bak"
 
   # Title comes from the front matter "title:" line, falling back to the file name.
   title="$(sed -n 's/^title: *"\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' "$md" | head -n 1)"
