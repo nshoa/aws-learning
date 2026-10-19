@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Create a bucket with **Versioning** and default **SSE-S3** encryption.
-- [ ] Confirm a new object is encrypted with SSE-S3.
-- [ ] Change the object's encryption to **SSE-KMS** and see the effect on versions.
+- Create a bucket with default **SSE-S3** encryption and check an object's encryption.
+- Change an object to **SSE-KMS** and see the key ID in the object's metadata.
+- Observe that with versioning on, changing the encryption creates a new version and keeps the old one.
 
 ## Prerequisites
 

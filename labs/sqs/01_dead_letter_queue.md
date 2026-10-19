@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Create a dead-letter queue (DLQ) and a source (standard) queue.
-- [ ] Attach the DLQ to the source queue with **Maximum receives = 3**.
-- [ ] Watch a message that is received too many times move into the DLQ.
-- [ ] Use **Start DLQ redrive** to send the message back to the source queue.
+- Attach a **dead-letter queue (DLQ)** to a standard queue and move a message back with **DLQ redrive**.
+- Explain when SQS moves a message to the DLQ: its receive count goes above **Maximum receives**.
+- Explain how the **visibility timeout** hides a received message and why a consumer must delete it.
 
 ## Prerequisites
 

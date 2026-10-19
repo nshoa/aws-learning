@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Create a standard SNS topic with the default settings.
-- [ ] Subscribe an email address to the topic.
-- [ ] Confirm the subscription from the confirmation email.
-- [ ] Publish a test message and receive it by email.
+- Create a standard SNS topic, subscribe an email address and publish a message to it.
+- Observe that SNS only delivers to an email endpoint after its owner **confirms** the subscription.
+- Know the difference between standard and FIFO topics, and that every notification email has an unsubscribe link.
 
 ## Prerequisites
 

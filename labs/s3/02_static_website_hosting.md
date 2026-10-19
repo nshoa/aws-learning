@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Enable the **Static website hosting** feature on a bucket.
-- [ ] Allow public reads with Block Public Access + a bucket policy.
-- [ ] Upload web assets and open the live website endpoint.
+- Host a static website from an S3 bucket and open its **website endpoint**.
+- Explain why a public website needs both Block Public Access turned off **and** a public-read bucket policy.
+- Know that website endpoints are **HTTP only**; HTTPS needs CloudFront in front.
 
 ## Prerequisites
 

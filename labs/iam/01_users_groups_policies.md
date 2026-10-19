@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Create a **group** and attach a managed policy to it.
-- [ ] Create a **user** that gets its permissions from the group, not directly.
-- [ ] Prove **least privilege** by testing an allowed and a denied action.
-- [ ] Understand why an **explicit Deny** always wins.
+- Create a **group** with a managed policy and a **user** that inherits its permissions.
+- Test an allowed and a denied action to see **least privilege** in practice.
+- Explain IAM policy evaluation: default deny, an Allow grants access, an **explicit Deny** always wins.
 
 ## Prerequisites
 

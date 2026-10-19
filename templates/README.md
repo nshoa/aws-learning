@@ -31,6 +31,10 @@ comment at the top, and run `make lint`.
 - **Breadcrumb** back to the section index near the top:
     `[← Labs index](../README.md)`.
 - **Metadata line** for labs: `Service · Level · Est. time · Est. cost`.
+- **Lab objectives** are 3–4 plain bullets (no checkboxes): 1–2 for what you build,
+    and 1–2 for what you observe or can explain, ideally an exam point. Start each with
+    a checkable verb (*Create*, *Observe*, *Explain*), not *Understand*, and don't repeat
+    the Steps or the Verification.
 - **Every lab ends with a `## Cleanup` section** listing how to delete billable
     resources.
 - **Redact** account IDs, CloudFront distribution IDs, and personal bucket names

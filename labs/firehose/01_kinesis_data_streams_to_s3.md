@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Create a Firehose stream that reads from a Kinesis data stream and writes to S3.
-- [ ] Let the console create the IAM role that Firehose uses.
-- [ ] Send records to the data stream from AWS CloudShell.
-- [ ] Find the delivered file in S3 after the buffer interval.
+- Deliver a Kinesis data stream to S3 with a **Firehose stream** and its IAM role.
+- Explain why Firehose is **near real time**: it buffers by size or interval before writing to S3.
+- Observe how Firehose names the delivered objects (UTC `YYYY/MM/DD/HH/` prefix) and that it joins records without a separator.
 
 ## Prerequisites
 

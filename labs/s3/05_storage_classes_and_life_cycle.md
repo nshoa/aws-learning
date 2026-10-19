@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Upload an object directly into a non-default storage class.
-- [ ] Change the storage class of an existing object.
-- [ ] Automate transitions with a **Lifecycle rule**.
+- Upload into a non-default storage class and change the class of an existing object.
+- Automate transitions with a **Lifecycle rule**.
+- Explain the minimums that apply to Standard-IA and One Zone-IA (30 days of storage, 128 KB per object), and why transitions need objects at least 30 days old.
 
 ## Prerequisites
 

@@ -22,9 +22,9 @@
 
 ## Objectives
 
-- [ ] <what the learner will accomplish>
-- [ ] <objective 2>
-- [ ] <objective 3>
+- <Build: what the learner creates or configures, e.g. "Attach a DLQ to a standard queue">
+- <Learn: a behaviour to observe or explain, ideally an exam point, e.g. "Explain when SQS moves a message to the DLQ">
+- <optional 3rd/4th objective, either kind>
 
 ## Prerequisites
 
