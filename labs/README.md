@@ -25,6 +25,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **CloudFront** | [01 - Distribution with S3 Origin (OAC)](cloudfront/01_cloudfront_distribution_with_s3_origin.md) | CDN over a private bucket | Beginner | 30 min |
 | **CloudFront** | [02 - Cache Invalidation](cloudfront/02_cache_invalidation.md) | Invalidate cached objects (needs CloudFront 01) | Beginner | 20 min |
 | **SQS** | [01 - Dead-Letter Queue & Redrive](sqs/01_dead_letter_queue.md) | DLQ with max receives, DLQ redrive | Beginner | 15 min |
+| **SNS** | [01 - Topic with an Email Subscription](sns/01_email_subscription.md) | Standard topic, confirm email, publish | Beginner | 15 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
