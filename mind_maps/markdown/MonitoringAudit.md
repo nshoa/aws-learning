@@ -66,11 +66,26 @@ markmap:
 
 ### CloudWatch Agent
 
-- **CloudWatch Logs Agent (Legacy)**: Sends log files from EC2/on-prem servers to CloudWatch Logs.
+- **Why an agent**
+    - By default, **no logs** from your EC2 instance go to CloudWatch.
+    - Run a CloudWatch agent on the EC2 instance (or on-premises server) to push the log files you want.
+    - Make sure the **IAM permissions** are correct (e.g., an instance role that allows writing to CloudWatch).
+    - Flow: EC2 instance (agent) / On-premises server (agent) → CloudWatch Logs
+- **CloudWatch Logs Agent (Legacy)**
+    - Old version of the agent.
+    - Can only send to CloudWatch Logs.
 - **CloudWatch Unified Agent (Current)**
-    - Collects system-level metrics (RAM, Disk IO, Netstat, Processes, CPU details etc.) *in addition* to logs.
-    - Supports EC2 and on-premises servers.
+    - For virtual servers (EC2 instances, on-premises servers).
+    - Collects additional system-level metrics (RAM, processes, etc.) *in addition* to logs, and sends logs to CloudWatch Logs.
     - Centralized configuration via SSM Parameter Store.
+    - **Metrics** (collected directly on the Linux server / EC2 instance)
+        - **CPU**: active, guest, idle, system, user, steal.
+        - **Disk**: free, used, total; **Disk IO**: writes, reads, bytes, IOPS.
+        - **RAM**: free, inactive, used, total, cached.
+        - **Netstat**: number of TCP and UDP connections, net packets, bytes.
+        - **Processes**: total, dead, blocked, idle, running, sleep.
+        - **Swap Space**: free, used, used %.
+    - Reminder: out-of-the-box EC2 metrics are only high level (disk, CPU, network); RAM and processes need the agent.
 
 ### CloudWatch Alarms
 
