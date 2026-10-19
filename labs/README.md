@@ -27,6 +27,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **SQS** | [01 - Dead-Letter Queue & Redrive](sqs/01_dead_letter_queue.md) | DLQ with max receives, DLQ redrive | Beginner | 15 min |
 | **SNS** | [01 - Topic with an Email Subscription](sns/01_email_subscription.md) | Standard topic, confirm email, publish | Beginner | 15 min |
 | **Kinesis** | [01 - Data Streams with the CLI](kinesis/01_data_streams_cli.md) | Provisioned stream, put-record, shard iterator, get-records | Beginner | 20 min |
+| **Data Firehose** | [01 - Kinesis Data Stream to S3](firehose/01_kinesis_data_streams_to_s3.md) | Firehose stream, IAM role, buffer interval, S3 delivery | Beginner | 25 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions

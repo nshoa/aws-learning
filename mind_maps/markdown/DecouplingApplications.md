@@ -280,6 +280,7 @@ markmap:
     - No Data Storage within Firehose itself
     - No Replay Capability
     - Pay for data ingested
+- **Hands-on lab**: [Data Firehose Lab: Deliver a Kinesis Data Stream to S3](https://nshoa.github.io/aws-learning/labs/firehose/01_kinesis_data_streams_to_s3/)
 
 ### Comparison: Data Firehose versus Kinesis Data Streams
 
