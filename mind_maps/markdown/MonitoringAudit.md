@@ -18,6 +18,13 @@ markmap:
     - Metrics have timestamps.
     - Used to create monitoring Dashboards.
     - Supports Custom Metrics (e.g., EC2 RAM pushed via CloudWatch Agent).
+- **Custom Metrics**
+    - Publish your own metrics (e.g., memory/RAM usage, disk space, number of logged-in users, business KPIs) with the `PutMetricData` API, or via the CloudWatch Agent.
+    - Define your own **Namespace** (cannot start with `AWS/`), metric name and **Dimensions**.
+    - **Standard resolution**: data points at 1-minute granularity (default).
+    - **High resolution** (`StorageResolution=1`): data points down to 1, 5, 10 or 30 seconds, at a higher cost.
+    - Accepts data points with timestamps up to **2 weeks in the past** and **2 hours in the future** (make sure the EC2 time is correct).
+    - Default metrics from AWS services: every 5 minutes; **EC2 Detailed Monitoring**: every 1 minute (extra cost).
 - **Metric Streams**
     - Stream metrics near real-time to destinations.
     - Destinations: Kinesis Data Firehose (then to S3, Redshift, OpenSearch, etc.) or 3rd-party providers (Datadog, Splunk, etc.).
