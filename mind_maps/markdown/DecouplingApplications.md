@@ -222,6 +222,10 @@ markmap:
     - Encryption At-rest: KMS keys
     - Client-Side Encryption: Option for clients
 
+### Hands-on Lab
+
+- [SNS Lab: Topic with an Email Subscription](https://nshoa.github.io/aws-learning/labs/sns/01_email_subscription/)
+
 ## Amazon Kinesis
 
 ### Overview
