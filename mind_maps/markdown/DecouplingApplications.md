@@ -258,6 +258,7 @@ markmap:
 - **Security**
     - In-flight (HTTPS)
     - At-rest (KMS)
+- **Hands-on lab**: [Kinesis Lab: Produce and Consume Data Streams with the CLI](https://nshoa.github.io/aws-learning/labs/kinesis/01_data_streams_cli/)
 
 ### Amazon Data Firehose (Formerly Kinesis Data Firehose)
 

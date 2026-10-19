@@ -124,6 +124,8 @@ nav:
           - Dead-Letter Queue & Redrive: labs/sqs/01_dead_letter_queue.md
       - SNS:
           - Topic with an Email Subscription: labs/sns/01_email_subscription.md
+      - Kinesis:
+          - Data Streams with the CLI: labs/kinesis/01_data_streams_cli.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
