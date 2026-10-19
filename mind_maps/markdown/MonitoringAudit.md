@@ -110,6 +110,27 @@ markmap:
 - **Contributor Insights**: Analyzes log data to identify top contributors (Top-N talkers) impacting performance (e.g., high-traffic IPs, error-prone URLs).
 - **Application Insights**: Provides automated dashboards and problem detection for specific application stacks on EC2 (e.g., .NET, SQL Server, Java) and related AWS resources. Integrates with SSM OpsCenter and EventBridge.
 
+### CloudWatch Synthetics Canary
+
+- **Overview**
+    - Configurable script that monitors your APIs, URLs, websites, etc.
+    - Reproduces what your customers do programmatically, to find issues **before** customers are impacted.
+    - Checks the availability and latency of your endpoints; can store load time data and screenshots of the UI.
+    - Integration with CloudWatch Alarms.
+    - Scripts written in Node.js or Python.
+    - Programmatic access to a headless Google Chrome browser.
+    - Can run once or on a regular schedule.
+- **Use Case: DNS failover**
+    - Canary monitors the endpoint (e.g., EC2 in us-east-1); when it fails, the canary triggers a CloudWatch Alarm, which invokes a Lambda function that updates the Route 53 DNS record to point to the endpoint in another region (e.g., us-west-2).
+    - Flow: Users → Route 53 → EC2 (us-east-1) / EC2 (us-west-2); CloudWatch Synthetics Canary → *monitor* → EC2 (us-east-1); Canary → *trigger* → CloudWatch Alarm → *invoke* → Lambda Function → *update DNS record* → Route 53
+- **Blueprints**
+    - **Heartbeat Monitor**: load a URL, store a screenshot and an HTTP archive file.
+    - **API Canary**: test basic read and write functions of REST APIs.
+    - **Broken Link Checker**: check all links inside the URL that you are testing.
+    - **Visual Monitoring**: compare a screenshot taken during a canary run with a baseline screenshot.
+    - **Canary Recorder**: used with CloudWatch Synthetics Recorder (records your actions on a website and automatically generates a script for that).
+    - **GUI Workflow Builder**: verifies that actions can be taken on your webpage (e.g., test a webpage with a login form).
+
 ## Amazon EventBridge (formerly CloudWatch Events)
 
 ### Overview
