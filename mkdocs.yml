@@ -132,6 +132,8 @@ nav:
           - Data Streams with the CLI: labs/kinesis/01_data_streams_cli.md
       - Data Firehose:
           - Kinesis Data Stream to S3: labs/firehose/01_kinesis_data_streams_to_s3.md
+      - CloudWatch:
+          - Logs Metric Filter: labs/cloudwatch/01_logs_metric_filter.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
