@@ -46,6 +46,11 @@ markmap:
     - Query language to search and analyze log data across log groups.
     - Auto-discovers fields from JSON logs/AWS service logs.
     - Supports filtering, aggregations, sorting, saved queries, dashboard integration. Query across accounts. (Note: Not a real-time engine).
+- **Live Tail**
+    - Watch log events in near real time as they are ingested, in the console or via the CLI (`aws logs start-live-tail`).
+    - Select one or more log groups and filter or highlight events by term.
+    - Only shows events that arrive while the session is running; use Logs Insights to search past logs.
+    - Useful for debugging (e.g., watching Lambda logs while testing); billed per session minute after a monthly free allowance.
 - **S3 Export**
     - Batch export logs to S3 (`CreateExportTask` API).
     - Can take up to 12 hours; not near-real-time.
