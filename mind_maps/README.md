@@ -115,7 +115,7 @@ These mind maps are created using XMind and serve as visual study guides to help
     <tr>
       <td rowspan="1">12</td>
       <td rowspan="1"><a href="#monitoring-audit"><b>AWS Monitoring & Audit</b></a></td>
-      <td>AWS Monitoring & Audit: CloudWatch, CloudTrail & Config </td>
+      <td>AWS Monitoring & Audit: CloudWatch, X-Ray, CloudTrail & Config </td>
       <td rowspan="1">Done</td>
     </tr>
     <tr>
