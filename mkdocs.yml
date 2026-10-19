@@ -126,6 +126,8 @@ nav:
           - Topic with an Email Subscription: labs/sns/01_email_subscription.md
       - Kinesis:
           - Data Streams with the CLI: labs/kinesis/01_data_streams_cli.md
+      - Data Firehose:
+          - Kinesis Data Stream to S3: labs/firehose/01_kinesis_data_streams_to_s3.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
