@@ -29,6 +29,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **Kinesis** | [01 - Data Streams with the CLI](kinesis/01_data_streams_cli.md) | Provisioned stream, put-record, shard iterator, get-records | Beginner | 20 min |
 | **Data Firehose** | [01 - Kinesis Data Stream to S3](firehose/01_kinesis_data_streams_to_s3.md) | Firehose stream, IAM role, buffer interval, S3 delivery | Beginner | 25 min |
 | **CloudWatch** | [01 - Logs Metric Filter](cloudwatch/01_logs_metric_filter.md) | Lambda logs, metric filter, custom metric | Beginner | 20 min |
+| **CloudWatch** | [02 - Logs Live Tail](cloudwatch/02_logs_live_tail.md) | Watch log events in real time (needs CloudWatch 01) | Beginner | 10 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
