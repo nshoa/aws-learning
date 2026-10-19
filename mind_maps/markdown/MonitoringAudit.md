@@ -123,6 +123,7 @@ markmap:
 - **Use Case: DNS failover**
     - Canary monitors the endpoint (e.g., EC2 in us-east-1); when it fails, the canary triggers a CloudWatch Alarm, which invokes a Lambda function that updates the Route 53 DNS record to point to the endpoint in another region (e.g., us-west-2).
     - Flow: Users → Route 53 → EC2 (us-east-1) / EC2 (us-west-2); CloudWatch Synthetics Canary → *monitor* → EC2 (us-east-1); Canary → *trigger* → CloudWatch Alarm → *invoke* → Lambda Function → *update DNS record* → Route 53
+    - ![CloudWatch Synthetics Canary DNS failover: the canary monitors the us-east-1 endpoint and triggers a CloudWatch Alarm, which invokes a Lambda function that updates the Route 53 DNS record to the us-west-2 endpoint](../images/CloudWatchSyntheticsCanary.png)
 - **Blueprints**
     - **Heartbeat Monitor**: load a URL, store a screenshot and an HTTP archive file.
     - **API Canary**: test basic read and write functions of REST APIs.
