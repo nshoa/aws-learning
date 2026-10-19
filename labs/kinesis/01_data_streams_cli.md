@@ -2,7 +2,7 @@
 
 [← Labs index](../README.md) · **Service:** Kinesis · **Level:** Beginner · **Est. time:** 20 min · **Est. cost:** ~$0.02 per shard-hour — remember to clean up
 
-**Reference:** [Tutorial: Get started with Kinesis Data Streams using the AWS CLI (AWS docs)](https://docs.aws.amazon.com/streams/latest/dev/fundamental-stream.html)
+**Reference:** [Udemy DVA-C01 - Kinesis Data Streams Hands On](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/26101790#overview)
 
 ## Contents
 
