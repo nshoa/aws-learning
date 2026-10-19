@@ -26,6 +26,10 @@ exclude_docs: |
 plugins:
   - same-dir
   - search
+  # Click an image to open it full size (lightbox); the alt text becomes the caption.
+  - glightbox:
+      zoomable: true
+      auto_caption: true
 
 theme:
   name: material
