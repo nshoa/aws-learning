@@ -1,5 +1,5 @@
 ---
-title: "Monitoring & Audit: CloudWatch, CloudTrail & Config"
+title: "Monitoring & Audit: CloudWatch, X-Ray, CloudTrail & Config"
 markmap:
   colorFreezeLevel: 2
   initialExpandLevel: 2
@@ -111,6 +111,34 @@ markmap:
 - **Archive & Replay**: Archive events from a bus to S3, replay them later for testing or recovery.
 - **Resource-based Policies**: Control cross-account/region access to event buses.
 
+## AWS X-Ray
+
+### Overview
+
+- **Troubleshooting** application performance and errors.
+- **Distributed tracing** of microservices: follow a request end to end across services.
+- Visual analysis of the application: find bottlenecks, latency and which service is failing.
+
+### Key Concepts
+
+- **Trace**: The end-to-end path of a single request through all services.
+- **Segment**: Data sent by each service (application) that handled the request.
+- **Subsegment**: More granular detail inside a segment (e.g., a downstream AWS call, an HTTP call, a database query).
+- **Annotations**: Key-value pairs that are **indexed** - use them to search and filter traces.
+- **Metadata**: Key-value pairs that are **not indexed** - not used for searching.
+- **Service Map**: Graph of services and their connections, with latency and error rates.
+
+### How It Works
+
+- Instrument the application with the **X-Ray SDK**; the SDK sends trace data to the **X-Ray daemon** (a local agent), which sends it to the X-Ray service.
+- Sampling: only a percentage of requests is traced to reduce cost and overhead.
+- Flow: Client request → Service A → Service B → DynamoDB → *trace data* → X-Ray → Service Map / traces in the console
+
+### Use Cases
+
+- Troubleshoot performance (find bottlenecks) and errors; understand dependencies in a microservice architecture.
+- Pinpoint which service is causing issues; review request behavior; find errors and exceptions.
+
 ## AWS CloudTrail
 
 ### Overview
@@ -161,8 +189,9 @@ markmap:
 
 - Compliance auditing (e.g., "Is SSH unrestricted?", "Are S3 buckets public?"), tracking configuration drift, security analysis, operational troubleshooting.
 
-## Comparison: CloudTrail vs. CloudWatch vs. Config
+## Comparison: CloudWatch vs. X-Ray vs. CloudTrail vs. Config
 
-- **CloudTrail**: Focuses on **API activity** (Who did what, when?). Audit trail.
 - **CloudWatch**: Focuses on **performance & operation** (Metrics, Logs, Events, Alarms).
+- **X-Ray**: Focuses on **request tracing** across microservices (Where is the latency or error?).
+- **CloudTrail**: Focuses on **API activity** (Who did what, when?). Audit trail.
 - **Config**: Focuses on **resource configuration & compliance** (What did my resource look like? Is it compliant?). Tracks changes over time.
