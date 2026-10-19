@@ -16,10 +16,10 @@ console. Each template builds on the previous one.
 
 ## Lab Objectives
 
-- [ ] Deploy a stack from a template (console **and** CLI).
-- [ ] Use the **SSM Public Parameter Store** to always get the latest AMI.
-- [ ] Understand why VPC instances reference security groups **by ID**.
-- [ ] Read stack **Outputs** and clean up by deleting the stack.
+- Deploy a stack from a template with the console **and** the CLI.
+- Use the **SSM Public Parameter Store** to always get the latest AMI.
+- Explain why instances in a VPC reference security groups **by ID** (`SecurityGroupIds`), not by name.
+- Read stack **Outputs** and clean up by deleting the stack.
 
 ---
 

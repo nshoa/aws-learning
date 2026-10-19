@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] See CloudFront keep serving a cached object after the origin changes.
-- [ ] Create a **CloudFront invalidation**.
-- [ ] Confirm the updated content is served after invalidating.
+- Observe CloudFront serving a **stale** cached object after the origin changes, until the TTL expires.
+- Create a **CloudFront invalidation** and see the new content served.
+- Read the `x-cache` header to tell a cache hit from a miss.
 
 ## Prerequisites
 

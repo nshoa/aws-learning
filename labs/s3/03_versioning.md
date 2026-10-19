@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Enable **Versioning** on an S3 bucket.
-- [ ] Observe what happens when you overwrite an existing object.
-- [ ] Understand the **Delete Marker** and use it to "undelete" an object.
+- Enable **Versioning** and overwrite an object to create a second version.
+- Observe that a normal delete only adds a **Delete Marker**, and restore the object by deleting the marker.
+- Explain that versioning can be **suspended** but never turned off, and that older objects keep version ID `null`.
 
 ## Prerequisites
 

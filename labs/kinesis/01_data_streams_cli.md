@@ -16,10 +16,10 @@
 
 ## Objectives
 
-- [ ] Create a Kinesis data stream in provisioned mode with 1 shard.
-- [ ] Act as a producer: send records to the stream from AWS CloudShell.
-- [ ] Act as a consumer: read the records back with a shard iterator.
-- [ ] Decode the Base64 record data.
+- Create a provisioned data stream and act as both **producer** (`put-record`) and **consumer** (`get-records`) from CloudShell.
+- Explain how the **partition key** picks the shard and keeps records with the same key in order.
+- Read records with a `TRIM_HORIZON` **shard iterator**, and know how it differs from `LATEST`.
+- Know why CLI v2 needs `--cli-binary-format raw-in-base64-out` and how to decode the Base64 `Data`.
 
 ## Prerequisites
 

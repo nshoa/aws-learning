@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Create two buckets in different regions, both with **Versioning** enabled (required).
-- [ ] Configure a **replication rule** from source to destination.
-- [ ] Observe that new objects replicate, and that delete markers do **not** by default.
+- Replicate a bucket to another region with a **replication rule**.
+- Explain why **Versioning** must be enabled on both buckets.
+- Observe that new objects replicate, but delete markers do **not** by default and existing objects are not copied.
 
 ## Prerequisites
 

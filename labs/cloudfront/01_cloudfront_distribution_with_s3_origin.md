@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Keep an S3 bucket **private** and use it as a CloudFront origin.
-- [ ] Create a CloudFront distribution secured with **Origin Access Control (OAC)**.
-- [ ] Confirm content is served through CloudFront while direct S3 access stays blocked.
+- Serve a **private** S3 bucket through a CloudFront distribution with **Origin Access Control (OAC)**.
+- Explain how the bucket policy lets only your distribution read the bucket.
+- Observe that the CloudFront URL works while the direct S3 URL stays **Access Denied**.
 
 ## Prerequisites
 

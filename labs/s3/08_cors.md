@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Host a static website in two buckets (two different origins).
-- [ ] Trigger a CORS error with a cross-origin `fetch`.
-- [ ] Fix it with a CORS configuration on the bucket being fetched from.
+- Trigger a **CORS** error with a `fetch` from one bucket's website to another's.
+- Fix it with a CORS configuration and explain why it goes on the bucket being **fetched from**, not the page's bucket.
+- Explain what makes two URLs different **origins** (scheme, host, port).
 
 ## Prerequisites
 

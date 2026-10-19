@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Launch an Amazon Linux 2023 EC2 instance on a free-tier instance type.
-- [ ] Attach a security group allowing SSH (22) from your IP and HTTP (80) from anywhere.
-- [ ] Bootstrap a web server with **User Data**.
-- [ ] Reach the site over HTTP and connect over SSH.
+- Launch an Amazon Linux 2023 instance on a free-tier type and bootstrap a web server with **User Data**.
+- Allow SSH (22) from your IP and HTTP (80) from anywhere with a **security group**, and explain why SSH should never be open to `0.0.0.0/0`.
+- Explain that User Data runs **once**, as root, on the first boot.
 
 ## Prerequisites
 

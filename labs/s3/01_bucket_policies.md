@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Understand the difference between **Block Public Access** and **Bucket Policies**.
-- [ ] Write a JSON policy that grants public read access.
-- [ ] Attach the policy to a bucket and confirm anonymous access works.
+- Make a bucket publicly readable with a bucket policy.
+- Explain why **Block Public Access** overrides any public bucket policy.
+- Explain why `s3:GetObject` needs the `bucket/*` resource, not the bucket ARN.
 
 ## Prerequisites
 

@@ -16,10 +16,9 @@
 
 ## Objectives
 
-- [ ] Create an SQS queue to receive S3 events.
-- [ ] Add an SQS access policy that lets S3 send messages.
-- [ ] Configure an S3 Event Notification for object uploads.
-- [ ] Read the event message from the queue.
+- Send an S3 **Event Notification** to an SQS queue when an object is uploaded, and read the event message.
+- Explain why the queue's **access policy** must allow `s3.amazonaws.com` to send messages.
+- Know that the same setup works with SNS and Lambda destinations.
 
 ## Prerequisites
 

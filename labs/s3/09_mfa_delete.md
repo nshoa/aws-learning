@@ -16,9 +16,9 @@
 
 ## Objectives
 
-- [ ] Enable **MFA Delete** on a versioned bucket (CLI only, as the root user).
-- [ ] Show that permanently deleting a version fails without an MFA code.
-- [ ] Disable MFA Delete again and confirm normal deletes work.
+- Enable and disable **MFA Delete** with the CLI as the root user.
+- Observe that permanently deleting a version fails without an MFA code, while a normal delete still works.
+- Explain what MFA Delete protects (permanent deletes, suspending versioning) and why only the root user can change it.
 
 ## Prerequisites
 
