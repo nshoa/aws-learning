@@ -31,6 +31,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **CloudWatch** | [01 - Logs Metric Filter](cloudwatch/01_logs_metric_filter.md) | Lambda logs, metric filter, custom metric | Beginner | 20 min |
 | **CloudWatch** | [02 - Logs Live Tail](cloudwatch/02_logs_live_tail.md) | Watch log events in real time (needs CloudWatch 01) | Beginner | 10 min |
 | **CloudWatch** | [03 - Alarm that Terminates an EC2 Instance](cloudwatch/03_alarm_terminate_ec2.md) | CPU alarm, EC2 action, set-alarm-state from CloudShell | Beginner | 20 min |
+| **X-Ray** | [01 - Trace the Scorekeep App on ECS](xray/01_scorekeep_tracing.md) | CloudFormation stack, X-Ray daemon, trace map, traces | Intermediate | 30 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
