@@ -162,31 +162,87 @@ markmap:
 
 ## AWS X-Ray
 
-### Overview
+### Why X-Ray
 
-- **Troubleshooting** application performance and errors.
-- **Distributed tracing** of microservices: follow a request end to end across services.
-- Visual analysis of the application: find bottlenecks, latency and which service is failing.
+- **Pain without it**
+    - Debugging production = reproduce locally, add logs everywhere, redeploy.
+    - Each service logs in its own format → hard to correlate in CloudWatch.
+    - Monolith: one place to look. Microservices: a request crosses many services.
+    - Nobody sees the whole architecture in one picture.
+- **X-Ray** = distributed tracing + a visual **service map** (trace map) of your app.
+- **What it answers**
+    - Where is the bottleneck / are we meeting the latency SLA?
+    - Which service depends on which?
+    - Which service fails, with which errors and exceptions?
+    - Where are we being throttled?
+    - Which users are affected?
+- Visual, so non-developers can help troubleshoot too.
+- **Hands-on lab**: [X-Ray Lab: Trace the Scorekeep App on ECS](https://nshoa.github.io/aws-learning/labs/xray/01_scorekeep_tracing/)
 
-### Key Concepts
+### Core Concepts
 
-- **Trace**: The end-to-end path of a single request through all services.
-- **Segment**: Data sent by each service (application) that handled the request.
-- **Subsegment**: More granular detail inside a segment (e.g., a downstream AWS call, an HTTP call, a database query).
-- **Annotations**: Key-value pairs that are **indexed** - use them to search and filter traces.
-- **Metadata**: Key-value pairs that are **not indexed** - not used for searching.
-- **Service Map**: Graph of services and their connections, with latency and error rates.
+- **Trace**: one request followed end to end; all its segments together.
+- **Segment**: what one service reports about its part of the request.
+- **Subsegment**: finer detail inside a segment (an AWS SDK call, HTTP call, SQL query).
+- **Annotations**: key-value pairs, **indexed** → search and filter traces with them.
+- **Metadata**: key-value pairs, **not indexed** → extra context only, not searchable.
+- **Sampling**: trace only part of the requests → less overhead and cost.
+- **Service map**: computed from all segments; nodes = services, edges = calls.
+- **Security**: IAM controls access; data encrypted at rest with KMS.
+- **Cross-account**: the daemon can assume a role to send traces to one central tracing account.
 
 ### How It Works
 
-- Instrument the application with the **X-Ray SDK**; the SDK sends trace data to the **X-Ray daemon** (a local agent), which sends it to the X-Ray service.
-- Sampling: only a percentage of requests is traced to reduce cost and overhead.
-- Flow: Client request → Service A → Service B → DynamoDB → *trace data* → X-Ray → Service Map / traces in the console
+- ![How X-Ray collects traces: the client calls the app, the app with the X-Ray SDK sends segments over UDP 2000 to the X-Ray daemon, the daemon (allowed by an IAM role with AWSXrayWriteOnlyAccess) sends batches every second to AWS X-Ray, and the trace map and traces are viewed in the console](../images/XRayHowItWorks.png)
+- **1. SDK in the code** (Java, Python, Go, Node.js, .NET)
+    - Mostly configuration, little code change.
+    - Captures automatically: AWS SDK calls, HTTP/HTTPS calls, database calls (MySQL, PostgreSQL, DynamoDB), SQS calls.
+    - Customize what is sent with interceptors, filters, handlers or middleware (e.g. Express: open a segment before routes, close it after).
+- **2. Daemon or built-in integration**
+    - Daemon = small process listening for UDP segments, runs on Linux, Windows and macOS.
+    - Lambda and other AWS services run it for you.
+- **3. IAM permission** to write to X-Ray for whoever runs the daemon.
 
-### Use Cases
+### Enable It By Platform
 
-- Troubleshoot performance (find bottlenecks) and errors; understand dependencies in a microservice architecture.
-- Pinpoint which service is causing issues; review request behavior; find errors and exceptions.
+- **EC2 / on-premises**: install and run the daemon + instance role with X-Ray write access.
+- **Lambda**: turn on **Active Tracing** + execution role with `AWSXrayWriteOnlyAccess` + SDK in the code.
+- **Elastic Beanstalk**
+    - Daemon is included in the platform; switch it on in the console or in `.ebextensions/xray-daemon.config` (`aws:elasticbeanstalk:xray` → `XRayEnabled: true`).
+    - Instance profile needs X-Ray write permissions; code still needs the SDK.
+    - Not provided for the multicontainer Docker platform.
+- **ECS**
+    - ![ECS options: on ECS on EC2 one X-Ray daemon container per host serves all app containers, or one X-Ray sidecar per app container; on Fargate each task gets its own X-Ray sidecar](../images/XRayEcsIntegration.png)
+    - **Daemon mode** (EC2 launch type): one X-Ray container per host, shared by all tasks.
+    - **Sidecar** (EC2 or Fargate): one X-Ray container next to each app container; the only option on Fargate.
+- Also integrates with **ELB** and **API Gateway**.
+
+### Sampling Rules
+
+- Control how much is recorded; change rules in the console **without code changes**.
+- **Default**: first request each second (**reservoir** = 1/s) + **5%** of the rest (**rate**).
+    - Reservoir guarantees at least one trace per second while traffic flows.
+- **Custom rules**: priority, reservoir, rate + match on service name/type, host, HTTP method, URL path, resource ARN.
+    - Raise the floor for important calls, e.g. a higher reservoir and rate for all `POST`.
+    - Temporary debug rule: top priority, reservoir 1, rate 1 (100%) for one problematic route.
+
+### APIs & IAM
+
+- **Write APIs** (used by the daemon) → managed policy `AWSXrayWriteOnlyAccess`
+    - `PutTraceSegments`: upload segment documents.
+    - `PutTelemetryRecords`: daemon health (segments received/rejected, backend connection errors).
+    - `GetSamplingRules`: learn what to sample.
+    - `GetSamplingTargets`, `GetSamplingStatisticSummaries`: advanced sampling.
+- **Read APIs** (console, tools)
+    - `GetServiceGraph`: the main service map.
+    - `GetTraceSummaries` → trace IDs + annotations for a time range (with filter) → `BatchGetTraces` → full traces.
+    - `GetTraceGraph`: service map of specific trace IDs.
+    - Also `GetGroups` / `GetGroup`, `GetTimeSeriesServiceStatistics` and the sampling reads.
+
+### Troubleshooting
+
+- **No traces from EC2**: check the instance role permissions and that the daemon is running.
+- **No traces from Lambda**: execution role has `AWSXrayWriteOnlyAccess`, SDK imported, Active Tracing on.
 
 ## AWS CloudTrail
 
