@@ -136,6 +136,8 @@ nav:
           - Logs Metric Filter: labs/cloudwatch/01_logs_metric_filter.md
           - Logs Live Tail: labs/cloudwatch/02_logs_live_tail.md
           - Alarm that Terminates an EC2 Instance: labs/cloudwatch/03_alarm_terminate_ec2.md
+      - X-Ray:
+          - Trace the Scorekeep App on ECS: labs/xray/01_scorekeep_tracing.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
