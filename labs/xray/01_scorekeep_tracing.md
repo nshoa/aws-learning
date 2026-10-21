@@ -23,8 +23,8 @@
 ## Prerequisites
 
 - An AWS account with permissions for CloudFormation, ECS, EC2, ELB, DynamoDB, SNS, IAM and X-Ray.
-- The course template `x-ray/eb-java-scorekeep-xray-simplified.yaml` (from the course code
-    download). It is not stored in this repo.
+- The template [`templates/eb-java-scorekeep-xray-simplified.yaml`](templates/eb-java-scorekeep-xray-simplified.yaml)
+    (from the course code, `x-ray/` folder). Download it to your computer.
 - A VPC with **two public subnets in different Availability Zones** (the default VPC works).
     The load balancer needs two AZs, and the instance needs a public IP to pull the container images.
 
@@ -33,7 +33,8 @@
 ### 1. Create the Stack
 
 1. Open the **CloudFormation Console** > **Create stack** > **With new resources (standard)**.
-2. Choose **Upload a template file**, select `eb-java-scorekeep-xray-simplified.yaml` and click **Next**.
+2. Choose **Upload a template file**, select the downloaded `eb-java-scorekeep-xray-simplified.yaml`
+    and click **Next**.
 3. **Stack name:** `dva-scorekeep-xray`.
 4. Leave every parameter at its default **except**:
     - **VpcId:** your VPC (e.g. the default VPC).
