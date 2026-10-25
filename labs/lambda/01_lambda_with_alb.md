@@ -2,7 +2,7 @@
 
 [← Labs index](../README.md) · **Service:** Lambda · **Level:** Beginner · **Est. time:** 25 min · **Est. cost:** ~$0.03 per hour for the ALB — remember to clean up
 
-**Reference:** [AWS docs - Using Lambda with an Application Load Balancer](https://docs.aws.amazon.com/lambda/latest/dg/services-alb.html)
+**Reference:** [Udemy DVA-C01 - Lambda and Application Load Balancer](https://www.udemy.com/course/aws-certified-developer-associate-dva-c01/learn/lecture/19730418#overview)
 
 ## Contents
 
