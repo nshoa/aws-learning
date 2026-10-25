@@ -76,9 +76,10 @@
 1. **EC2 Console** > **Load balancers** > **Create load balancer** > **Application Load Balancer**.
 2. **Name:** `DVA-DemoALBLambda`. **Scheme:** Internet-facing. **IP address type:** IPv4.
 3. **Network mapping:** select your VPC and tick **three** Availability Zones, one public subnet each.
-4. **Security groups:** remove `default` and select `DVA_DemoSGLambda`.
 
-    ![Three Availability Zones and the security group of the ALB](../shared_assets/lambda/01_alb-azs-and-security-group.png)
+    ![Three Availability Zones, one public subnet each](../shared_assets/lambda/01_alb-availability-zones.png)
+
+4. **Security groups:** remove `default` and select `DVA_DemoSGLambda`.
 
 5. Under **Listeners and routing**, keep **HTTP:80** and click **Create target group** (opens a new tab).
 
@@ -91,7 +92,10 @@
 
 3. Back on the ALB page, refresh the target group list, choose `DVA-DemoTargetGroupLambda` as the
     listener's default action and click **Create load balancer**.
-4. Wait until the ALB **Status** is **Active**.
+4. Wait until the ALB **Status** is **Active**, then open its **Security** tab and check that
+    `DVA_DemoSGLambda` is the only security group.
+
+    ![The ALB is active with the DVA_DemoSGLambda security group](../shared_assets/lambda/01_alb-security-group-attached.png)
 
 > 💡 When you register the function, the console adds a resource-based policy that lets
 > `elasticloadbalancing.amazonaws.com` invoke it. The Lambda page now shows the ALB as a trigger.
