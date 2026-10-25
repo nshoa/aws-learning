@@ -140,6 +140,7 @@ nav:
           - Trace the Scorekeep App on ECS: labs/xray/01_scorekeep_tracing.md
       - Lambda:
           - Function Behind an Application Load Balancer: labs/lambda/01_lambda_with_alb.md
+          - Run a Function Every Minute with EventBridge Scheduler: labs/lambda/02_lambda_with_eventbridge_schedule.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:

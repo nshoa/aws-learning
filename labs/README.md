@@ -33,6 +33,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **CloudWatch** | [03 - Alarm that Terminates an EC2 Instance](cloudwatch/03_alarm_terminate_ec2.md) | CPU alarm, EC2 action, set-alarm-state from CloudShell | Beginner | 20 min |
 | **X-Ray** | [01 - Trace the Scorekeep App on ECS](xray/01_scorekeep_tracing.md) | CloudFormation stack, X-Ray daemon, trace map, traces | Intermediate | 30 min |
 | **Lambda** | [01 - Function Behind an Application Load Balancer](lambda/01_lambda_with_alb.md) | Lambda target group, ALB listener, HTTP event and response | Beginner | 25 min |
+| **Lambda** | [02 - Run a Function Every Minute with EventBridge Scheduler](lambda/02_lambda_with_eventbridge_schedule.md) | Rate-based schedule, scheduler execution role, scheduled event in logs | Beginner | 15 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
