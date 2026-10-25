@@ -72,6 +72,37 @@ markmap:
         - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
         - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
 
+### Event Source Mapping
+
+- ![Event source mapping: Kinesis Data Streams, DynamoDB Streams and SQS are polled by the event source mapping inside the Lambda service, which gets a batch of records and invokes the Lambda function synchronously with it](../images/LambdaEventSourceMapping.png)
+- **What it is**
+    - A poller run by Lambda for sources that do not push events: **Kinesis Data Streams**, **DynamoDB Streams**, **SQS** and **SQS FIFO**.
+    - Lambda reads records in **batches** and invokes the function **synchronously** with each batch.
+    - Compare: S3, SNS and EventBridge push events to Lambda (asynchronous invocation).
+- **Streams (Kinesis, DynamoDB Streams)**
+    - ![Stream parallelization: one shard is read in order, records are grouped by partition key into separate batches, and each batch is sent to its own Lambda invocation](../images/LambdaStreamParallelization.png)
+    - One iterator per shard; records are processed in order within the shard.
+    - Starting position: only new records, from the beginning of the stream, or from a timestamp.
+    - Records stay in the stream after processing, so other consumers can still read them.
+    - Low traffic: a **batch window** waits to collect more records before invoking.
+    - **Parallelization**: up to **10 batches per shard** at the same time; order is still kept per partition key.
+    - **Errors**
+        - Default: a failing batch is retried as a whole until it succeeds or its records expire.
+        - The shard waits meanwhile, to keep the order.
+        - Tune it: discard records older than a max age, cap the retries, or **split the batch on error** (helps with timeouts).
+        - Send discarded records to an **on-failure destination**.
+- **Queues (SQS, SQS FIFO)**
+    - The mapping uses **long polling**; batch size 1-10 messages (standard queues can go higher with a batch window).
+    - Set the queue **visibility timeout to 6x the function timeout**.
+    - Success → Lambda **deletes** the messages; error → the messages go back to the queue one by one and may be retried in different batches.
+    - A message can be delivered twice even without an error → make the processing idempotent.
+    - Standard queue: no ordering; FIFO queue: in order within each message group.
+    - **DLQ**: set it on the **SQS queue**, not on Lambda (a Lambda DLQ only works for async invocations), or use an on-failure destination.
+- **Scaling**
+    - Streams: one invocation per shard at a time, up to 10 per shard with parallelization.
+    - SQS standard: scales out as fast as possible; course figures are +60 instances per minute and up to 1,000 batches at once (check the AWS docs for the current limits).
+    - SQS FIFO: scales up to the number of active message groups; messages with the same group ID are processed in order.
+
 ### Networking
 
 - **Default**: Runs outside your VPC, can access public internet/AWS APIs. Cannot access private VPC resources.
