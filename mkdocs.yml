@@ -138,6 +138,8 @@ nav:
           - Alarm that Terminates an EC2 Instance: labs/cloudwatch/03_alarm_terminate_ec2.md
       - X-Ray:
           - Trace the Scorekeep App on ECS: labs/xray/01_scorekeep_tracing.md
+      - Lambda:
+          - Function Behind an Application Load Balancer: labs/lambda/01_lambda_with_alb.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
