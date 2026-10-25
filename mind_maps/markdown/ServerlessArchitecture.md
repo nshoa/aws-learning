@@ -98,6 +98,7 @@ markmap:
     - A message can be delivered twice even without an error → make the processing idempotent.
     - Standard queue: no ordering; FIFO queue: in order within each message group.
     - **DLQ**: set it on the **SQS queue**, not on Lambda (a Lambda DLQ only works for async invocations), or use an on-failure destination.
+- **Hands-on lab**: [Lambda Lab: Event Source Mapping with an SQS Queue](https://nshoa.github.io/aws-learning/labs/lambda/04_lambda_event_source_mapping_sqs/)
 - **Scaling**
     - Streams: one invocation per shard at a time, up to 10 per shard with parallelization.
     - SQS standard: scales out as fast as possible; course figures are +60 instances per minute and up to 1,000 batches at once (check the AWS docs for the current limits).
