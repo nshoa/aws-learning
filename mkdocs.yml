@@ -141,6 +141,7 @@ nav:
       - Lambda:
           - Function Behind an Application Load Balancer: labs/lambda/01_lambda_with_alb.md
           - Run a Function Every Minute with EventBridge Scheduler: labs/lambda/02_lambda_with_eventbridge_schedule.md
+          - Trigger a Function from an S3 Event Notification: labs/lambda/03_lambda_with_s3_event_notification.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
