@@ -34,6 +34,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **X-Ray** | [01 - Trace the Scorekeep App on ECS](xray/01_scorekeep_tracing.md) | CloudFormation stack, X-Ray daemon, trace map, traces | Intermediate | 30 min |
 | **Lambda** | [01 - Function Behind an Application Load Balancer](lambda/01_lambda_with_alb.md) | Lambda target group, ALB listener, HTTP event and response | Beginner | 25 min |
 | **Lambda** | [02 - Run a Function Every Minute with EventBridge Scheduler](lambda/02_lambda_with_eventbridge_schedule.md) | Rate-based schedule, scheduler execution role, scheduled event in logs | Beginner | 15 min |
+| **Lambda** | [03 - Trigger a Function from an S3 Event Notification](lambda/03_lambda_with_s3_event_notification.md) | S3 event notification, object-created event, resource-based policy | Beginner | 15 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
