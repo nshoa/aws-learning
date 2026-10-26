@@ -72,6 +72,15 @@ markmap:
         - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
         - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
 
+### Destinations
+
+- Send the **result** of an **asynchronous** invocation to another service: **on success** and/or **on failure**.
+- Targets: SQS, SNS, Lambda, EventBridge event bus.
+- On failure: the record is sent after the retries are used up (default **2 retries**, 3 attempts).
+- The record holds the original event (`requestPayload`), the result or error (`responsePayload`) and the `condition` (`Success`, `RetriesExhausted`).
+- Recommended over a Lambda DLQ, which only gets the failed event, without the error.
+- **Hands-on lab**: [Lambda Lab: Destinations for Asynchronous Invocations](https://nshoa.github.io/aws-learning/labs/lambda/05_lambda_destinations/)
+
 ### Event Source Mapping
 
 - ![Event source mapping: Kinesis Data Streams, DynamoDB Streams and SQS are polled by the event source mapping inside the Lambda service, which gets a batch of records and invokes the Lambda function synchronously with it](../images/LambdaEventSourceMapping.png)
