@@ -144,6 +144,7 @@ nav:
           - Trigger a Function from an S3 Event Notification: labs/lambda/03_lambda_with_s3_event_notification.md
           - Event Source Mapping with an SQS Queue: labs/lambda/04_lambda_event_source_mapping_sqs.md
           - Destinations for Asynchronous Invocations: labs/lambda/05_lambda_destinations.md
+          - Timeout and Initialization Outside the Handler: labs/lambda/06_lambda_performance.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
