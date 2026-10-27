@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to deploy an AWS Lambda function sourced from a ZIP file in an S3 bucket.
+
+Parameters:
+  CodeS3Bucket:
+    Type: String
+    Description: Name of the existing S3 bucket containing the Lambda deployment package (.zip).
+
+  CodeS3Key:
+    Type: String
+    Description: S3 object key (path and filename) of the .zip file (e.g., code/list_buckets.zip).
+
+  CodeS3ObjectVersion:
+    Type: String
+    Default: ''
+    Description: (Optional) S3 Object Version ID if versioning is enabled on the bucket.
+
+  Handler:
+    Type: String
+    Default: lambda_function.lambda_handler
+    Description: Function entry point in the format <filename_without_extension>.<function_name>.
+
+Conditions:
+  HasObjectVersion: !Not [!Equals [!Ref CodeS3ObjectVersion, '']]
+
+Resources:
+  ListS3BucketsExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: AllowS3ListBuckets
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:ListAllMyBuckets
+                Resource: '*'
+
+  ListS3BucketsFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-list-s3-buckets'
+      Runtime: python3.12
+      Handler: !Ref Handler
+      Timeout: 15
+      MemorySize: 128
+      Role: !GetAtt ListS3BucketsExecutionRole.Arn
+      Code:
+        S3Bucket: !Ref CodeS3Bucket
+        S3Key: !Ref CodeS3Key
+        S3ObjectVersion: !If [HasObjectVersion, !Ref CodeS3ObjectVersion, !Ref 'AWS::NoValue']
+
+Outputs:
+  LambdaFunctionName:
+    Description: Name of the created Lambda Function
+    Value: !Ref ListS3BucketsFunction
+  LambdaFunctionArn:
+    Description: ARN of the created Lambda Function
+    Value: !GetAtt ListS3BucketsFunction.Arn
+  LambdaExecutionRoleArn:
+    Description: ARN of the Lambda Execution Role
+    Value: !GetAtt ListS3BucketsExecutionRole.Arn

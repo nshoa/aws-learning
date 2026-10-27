@@ -39,6 +39,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **Lambda** | [05 - Destinations for Asynchronous Invocations](lambda/05_lambda_destinations.md) | On-success and on-failure SQS destinations, async retries, destination records | Beginner | 25 min |
 | **Lambda** | [06 - Timeout and Initialization Outside the Handler](lambda/06_lambda_performance.md) | Default 3 s timeout, init code outside the handler, cold vs warm starts | Beginner | 15 min |
 | **Lambda** | [07 - Add a Library with a Layer](lambda/07_lambda_layers.md) | `ImportModuleError` without pandas, AWS SDK for pandas managed layer | Beginner | 15 min |
+| **Lambda** | [05 - Deploy a Function from S3 with CloudFormation](lambda/05_lambda_with_cloudformation.md) | Versioned S3 zip, CloudFormation template, execution role, object version updates | Intermediate | 25 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
