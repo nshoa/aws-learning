@@ -124,6 +124,21 @@ markmap:
     - SQS standard: scales out as fast as possible; course figures are +60 instances per minute and up to 1,000 batches at once (check the AWS docs for the current limits).
     - SQS FIFO: scales up to the number of active message groups; messages with the same group ID are processed in order.
 
+### Versions & Aliases
+
+- ![Lambda aliases: callers use the dev, prod and test aliases; dev points to $LATEST, test to version 2, and prod sends 95% to version 1 and 5% to version 2](../images/LambdaVersionsAndAliases.png)
+- **Versions**
+    - You always edit **`$LATEST`** (the only mutable version).
+    - **Publish** → a new numbered version (1, 2, 3, …), a frozen snapshot of code + configuration (**immutable**).
+    - Each version has its own ARN (`...:function:my-fn:2`) and can be invoked directly.
+- **Aliases**
+    - Named **pointers** to a version, e.g. `dev`, `test`, `prod`; each has its own ARN (`...:function:my-fn:prod`).
+    - **Mutable**: move the alias to release or roll back; callers keep the same name.
+    - Give triggers and destinations a stable target: point them at the alias, not at a version number.
+    - An alias cannot point to another alias.
+    - **Weighted alias** = canary: split traffic between two published versions (e.g. 95% v1 / 5% v2).
+- **Hands-on lab**: [Lambda Lab: Versions and Aliases with a Weighted Canary](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_versions_and_aliases/)
+
 ### Networking
 
 - **Default**: Runs outside your VPC, can access public internet/AWS APIs. Cannot access private VPC resources.
