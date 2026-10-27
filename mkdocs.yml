@@ -143,6 +143,7 @@ nav:
           - Run a Function Every Minute with EventBridge Scheduler: labs/lambda/02_lambda_with_eventbridge_schedule.md
           - Trigger a Function from an S3 Event Notification: labs/lambda/03_lambda_with_s3_event_notification.md
           - Event Source Mapping with an SQS Queue: labs/lambda/04_lambda_event_source_mapping_sqs.md
+          - Deploy a Function from S3 with CloudFormation: labs/lambda/05_lambda_with_cloudformation.md
           - Destinations for Asynchronous Invocations: labs/lambda/05_lambda_destinations.md
           - Timeout and Initialization Outside the Handler: labs/lambda/06_lambda_performance.md
           - Add a Library with a Layer: labs/lambda/07_lambda_layers.md
