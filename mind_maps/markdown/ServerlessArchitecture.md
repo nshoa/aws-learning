@@ -75,6 +75,14 @@ markmap:
         - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
 - **Hands-on lab**: [Lambda Lab: Timeout and Initialization Outside the Handler](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_performance/)
 
+### Layers
+
+- **Definition**: A zip archive of libraries, a custom runtime or other dependencies, shared across functions.
+- Extracted to `/opt` in the execution environment; Python imports from `/opt/python`.
+- Up to **5 layers** per function; function + layers must stay under **250 MB unzipped**.
+- Keeps the deployment package small; AWS publishes managed layers such as **AWS SDK for pandas**.
+- **Hands-on lab**: [Lambda Lab: Add a Library with a Layer](https://nshoa.github.io/aws-learning/labs/lambda/07_lambda_layers/)
+
 ### Destinations
 
 - Send the **result** of an **asynchronous** invocation to another service: **on success** and/or **on failure**.
