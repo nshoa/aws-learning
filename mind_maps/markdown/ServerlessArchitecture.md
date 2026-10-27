@@ -54,12 +54,14 @@ markmap:
 - **Integrations**: Triggered by or interacts with API Gateway, Kinesis, DynamoDB, S3, CloudFront, EventBridge, CloudWatch Logs, SNS, SQS, Cognito, etc..
 - **Pricing**: Per call ($0.2/M after free tier) and per duration (GB-seconds, free tier).
 - **Cold Starts**: Initial delay when invoking a function on a new/idle instance while code/dependencies are loaded.
+    - Put SDK clients and DB connections **outside the handler**: they run once in the init phase and are reused by warm invocations.
+    - Cold start `REPORT` lines show an `Init Duration`; warm starts do not.
 - **Provisioned Concurrency**: Keeps function instances initialized and ready, eliminating cold starts for predictable workloads. Can be managed by Application Auto Scaling.
 - **Lambda SnapStart**: Reduces cold start latency (up to 10x) for Java/Python/.NET by caching a snapshot of the initialized execution environment.
     - SnapStart enabled: function is pre-initialized → Invoke → Shutdown
     - SnapStart disabled: Init → Invoke → Shutdown
 - **Limits (Per Region)**
-    - Execution Time: Max 900 seconds (15 minutes).
+    - Execution Time: Max 900 seconds (15 minutes). Default timeout 3 seconds.
     - Memory: 128MB - 10GB.
     - Concurrency: 1000 concurrent executions default (soft limit).
     - Deployment Size: 50MB (zipped), 250MB (unzipped).
@@ -71,6 +73,7 @@ markmap:
     - Throttling
         - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
         - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
+- **Hands-on lab**: [Lambda Lab: Timeout and Initialization Outside the Handler](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_performance/)
 
 ### Destinations
 
