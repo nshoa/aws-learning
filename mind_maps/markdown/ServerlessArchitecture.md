@@ -139,6 +139,17 @@ markmap:
     - **Weighted alias** = canary: split traffic between two published versions (e.g. 95% v1 / 5% v2).
 - **Hands-on lab**: [Lambda Lab: Versions and Aliases with a Weighted Canary](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_versions_and_aliases/)
 
+### Function URL
+
+- **Definition**: A dedicated HTTPS endpoint for one function: `https://<url-id>.lambda-url.<region>.on.aws`.
+- Points to `$LATEST` or an **alias**, never to a numbered version.
+- **Auth type**
+    - `NONE`: public; the resource-based policy must still allow `*` to invoke the function.
+    - `AWS_IAM`: callers sign requests with SigV4.
+    - New URLs need both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction`.
+- Supports CORS and response streaming; no usage plans, API keys or caching (use API Gateway for those).
+- **Hands-on lab**: [Lambda Lab: Call a Function with a Function URL](https://nshoa.github.io/aws-learning/labs/lambda/08_lambda_function_url/)
+
 ### Networking
 
 - **Default**: Runs outside your VPC, can access public internet/AWS APIs. Cannot access private VPC resources.

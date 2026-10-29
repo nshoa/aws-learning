@@ -148,6 +148,7 @@ nav:
           - Destinations for Asynchronous Invocations: labs/lambda/05_lambda_destinations.md
           - Timeout and Initialization Outside the Handler: labs/lambda/06_lambda_performance.md
           - Add a Library with a Layer: labs/lambda/07_lambda_layers.md
+          - Call a Function with a Function URL: labs/lambda/08_lambda_function_url.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
