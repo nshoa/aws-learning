@@ -329,7 +329,15 @@ markmap:
         - Cross-region replication (Global Tables need Streams).
 - **Global Tables**: Multi-region, active-active tables with low-latency access for globally distributed applications. Requires Streams enabled.
     - Table US-EAST-1 ⇄ two-way replication ⇄ Table US-EAST-2
-- **TTL (Time To Live)**: Automatically deletes expired items based on a timestamp attribute. Reduces storage costs, helps with session management, compliance.
+- **TTL (Time To Live)**: automatically deletes items after an expiry timestamp.
+    - ![TTL on a Sessions table: items whose expires_at is in the future are kept, an expired item is still returned by reads until it is deleted, and an older expired item is deleted in the background](../images/DynamoDBTTL.png)
+    - The TTL attribute must be a **Number** holding a **Unix epoch timestamp in seconds** (e.g. `expires_at = 1793599200`).
+    - Deletes use **no WCU** → no extra cost.
+    - Expired items are deleted **within a few days**, not at the exact second.
+        - Until then they still show up in reads, queries and scans → filter them out (e.g. `expires_at > :now`).
+    - Deleted from the table and from its **LSIs and GSIs**.
+    - Each TTL delete enters **DynamoDB Streams** as a `REMOVE` record → can be used to archive or recover expired items.
+    - Use cases: keep only current items (sessions, temporary data) to cut storage, meet data retention rules.
 - **Backups**
     - **Point-in-Time Recovery (PITR)**: Continuous backups, restore to any second within the last 35 days. Creates a new table on restore.
     - **On-Demand Backups**: Full backups for long-term retention, manually deleted. Creates a new table on restore. Can manage via AWS Backup.
