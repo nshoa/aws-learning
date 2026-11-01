@@ -167,13 +167,31 @@ markmap:
 ### Definition
 
 - Fully managed, highly available NoSQL key-value and document database. Serverless, multi-AZ replication, scalable, fast/consistent performance (ms latency).
+- **Not relational**: no joins; you design the table around how the data is read.
+- **Massive scale**: distributed database for millions of requests per second, trillions of items and hundreds of TB.
+- **Security**: IAM controls access, authorization and administration (no DB users or passwords).
+- **Event driven**: DynamoDB Streams lets changes trigger processing (e.g. Lambda).
+- **Cost**: low cost with auto scaling; two **table classes**: **Standard** and **Standard-Infrequent Access (IA)** for rarely read data (cheaper storage, higher read/write cost).
 
 ### Core Concepts
 
-- **Tables**: Collections of Items.
-- **Items**: Rows/records in a table. Max size 400KB.
-- **Attributes**: Columns/fields within an item (can be added dynamically). Supports scalar, document, and set types.
-- **Primary Key**: Uniquely identifies items. Defined at table creation. Can be Partition Key only, or Partition Key + Sort Key.
+- **Tables**: Collections of Items; a table can hold an unlimited number of items.
+- **Items**: Rows/records in a table. Max size **400 KB**.
+- **Attributes**: Columns/fields within an item; new ones can be added at any time and an item may not have them (null).
+- **Data types**
+    - **Scalar**: String, Number, Binary, Boolean, Null.
+    - **Document**: List, Map.
+    - **Set**: String Set, Number Set, Binary Set.
+- **Primary Key**: Uniquely identifies items; chosen when the table is created.
+    - ![DynamoDB primary key options: a Users table keyed by user_id only, and an Orders table keyed by user_id plus order_date, where two orders share the same user_id with different dates](../images/DynamoDBPrimaryKeys.png)
+    - **Option 1 - Partition key (HASH)**
+        - Must be unique for each item.
+        - Must be "diverse" (many distinct values) so data spreads across partitions.
+        - Example: `user_id` for a users table.
+    - **Option 2 - Partition key + Sort key (HASH + RANGE)**
+        - The **combination** must be unique; many items can share a partition key.
+        - Items are grouped by partition key and ordered by sort key.
+        - Example: `user_id` + `order_date` for an orders table (one user, many orders).
 - **Read/Write Capacity Modes**
     - **Provisioned Mode**: Specify Read Capacity Units (RCU) and Write Capacity Units (WCU). Can be scaled manually or using Auto Scaling. Cost-effective for predictable workloads.
     - **On-Demand Mode**: Capacity scales automatically based on traffic. Pay per request, no planning needed. Good for unpredictable workloads.
