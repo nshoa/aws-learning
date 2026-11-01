@@ -297,7 +297,17 @@ markmap:
 
 ### Features
 
-- **DAX (DynamoDB Accelerator)**: Fully managed in-memory cache for DynamoDB reads. Provides microsecond latency for cached items. API-compatible with DynamoDB. Helps avoid read throttling (`ProvisionedThroughputExceededException`). Default TTL 5 mins.
+- **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
+    - ![DAX: the application sends GetItem, Query and Scan calls to a DAX cluster, which reads DynamoDB only on a cache miss; aggregated results the application computes go to ElastiCache instead](../images/DynamoDBDAX.png)
+    - **Microsecond** latency for cached reads and queries.
+    - Same API as DynamoDB → swap the client, no change to application logic.
+    - Fixes the **hot key** problem (one item read too often) and helps avoid read throttling (`ProvisionedThroughputExceededException`).
+    - Cache TTL **5 minutes** by default.
+    - Cluster of up to **10 nodes**, multi-AZ (at least **3 nodes** recommended for production).
+    - Secure: KMS encryption at rest, runs in your VPC, IAM, CloudTrail.
+    - **DAX vs ElastiCache**: use both together.
+        - DAX: caches individual items and `Query`/`Scan` results.
+        - ElastiCache: stores results the app computes itself (aggregations, e.g. daily totals).
 - **DynamoDB Streams**: Time-ordered sequence of item-level changes (create, update, delete). 24-hour data retention. Can trigger Lambda functions. Prerequisite for Global Tables. Alternative integration via Kinesis Data Streams for longer retention/more consumers.
     - Application → table → DynamoDB Streams → processing layer (KCL adapter, Lambda) → SNS / DDB table; or → Kinesis Data Streams → Firehose → Redshift / S3 / OpenSearch
 - **Global Tables**: Multi-region, active-active tables with low-latency access for globally distributed applications. Requires Streams enabled.
