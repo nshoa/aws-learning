@@ -308,8 +308,15 @@ markmap:
     - **DAX vs ElastiCache**: use both together.
         - DAX: caches individual items and `Query`/`Scan` results.
         - ElastiCache: stores results the app computes itself (aggregations, e.g. daily totals).
-- **DynamoDB Streams**: Time-ordered sequence of item-level changes (create, update, delete). 24-hour data retention. Can trigger Lambda functions. Prerequisite for Global Tables. Alternative integration via Kinesis Data Streams for longer retention/more consumers.
-    - Application → table → DynamoDB Streams → processing layer (KCL adapter, Lambda) → SNS / DDB table; or → Kinesis Data Streams → Firehose → Redshift / S3 / OpenSearch
+- **DynamoDB Streams**: ordered log of item-level changes (create, update, delete) in a table.
+    - ![DynamoDB Streams: the application writes to the Orders table, DynamoDB Streams is polled by Lambda or a KCL app that sends a welcome email through SNS or fills a derived table; the table's Kinesis integration feeds Kinesis Data Streams and Firehose into Redshift, S3 and OpenSearch](../images/DynamoDBStreams.png)
+    - Records kept for **24 hours**.
+    - Read by **AWS Lambda** (event source mapping) or **Kinesis Client Library (KCL)** apps.
+    - Or send changes to **Kinesis Data Streams** (longer retention, more consumers, Firehose to Redshift/S3/OpenSearch).
+    - Use cases
+        - React in real time, e.g. welcome email when a user item is created.
+        - Analytics; fill derived tables; index into OpenSearch.
+        - Cross-region replication (Global Tables need Streams).
 - **Global Tables**: Multi-region, active-active tables with low-latency access for globally distributed applications. Requires Streams enabled.
     - Table US-EAST-1 ⇄ two-way replication ⇄ Table US-EAST-2
 - **TTL (Time To Live)**: Automatically deletes expired items based on a timestamp attribute. Reduces storage costs, helps with session management, compliance.
