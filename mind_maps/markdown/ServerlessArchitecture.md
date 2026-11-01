@@ -242,6 +242,12 @@ markmap:
 ### Data Operations (APIs)
 
 - **Write**
+    - **Write types** at a glance:
+        - ![Write types on item post p-7 with likes = 10: concurrent SET writes end with the last value 12 and lose A's update; conditional writes IF likes = 10 let the first succeed and the second fail; atomic ADD 1 and ADD 2 both apply to give 13; a batch write puts or deletes many items in one call](../images/DynamoDBWriteTypes.png)
+        - **Concurrent**: plain writes to the same item → **last write wins**, earlier updates are lost.
+        - **Conditional**: first write that meets the condition wins, the other fails (see below).
+        - **Atomic**: `ADD` / `SET x = x + n` → every update is applied (see atomic counter).
+        - **Batch**: many items in one call (see Batch operations).
     - `PutItem`: create an item, or **replace the whole item** with the same primary key; consumes WCU.
     - `UpdateItem`: change only some attributes (creates the item if missing).
         - **Atomic counter**: increment a number in place, e.g. `SET views = views + 1`, no read needed.
