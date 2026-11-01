@@ -295,6 +295,23 @@ markmap:
     - Has its **own RCU/WCU** to provision; reads are eventually consistent only.
     - ⚠️ **Throttling**: if writes to the GSI are throttled, writes to the **main table are throttled too**, even when the table has spare WCU → choose the GSI partition key and its WCU carefully.
 
+### Transactions
+
+- **All-or-nothing** writes/reads on several items, in one or more tables → **ACID** (atomicity, consistency, isolation, durability).
+- ![DynamoDB transaction: the application sends one TransactWriteItems request that debits acc-a only if its balance is at least 45, credits acc-b in the Accounts table and puts a transfer item in the Transfers table; all three writes succeed or none do](../images/DynamoDBTransactions.png)
+- **APIs**
+    - `TransactGetItems`: one or more `GetItem`.
+    - `TransactWriteItems`: one or more `PutItem`, `UpdateItem`, `DeleteItem` (each can carry a condition).
+- **Modes**
+    - Read: eventually consistent, strongly consistent, **transactional**.
+    - Write: standard, **transactional**.
+- **Cost: 2x** WCU and RCU, because DynamoDB does two steps per item (**prepare** + **commit**).
+    - Transactional WCU = writes per second × ceil(item KB) × 2.
+        - e.g. 4 writes/s of 3 KB → 4 × 3 × 2 = **24 WCU**.
+    - Transactional RCU = reads per second × ceil(item KB / 4) × 2.
+        - e.g. 10 reads/s of 6 KB → rounded to 8 KB → 10 × 2 × 2 = **40 RCU**.
+- Use cases: money transfers, order processing (order + stock), multiplayer game state.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
