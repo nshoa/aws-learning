@@ -241,6 +241,11 @@ markmap:
         - **Atomic counter**: increment a number in place, e.g. `SET views = views + 1`, no read needed.
     - **Conditional writes**: put/update/delete only if a condition holds (e.g. `attribute_not_exists(user_id)`), else an error.
         - Protects items from concurrent writers; no performance cost.
+        - **Optimistic locking**: a strategy built on conditional writes so an item is not overwritten by someone who read an older copy.
+            - ![Optimistic locking: app instances A and B both read order o-1001 at version 1; A updates it if version = 1 and bumps it to 2, then B's update with the same condition fails with ConditionalCheckFailedException](../images/DynamoDBOptimisticLocking.png)
+            - Each item carries a **version number** attribute.
+            - Update/delete with `IF version = <the version you read>` and increment the version in the same write.
+            - If another writer got there first → `ConditionalCheckFailedException` → re-read the item and retry.
 - **Read**
     - `GetItem`: one item by its full primary key (partition key, plus sort key if the table has one).
         - Eventually consistent by default; strongly consistent costs more RCU and can be slower.
