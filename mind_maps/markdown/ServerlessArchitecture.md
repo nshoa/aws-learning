@@ -312,6 +312,16 @@ markmap:
         - e.g. 10 reads/s of 6 KB → rounded to 8 KB → 10 × 2 × 2 = **40 RCU**.
 - Use cases: money transfers, order processing (order + stock), multiplayer game state.
 
+### Session State Store
+
+- Common use: keep web/app **session state** in a DynamoDB table so every instance behind the load balancer sees the same session.
+- ![Session state store comparison: DynamoDB and ElastiCache are shared key/value stores, EFS is shared only when mounted on EC2, EBS and instance store are local to one instance, S3 is shared but has higher latency](../images/DynamoDBSessionStateStore.png)
+- **vs ElastiCache**: both key/value; ElastiCache is in-memory (faster), DynamoDB is serverless.
+- **vs EFS**: EFS must be mounted on EC2 instances as a network drive.
+- **vs EBS / Instance Store**: tied to one instance → local cache only, not shared.
+- **vs S3**: higher latency, not meant for small, frequently changing objects.
+- Tip: put an expiry attribute on each session and turn on **TTL** to clean up old sessions.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
