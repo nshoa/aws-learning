@@ -233,6 +233,43 @@ markmap:
     - Causes: **hot key** (one popular partition key), **hot partition**, **very large items** (cost more units).
     - Fixes: **exponential backoff** (built into the SDKs), spread partition keys, **DAX** for read-heavy hot items.
 
+### Data Operations (APIs)
+
+- **Write**
+    - `PutItem`: create an item, or **replace the whole item** with the same primary key; consumes WCU.
+    - `UpdateItem`: change only some attributes (creates the item if missing).
+        - **Atomic counter**: increment a number in place, e.g. `SET views = views + 1`, no read needed.
+    - **Conditional writes**: put/update/delete only if a condition holds (e.g. `attribute_not_exists(user_id)`), else an error.
+        - Protects items from concurrent writers; no performance cost.
+- **Read**
+    - `GetItem`: one item by its full primary key (partition key, plus sort key if the table has one).
+        - Eventually consistent by default; strongly consistent costs more RCU and can be slower.
+        - `ProjectionExpression`: return only the attributes you need.
+    - ![Query vs Scan on an Orders table: Query reads only the two items of one user in a date range, Scan reads all six items and the filter drops four of them, so Scan pays RCU for every item](../images/DynamoDBQueryVsScan.png)
+    - `Query`: items of **one partition key**.
+        - `KeyConditionExpression`: partition key with `=` (required); sort key with `=`, `<`, `<=`, `>`, `>=`, `BETWEEN`, `begins_with` (optional).
+        - `FilterExpression`: extra filter on **non-key** attributes, applied after the read and before the result is returned.
+        - Returns up to `Limit` items or **1 MB**, then paginate; works on the table, an LSI or a GSI.
+    - `Scan`: reads the **entire table**, then filters → slow and RCU-hungry.
+        - Up to 1 MB per call, paginate to continue; reduce impact with `Limit` or smaller pages and pauses.
+        - **Parallel scan**: several workers scan segments at once → faster but uses even more RCU.
+        - `ProjectionExpression` and `FilterExpression` only shrink the response, not the RCU.
+- **Delete**
+    - `DeleteItem`: one item, optionally conditional.
+    - `DeleteTable`: drops the table and all items, much faster than deleting items one by one.
+- **Batch operations**: fewer API calls → lower latency; work runs in parallel; part of a batch can fail → retry the rest.
+    - `BatchWriteItem`
+        - Up to **25** `PutItem`/`DeleteItem` per call, up to **16 MB** total, 400 KB per item.
+        - No updates (use `UpdateItem`).
+        - Failed writes come back in `UnprocessedItems` → retry with exponential backoff or add WCU.
+    - `BatchGetItem`
+        - Up to **100** items, up to **16 MB**, from one or more tables; fetched in parallel.
+        - Failed reads come back in `UnprocessedKeys` → retry with backoff or add RCU.
+- **PartiQL**: SQL-compatible syntax for DynamoDB.
+    - `SELECT`, `INSERT`, `UPDATE`, `DELETE`; can query several tables.
+    - e.g. `SELECT order_date, total FROM Orders WHERE user_id = 'u-2c91'`.
+    - Run it from the console, NoSQL Workbench, the DynamoDB API, the AWS CLI or the SDKs.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: Fully managed in-memory cache for DynamoDB reads. Provides microsecond latency for cached items. API-compatible with DynamoDB. Helps avoid read throttling (`ProvisionedThroughputExceededException`). Default TTL 5 mins.
