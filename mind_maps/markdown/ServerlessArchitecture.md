@@ -355,6 +355,20 @@ markmap:
     - Option 2: **AWS Glue** ETL job → reads the source, writes the target (can transform data on the way).
     - Option 3: your own code → `Scan` + `PutItem` / `BatchWriteItem`.
 
+### Security
+
+- **Network**: **VPC endpoint** (gateway) to reach DynamoDB without going over the Internet.
+- **Access**: fully controlled by **IAM** (no database users).
+- **Encryption**: at rest with **AWS KMS**, in transit with **SSL/TLS**.
+- **Users access DynamoDB directly** (no backend in between)
+    - ![Direct access with fine-grained control: users log in to an identity provider, exchange the token at Cognito Identity Pools for temporary AWS credentials of an IAM role, then call DynamoDB; the role's dynamodb:LeadingKeys condition limits them to items keyed by their own identity ID](../images/DynamoDBFineGrainedAccess.png)
+    - Log in with an identity provider: Cognito User Pools, Google, Facebook, OpenID Connect, SAML.
+    - **Cognito Identity Pools** (or web identity federation) exchange the token for **temporary AWS credentials** of an IAM role.
+- **Fine-grained access control**: add a **Condition** to that role's policy.
+    - `dynamodb:LeadingKeys` → **row-level**: only items whose partition key matches, e.g. `"dynamodb:LeadingKeys": ["${cognito-identity.amazonaws.com:sub}"]` with `ForAllValues:StringEquals`.
+    - `dynamodb:Attributes` → **column-level**: only the listed attributes can be read or written.
+    - Docs: [Using IAM policy conditions for fine-grained access control](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/specifying-conditions.html)
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
