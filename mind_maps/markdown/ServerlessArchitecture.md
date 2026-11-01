@@ -321,6 +321,7 @@ markmap:
     - Read by **Kinesis Client Library (KCL)** apps or **AWS Lambda**.
         - Lambda needs an **event source mapping** that polls the stream and invokes the function **synchronously** with a batch (see Lambda → Event Source Mapping).
         - The function's execution role needs permission to read the stream.
+    - **Hands-on lab**: [DynamoDB Lab: Process DynamoDB Streams with Lambda](https://nshoa.github.io/aws-learning/labs/dynamodb/01_dynamodb_streams_with_lambda/)
     - Or send changes to **Kinesis Data Streams** (longer retention, more consumers, Firehose to Redshift/S3/OpenSearch).
     - Use cases
         - React in real time, e.g. welcome email when a user item is created.

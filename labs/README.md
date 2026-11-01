@@ -42,6 +42,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **Lambda** | [05 - Deploy a Function from S3 with CloudFormation](lambda/05_lambda_with_cloudformation.md) | Versioned S3 zip, CloudFormation template, execution role, object version updates | Intermediate | 25 min |
 | **Lambda** | [06 - Versions and Aliases with a Weighted Canary](lambda/06_lambda_versions_and_aliases.md) | Publish versions, dev/test/prod aliases, 90/10 weighted alias | Beginner | 20 min |
 | **Lambda** | [08 - Call a Function with a Function URL](lambda/08_lambda_function_url.md) | Function URL with auth type NONE, resource-based policy, browser and curl calls | Beginner | 10 min |
+| **DynamoDB** | [01 - Process DynamoDB Streams with Lambda](dynamodb/01_dynamodb_streams_with_lambda.md) | Stream view types, DynamoDB trigger, execution role permissions, INSERT/MODIFY records | Beginner | 20 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
