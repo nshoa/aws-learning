@@ -270,6 +270,26 @@ markmap:
     - e.g. `SELECT order_date, total FROM Orders WHERE user_id = 'u-2c91'`.
     - Run it from the console, NoSQL Workbench, the DynamoDB API, the AWS CLI or the SDKs.
 
+### Secondary Indexes
+
+- Query on something other than the primary key without a `Scan`; an index is a re-keyed copy of the table's items that DynamoDB keeps in sync.
+- ![Secondary indexes on an Orders table: the base table is keyed by user_id and order_date, an LSI keeps user_id but sorts by total, a GSI is keyed by status and order_date; GSI write throttling also throttles the table](../images/DynamoDBSecondaryIndexes.png)
+- Index keys are **scalar** attributes (String, Number or Binary).
+- **Attribute projections**: which attributes are copied into the index.
+    - `KEYS_ONLY`: index keys + table primary key.
+    - `INCLUDE`: keys + the attributes you list.
+    - `ALL`: every attribute (biggest index, no extra reads).
+- **LSI (Local Secondary Index)**
+    - **Same partition key** as the table, **different sort key** (e.g. a user's orders sorted by `total` instead of `order_date`).
+    - Must be defined **when the table is created**; up to **5** per table.
+    - Uses the table's RCU/WCU → no special throttling concerns.
+    - Supports strongly consistent reads.
+- **GSI (Global Secondary Index)**
+    - **New primary key**: partition key, or partition + sort key, from any attributes (e.g. `status` + `order_date` to list all pending orders).
+    - Speeds up queries on non-key attributes; can be **added or changed after** the table is created.
+    - Has its **own RCU/WCU** to provision; reads are eventually consistent only.
+    - ⚠️ **Throttling**: if writes to the GSI are throttled, writes to the **main table are throttled too**, even when the table has spare WCU → choose the GSI partition key and its WCU carefully.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: Fully managed in-memory cache for DynamoDB reads. Provides microsecond latency for cached items. API-compatible with DynamoDB. Helps avoid read throttling (`ProvisionedThroughputExceededException`). Default TTL 5 mins.
