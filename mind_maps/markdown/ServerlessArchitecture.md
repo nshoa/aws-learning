@@ -334,6 +334,16 @@ markmap:
 - **vs S3**: higher latency, not meant for small, frequently changing objects.
 - Tip: put an expiry attribute on each session and turn on **TTL** to clean up old sessions.
 
+### Patterns with S3
+
+- ![DynamoDB with S3: in the large objects pattern the writer uploads a photo to S3 and stores its metadata and S3 key in a Products table, then a reader gets the metadata and downloads the photo; in the metadata index pattern an S3 upload invokes Lambda, which stores the object's metadata in a table that a metadata API queries for clients](../images/DynamoDBWithS3Patterns.png)
+- **Large objects pattern**: items max out at **400 KB**, so keep big files in S3 and only a pointer in DynamoDB.
+    - Write: upload the object to S3, then store its metadata + **S3 key/URL** in the table.
+    - Read: get the item from DynamoDB, then download the object from S3.
+- **Indexing S3 object metadata**: S3 cannot be queried by attributes, so build an index in DynamoDB.
+    - S3 upload → **event notification** → Lambda → writes the object's metadata (key, size, owner, date) to a table.
+    - An API on top of the table answers: objects by date range, total storage per customer, objects with given attributes.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
