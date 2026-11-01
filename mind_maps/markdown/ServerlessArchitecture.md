@@ -232,6 +232,12 @@ markmap:
     - Exceeding RCU/WCU → `ProvisionedThroughputExceededException`.
     - Causes: **hot key** (one popular partition key), **hot partition**, **very large items** (cost more units).
     - Fixes: **exponential backoff** (built into the SDKs), spread partition keys, **DAX** for read-heavy hot items.
+- **Write sharding**: spread writes for a few popular key values across many partitions.
+    - ![Write sharding for a voting app: with candidate_id as the partition key only two partitions are hot; adding a suffix 1 to 4 gives eight key values and an even load, and counting votes means querying all eight keys](../images/DynamoDBWriteSharding.png)
+    - Problem: e.g. a vote table keyed by `candidate_id` with 2 candidates → only 2 key values → **hot partitions**.
+    - Fix: add a **suffix** to the partition key value, e.g. `cand-A#1` … `cand-A#4`.
+    - **Random suffix**: pick 1..N at random → even spread; to read, query all N keys and merge.
+    - **Calculated suffix**: derive it from another attribute (e.g. hash of `voter_id` mod N) → even spread and you can compute where one item lives.
 
 ### Data Operations (APIs)
 
