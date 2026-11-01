@@ -310,8 +310,17 @@ markmap:
         - ElastiCache: stores results the app computes itself (aggregations, e.g. daily totals).
 - **DynamoDB Streams**: ordered log of item-level changes (create, update, delete) in a table.
     - ![DynamoDB Streams: the application writes to the Orders table, DynamoDB Streams is polled by Lambda or a KCL app that sends a welcome email through SNS or fills a derived table; the table's Kinesis integration feeds Kinesis Data Streams and Firehose into Redshift, S3 and OpenSearch](../images/DynamoDBStreams.png)
-    - Records kept for **24 hours**.
-    - Read by **AWS Lambda** (event source mapping) or **Kinesis Client Library (KCL)** apps.
+    - Records kept for **24 hours**; only changes made **after** the stream is enabled (no back-fill).
+    - **Stream view type**: what each record contains.
+        - ![Stream view types for one update that changes an order's status from PENDING to SHIPPED: KEYS_ONLY holds the keys, NEW_IMAGE the item after, OLD_IMAGE the item before, NEW_AND_OLD_IMAGES both](../images/DynamoDBStreamViewTypes.png)
+        - `KEYS_ONLY`: key attributes of the changed item.
+        - `NEW_IMAGE`: whole item after the change.
+        - `OLD_IMAGE`: whole item before the change.
+        - `NEW_AND_OLD_IMAGES`: both.
+    - Made of **shards** like Kinesis Data Streams, but AWS manages them (no shard provisioning).
+    - Read by **Kinesis Client Library (KCL)** apps or **AWS Lambda**.
+        - Lambda needs an **event source mapping** that polls the stream and invokes the function **synchronously** with a batch (see Lambda → Event Source Mapping).
+        - The function's execution role needs permission to read the stream.
     - Or send changes to **Kinesis Data Streams** (longer retention, more consumers, Firehose to Redshift/S3/OpenSearch).
     - Use cases
         - React in real time, e.g. welcome email when a user item is created.
