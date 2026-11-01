@@ -192,9 +192,46 @@ markmap:
         - The **combination** must be unique; many items can share a partition key.
         - Items are grouped by partition key and ordered by sort key.
         - Example: `user_id` + `order_date` for an orders table (one user, many orders).
-- **Read/Write Capacity Modes**
-    - **Provisioned Mode**: Specify Read Capacity Units (RCU) and Write Capacity Units (WCU). Can be scaled manually or using Auto Scaling. Cost-effective for predictable workloads.
-    - **On-Demand Mode**: Capacity scales automatically based on traffic. Pay per request, no planning needed. Good for unpredictable workloads.
+
+### Read/Write Capacity
+
+- **Capacity modes**: how the table's read/write throughput is managed; you can switch between them (course: once every 24 hours).
+    - **Provisioned**
+        - You set reads/writes per second up front: **RCU** (reads) and **WCU** (writes); you pay for what you provision.
+        - Needs capacity planning; optional **auto scaling** adjusts RCU/WCU to demand. Fits predictable traffic.
+        - Short spikes above the limit use **burst capacity**; once it is used up → `ProvisionedThroughputExceededException` → retry with **exponential backoff**.
+    - **On-Demand (default)**
+        - Scales up and down with the traffic; no RCU/WCU planning, effectively no throttling.
+        - Billed per request: **RRU** (read request units, same size rules as RCU) and **WRU** (write request units, same as WCU).
+        - Costs more per request (course: about 2.5x provisioned). Fits unknown or spiky traffic.
+- **WCU (write capacity unit)**
+    - 1 WCU = **1 write per second** for an item up to **1 KB**; item size is rounded **up** to the next KB.
+    - Formula: writes per second × ceil(item size in KB).
+    - e.g. 8 writes/s of 3 KB → 8 × 3 = **24 WCU**.
+    - e.g. 5 writes/s of 2.3 KB → rounded to 3 KB → **15 WCU**.
+    - e.g. 300 writes/min of 1 KB → 5 writes/s → **5 WCU**.
+- **Read consistency**
+    - ![Read consistency: the application writes to replica 1, which replicates to replicas 2 and 3; an eventually consistent read from replica 3 may return stale data](../images/DynamoDBReadConsistency.png)
+    - **Eventually consistent (default)**: a read right after a write may return old data while replicas catch up.
+    - **Strongly consistent**: always returns the latest write; set `ConsistentRead=true` on `GetItem`, `BatchGetItem`, `Query`, `Scan`; costs **2x** the RCU.
+- **RCU (read capacity unit)**
+    - 1 RCU = **1 strongly consistent read** or **2 eventually consistent reads** per second for an item up to **4 KB**; size is rounded **up** to a multiple of 4 KB.
+    - Formula: reads per second × ceil(size / 4 KB), then ÷ 2 if eventually consistent.
+    - e.g. 20 strong reads/s of 4 KB → **20 RCU**.
+    - e.g. 20 eventual reads/s of 8 KB → 20 × 2 ÷ 2 = **20 RCU**.
+    - e.g. 6 strong reads/s of 5 KB → rounded to 8 KB → 6 × 2 = **12 RCU**.
+- **Partitions (internal)**
+    - ![Partitions: the application writes items, DynamoDB hashes each partition key and stores the item in partition 1, 2 or 3](../images/DynamoDBPartitions.png)
+    - Data lives in partitions; a **hash of the partition key** decides which one.
+    - Course formula for the number of partitions:
+        - By capacity = RCU / 3000 + WCU / 1000.
+        - By size = total size / 10 GB.
+        - Partitions = ceil(max(by capacity, by size)); e.g. 6000 RCU, 2000 WCU, 25 GB → max(4, 2.5) → **4**.
+    - RCU and WCU are **spread evenly** across partitions.
+- **Throttling**
+    - Exceeding RCU/WCU → `ProvisionedThroughputExceededException`.
+    - Causes: **hot key** (one popular partition key), **hot partition**, **very large items** (cost more units).
+    - Fixes: **exponential backoff** (built into the SDKs), spread partition keys, **DAX** for read-heavy hot items.
 
 ### Features
 
