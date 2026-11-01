@@ -344,6 +344,17 @@ markmap:
     - S3 upload → **event notification** → Lambda → writes the object's metadata (key, size, owner, date) to a table.
     - An API on top of the table answers: objects by date range, total storage per customer, objects with given attributes.
 
+### Operations
+
+- **Table cleanup** (remove all items)
+    - Option 1: `Scan` + `DeleteItem` → very slow, uses RCU and WCU, expensive.
+    - Option 2: **drop the table and recreate it** → fast, efficient, cheap.
+- **Copying a table**
+    - ![Copying a DynamoDB table: back up with AWS Backup and restore into a new table, read and write with an AWS Glue ETL job, or Scan with your own code and write with PutItem or BatchWriteItem](../images/DynamoDBCopyTable.png)
+    - Option 1: **AWS Backup** → back up, then restore into a new table.
+    - Option 2: **AWS Glue** ETL job → reads the source, writes the target (can transform data on the way).
+    - Option 3: your own code → `Scan` + `PutItem` / `BatchWriteItem`.
+
 ### Features
 
 - **DAX (DynamoDB Accelerator)**: fully managed, highly available **in-memory cache** in front of DynamoDB.
