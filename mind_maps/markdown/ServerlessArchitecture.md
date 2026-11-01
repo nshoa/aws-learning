@@ -412,12 +412,14 @@ markmap:
     - Deleted from the table and from its **LSIs and GSIs**.
     - Each TTL delete enters **DynamoDB Streams** as a `REMOVE` record → can be used to archive or recover expired items.
     - Use cases: keep only current items (sessions, temporary data) to cut storage, meet data retention rules.
-- **Backups**
-    - **Point-in-Time Recovery (PITR)**: Continuous backups, restore to any second within the last 35 days. Creates a new table on restore.
+- **Backups** (no performance impact on the table)
+    - **Point-in-Time Recovery (PITR)**: Continuous backups, restore to any second within the last 35 days (like RDS). Creates a new table on restore.
     - **On-Demand Backups**: Full backups for long-term retention, manually deleted. Creates a new table on restore. Can manage via AWS Backup.
 - **S3 Integration**
     - **Export to S3**: Export table data (PITR required) to S3 bucket (JSON or ION format) for analytics, auditing. Doesn't consume read capacity.
     - **Import from S3**: Load data from S3 (CSV, JSON, ION) into a **new** DynamoDB table. Doesn't consume write capacity.
+- **DynamoDB Local**: run DynamoDB on your machine to develop and test without the web service (no Internet needed).
+- **AWS DMS (Database Migration Service)**: migrate data into DynamoDB from MongoDB, Oracle, MySQL, S3, etc.
 
 ## Amazon API Gateway
 
