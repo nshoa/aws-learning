@@ -80,22 +80,12 @@
 
 - With the canary at 50%, repeated calls return both messages (step 5).
 - After **Promote canary**, every call returns `"Hello from Lambda version 2!"`.
-- CLI alternative: set the two values first. The API ID is the first part of the invoke URL
-    (`https://abc123defg.execute-api.ap-northeast-1.amazonaws.com/...` → `abc123defg`).
+- CLI alternative:
 
     ```bash
-    API_ID=<your-api-id>
-    REGION=<your-region>   # e.g. ap-northeast-1
-
-    for i in $(seq 1 10); do
-      curl -s "https://$API_ID.execute-api.$REGION.amazonaws.com/canary/canary-demo"; echo
-    done
-    aws apigateway get-stage --rest-api-id "$API_ID" --stage-name canary \
-      --region "$REGION" --query canarySettings
+    for i in $(seq 1 10); do curl -s https://API_ID.execute-api.REGION.amazonaws.com/canary/canary-demo; echo; done
+    aws apigateway get-stage --rest-api-id API_ID --stage-name canary --query canarySettings
     ```
-
-    Expected: a mix of `"Hello from Lambda version 1!"` and `"Hello from Lambda version 2!"` (about half
-    each, e.g. 6/4 over 10 calls), and `canarySettings` with `"percentTraffic": 50.0`.
 
 ## Troubleshooting
 
@@ -105,8 +95,6 @@
 | Every call returns version 2 right away | The canary was promoted, or the stage had no canary when you deployed | Check the **Canary** tab; recreate it and redeploy |
 | 500 `Internal server error` from one side of the split | No invoke permission for that version | Re-select the function in the integration request so the console adds it, or run `aws lambda add-permission` for `:1` / `:2` |
 | `{"message":"Missing Authentication Token"}` | Wrong path | Call `/canary/canary-demo` (stage, then resource) |
-| `zsh: no matches found: arn:aws:execute-api:...` | An ARN was passed to `--rest-api-id`, and zsh expands its unquoted `*` as a file pattern | `--rest-api-id` takes only the API ID (e.g. `abc123defg`); quote any value that contains `*` |
-| `You must specify a region` | No default Region in the local AWS CLI profile | Add `--region "$REGION"`, or run the commands in CloudShell |
 
 ## Cleanup
 
