@@ -54,12 +54,17 @@
     and click **Create method**.
 4. **Test** tab > **Test**: the body is the function's object as is, `{"example": "Hello"}`.
 
+    ![Test of GET /mapping-template before any template returns status 200 and {"example": "Hello"}](../shared_assets/api_gateway/04_test-before-template.png)
+
 > 💡 With proxy integration **on**, API Gateway hands the whole request to Lambda and returns its answer
 > unchanged, so the integration request and response have no mapping templates. Turn it off to use them.
 
 ### 3. Add a Mapping Template to the Integration Response
 
-1. Open the method's **Integration response** tab > the default response (`200`) > **Edit**.
+1. Open the method's **Integration response** tab. The **Default - Response 200** passes the Lambda result through
+    unchanged: **Content handling** Passthrough, **Mapping templates (0)**. Click **Edit**.
+
+    ![Default integration response 200 with passthrough content handling and no mapping templates](../shared_assets/api_gateway/04_integration-response-no-template.png)
 2. Under **Mapping templates**, click **Add mapping template**, **Content type** `application/json`, and enter:
 
     ```json
