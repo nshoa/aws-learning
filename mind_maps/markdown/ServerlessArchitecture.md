@@ -440,6 +440,22 @@ markmap:
 - Generate **SDKs** and API specifications.
 - **Cache** API responses.
 
+### Deployments & Stages
+
+- Editing resources and methods changes **nothing live** → you must **deploy** the API to a **stage** (a common source of confusion).
+- **Stages**: as many as you want, any names (`dev`, `test`, `prod`, `v1`, `v2`…); each has its own URL and settings (throttling, caching, logs, variables).
+- Each stage keeps a **history of deployments** → roll back to an earlier one.
+- **Breaking change**: keep the old stage for existing clients and publish a new stage with a new URL.
+    - ![Breaking change with stages: clients on v1 keep calling /v1 which invokes the v1 Lambda, while clients on v2 use the new /v2 URL which invokes the v2 Lambda](../images/APIGatewayStagesV1V2.png)
+- **Stage variables**: like environment variables, but per stage → for config that changes often.
+    - Usable in: the **Lambda function ARN**, the **HTTP endpoint** URL, **mapping templates**.
+    - Syntax: `${stageVariables.name}`; with a Lambda proxy integration the function sees them in `event["stageVariables"]`.
+    - Use cases: point each stage at its own HTTP backend (dev, test, prod); pass config to Lambda.
+- **Stage variables + Lambda aliases**: the integration calls `my-fn:${stageVariables.alias}` → each stage invokes its own alias.
+    - ![Stage variables and Lambda aliases: stage prod invokes alias prod which sends 90% to version 3 and 10% to version 4, stage test invokes alias test which sends 100% to version 4, stage dev invokes alias dev which points to $LATEST](../images/APIGatewayStageVariables.png)
+    - Release by moving alias weights in Lambda (e.g. prod 90% v3 / 10% v4) → **no API Gateway change or redeploy**.
+    - Each alias needs a resource-based permission so API Gateway may invoke it (`aws lambda add-permission --function-name my-fn:prod …`).
+
 ### Integrations
 
 - ![API Gateway integration types: clients call API Gateway, which invokes a Lambda function that does CRUD on DynamoDB, proxies HTTP to an ALB or on-premises API, or calls an AWS service such as Kinesis Data Streams feeding Firehose and S3](../images/APIGatewayIntegrations.png)
