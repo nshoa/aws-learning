@@ -30,8 +30,8 @@
 
 ### 1. Add a Method that Calls Version 1
 
-1. Open the API `DVA_DemoAPIGatewayStages` > **Resources** > **Create resource**, e.g. **Resource name** `version`.
-2. On `/version` click **Create method**: **Method type** `GET`, **Integration type** Lambda function,
+1. Open the API `DVA_DemoAPIGatewayStages` > **Resources** > **Create resource**, e.g. **Resource name** `canary-demo`.
+2. On `/canary-demo` click **Create method**: **Method type** `GET`, **Integration type** Lambda function,
     turn on **Lambda proxy integration**, and enter the ARN of **version 1**:
 
     ```text
@@ -44,7 +44,7 @@
 ### 2. Deploy a New Stage
 
 1. **Deploy API** > **New stage**, **Stage name** `canary` > **Deploy**.
-2. Open `https://API_ID.execute-api.REGION.amazonaws.com/canary/version`: it returns `"Hello from Lambda version 1!"`.
+2. Open `https://API_ID.execute-api.REGION.amazonaws.com/canary/canary-demo`: it returns `"Hello from Lambda version 1!"`.
 
 ### 3. Turn on the Canary for the Stage
 
@@ -59,7 +59,7 @@
 
 ### 4. Point the Method at Version 2 and Deploy to the Canary
 
-1. **Resources** > `/version` > `GET` > **Integration request** > **Edit**.
+1. **Resources** > `/canary-demo` > `GET` > **Integration request** > **Edit**.
 2. Change the Lambda function to **version 2** and click **Save** (the console adds the permission for `:2`):
 
     ```text
@@ -71,7 +71,7 @@
 
 ### 5. Watch the Split, Then Promote or Roll Back
 
-1. Reload `/canary/version` several times: about half of the answers are `version 1!`, the other half `version 2!`.
+1. Reload `/canary/canary-demo` several times: about half of the answers are `version 1!`, the other half `version 2!`.
 2. If version 2 looks healthy, open the stage's **Canary** tab > **Promote canary**: the canary deployment
     becomes the base and gets 100% of the traffic.
 3. To roll back instead, **Delete** the canary: all traffic returns to the base deployment (version 1).
@@ -83,7 +83,7 @@
 - CLI alternative:
 
     ```bash
-    for i in $(seq 1 10); do curl -s https://API_ID.execute-api.REGION.amazonaws.com/canary/version; echo; done
+    for i in $(seq 1 10); do curl -s https://API_ID.execute-api.REGION.amazonaws.com/canary/canary-demo; echo; done
     aws apigateway get-stage --rest-api-id API_ID --stage-name canary --query canarySettings
     ```
 
@@ -94,7 +94,7 @@
 | Every call still returns version 1 | The change was saved but not deployed, or deployed before the canary existed | Create the canary first, then **Deploy API** to the `canary` stage |
 | Every call returns version 2 right away | The canary was promoted, or the stage had no canary when you deployed | Check the **Canary** tab; recreate it and redeploy |
 | 500 `Internal server error` from one side of the split | No invoke permission for that version | Re-select the function in the integration request so the console adds it, or run `aws lambda add-permission` for `:1` / `:2` |
-| `{"message":"Missing Authentication Token"}` | Wrong path | Call `/canary/version` (stage, then resource) |
+| `{"message":"Missing Authentication Token"}` | Wrong path | Call `/canary/canary-demo` (stage, then resource) |
 
 ## Cleanup
 
