@@ -1,13 +1,13 @@
 # ☁️ AWS Learning
 
-[![CI](https://github.com/nshoa/aws-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/nshoa/aws-learning/actions/workflows/ci.yml)
+[![CI](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml)
 
 My study repository for AWS certifications — visual mind maps, quick-recall
 cheatsheets, hands-on labs, and exam practice. Built mostly while following
 Stephane Maarek's courses (SAA-C03 / DVA-C01).
 
-📖 **Read it as a website:** <https://nshoa.github.io/aws-learning/> (searchable, with
-[interactive mind maps](https://nshoa.github.io/aws-learning/mind-maps/)).
+📖 **Read it as a website:** <https://hoans-swe.github.io/aws-learning/> (searchable, with
+[interactive mind maps](https://hoans-swe.github.io/aws-learning/mind-maps/)).
 
 ## 📚 What's inside
 

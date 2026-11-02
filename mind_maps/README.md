@@ -154,8 +154,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">EC2</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/EC2.png" alt="EC2" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/EC2.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/EC2.png" alt="EC2" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -165,8 +165,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DATABASES</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DATABASES.png" alt="AWS DATABASES" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DATABASES.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DATABASES.png" alt="AWS DATABASES" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -176,8 +176,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">ROUTE 53</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ROUTE53.png" alt="Route 53" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/ROUTE53.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/ROUTE53.png" alt="Route 53" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -187,8 +187,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">S3</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/S3.png" alt="S3" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/S3.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/S3.png" alt="S3" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -198,8 +198,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">CLOUDFRONT & GLOBAL ACCELERATOR</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" alt="CloudFront & Global Accelerator" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/CloudFront&GlobalAccelerator.png" alt="CloudFront & Global Accelerator" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -209,8 +209,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">STORAGE EXTRA</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/StorageExtra.png" alt="Storage Extra" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/StorageExtra.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/StorageExtra.png" alt="Storage Extra" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -220,8 +220,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DECOUPLING APPLICATIONS: SQS, SNS, KINESIS, ACTIVE MQ</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DecouplingApplications.png" alt="Decoupling Applications: SQS, SNS, Kinesis, Active MQ" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DecouplingApplications.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DecouplingApplications.png" alt="Decoupling Applications: SQS, SNS, Kinesis, Active MQ" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -231,8 +231,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">CONTAINERS ON AWS: ECS, FARGATE, ECR & EKS</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Containers.png" alt="Containers on AWS: ECS, Fargate, ECR & EKS" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/Containers.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/Containers.png" alt="Containers on AWS: ECS, Fargate, ECR & EKS" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -242,8 +242,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">SERVERLESS ARCHITECTURE</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" alt="Serverless Architecture" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/ServerlessArchitecture.png" alt="Serverless Architecture" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -253,8 +253,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DATA & ANALYTICS</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DataAnalytics.png" alt="Data & Analytics" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DataAnalytics.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DataAnalytics.png" alt="Data & Analytics" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -264,8 +264,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">MACHINE LEARNING</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MachineLearning.png" alt="Machine Learning" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/MachineLearning.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/MachineLearning.png" alt="Machine Learning" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -275,8 +275,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">MONITORING & AUDIT: CLOUDWATCH, CLOUDTRAIL & CONFIG</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/MonitoringAudit.png" alt="Monitoring & Audit" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/MonitoringAudit.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/MonitoringAudit.png" alt="Monitoring & Audit" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -286,8 +286,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">IAM</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/IAM.png" alt="IAM" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/IAM.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/IAM.png" alt="IAM" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -297,8 +297,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/SecurityEncryption.png" alt="SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/SecurityEncryption.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/SecurityEncryption.png" alt="SECURITY & ENCRYPTION: KMS, SSM, PARAMETER STORE, SHIELD, WAF" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -308,8 +308,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">NETWORKING - VPC</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/Networking.png" alt="Networking - VPC" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/Networking.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/Networking.png" alt="Networking - VPC" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
@@ -319,8 +319,8 @@ These mind maps are created using XMind and serve as visual study guides to help
     <h1 style="border-bottom: 2px solid #0066cc; padding-bottom: 10px; color: #333;">DISASTER RECOVERY - MIGRATIONS</h1>
     <p style="font-style: italic; color: #666; text-align: center; margin-bottom: 15px;">Click on the image to view in full size</p>
     <div style="text-align: center;">
-      <a href="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" target="_blank">
-        <img src="https://raw.githubusercontent.com/nshoa/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" alt="Disaster Recovery - Migrations" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+      <a href="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" target="_blank">
+        <img src="https://raw.githubusercontent.com/hoans-swe/aws-learning/main/mind_maps/images/DisasterRecoveryAndMigration.png" alt="Disaster Recovery - Migrations" style="max-width: 100%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
       </a>
     </div>
   </div>
