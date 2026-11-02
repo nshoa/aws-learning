@@ -155,6 +155,7 @@ nav:
           - REST API Backed by a Lambda Function: labs/api_gateway/01_rest_api_with_lambda.md
           - Stages, Stage Variables and Lambda Aliases: labs/api_gateway/02_stages_and_stage_variables.md
           - Canary Deployment on a Stage: labs/api_gateway/03_canary_deployment.md
+          - Rename a Response Field with a Mapping Template: labs/api_gateway/04_mapping_template.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:

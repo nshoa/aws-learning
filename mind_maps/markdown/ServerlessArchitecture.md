@@ -495,6 +495,7 @@ markmap:
 - Written in **VTL** (Velocity Template Language): variables, `#if`, `#foreach`…; e.g. `$input.params('user')`, `$input.path('$.user_id')`.
 - Picked by **Content-Type**: `application/json` or `application/xml`.
 - **SOAP example**: SOAP APIs speak XML, REST clients speak JSON → API Gateway extracts data from the path, body or headers, builds the SOAP XML message, calls the SOAP service, then turns the XML reply into JSON for the client.
+- **Hands-on lab**: [API Gateway Lab: Rename a Response Field with a Mapping Template](https://hoans-swe.github.io/aws-learning/labs/api_gateway/04_mapping_template/)
 
 ### Endpoint Types
 
