@@ -474,6 +474,27 @@ markmap:
 - **AWS service**: expose an AWS API directly, no Lambda in between.
     - e.g. start a Step Functions execution, send a message to SQS, `PutRecord` to Kinesis Data Streams (→ Firehose → JSON files in S3).
     - Why: add authentication, public access and rate control to that AWS API.
+- **Integration types** (REST API): who shapes the request and the response?
+    - ![API Gateway integration types: MOCK answers from a template with no backend; HTTP and AWS need mapping templates for the integration request and response; AWS_PROXY passes the whole request to Lambda; HTTP_PROXY passes request and response through to an HTTP backend](../images/APIGatewayIntegrationTypes.png)
+    - `MOCK`: API Gateway answers by itself, the request never reaches a backend (stubs, testing).
+    - `HTTP` / `AWS` (non-proxy, Lambda or any AWS service): you configure **both** the integration request and the integration response, with **mapping templates** (e.g. API Gateway → SQS `SendMessage`).
+    - `AWS_PROXY` (**Lambda proxy**): the whole HTTP request (`httpMethod`, `path`, `headers`, `queryStringParameters`, `pathParameters`, `stageVariables`, `requestContext`, `body`…) is the Lambda `event`.
+        - The function owns the logic and must return `{ "statusCode", "headers", "body" (string), "isBase64Encoded" }`.
+        - No mapping templates.
+    - `HTTP_PROXY`: the HTTP request goes to the backend (e.g. ALB) and its response comes back unchanged.
+        - No mapping templates; you can still **add HTTP headers** (e.g. an API key for the backend).
+
+### Mapping Templates
+
+- Only for **non-proxy** `HTTP` and `AWS` integrations: reshape the request before the backend and the response before the client.
+- ![Mapping templates: a request template turns the query string user and since into a JSON Lambda event with user_id and from_date; for a SOAP backend a request template builds XML from the JSON body and a response template turns the XML reply back into filtered JSON](../images/APIGatewayMappingTemplates.png)
+- What they can do
+    - **Rename / modify query string parameters** (e.g. `?user=` → `"user_id"`).
+    - **Modify the body**, **add headers**.
+    - **Filter the output** (drop fields the client does not need).
+- Written in **VTL** (Velocity Template Language): variables, `#if`, `#foreach`…; e.g. `$input.params('user')`, `$input.path('$.user_id')`.
+- Picked by **Content-Type**: `application/json` or `application/xml`.
+- **SOAP example**: SOAP APIs speak XML, REST clients speak JSON → API Gateway extracts data from the path, body or headers, builds the SOAP XML message, calls the SOAP service, then turns the XML reply into JSON for the client.
 
 ### Endpoint Types
 
