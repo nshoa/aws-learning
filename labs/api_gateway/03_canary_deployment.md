@@ -69,23 +69,43 @@
 3. **Deploy API** > **Stage** `canary` > **Deploy**. Because the stage has a canary, this deployment goes to the
     **canary** only; the base deployment still serves version 1.
 
-### 5. Watch the Split, Then Promote or Roll Back
+### 5. Test the Split, Promote the Canary and Test Again
 
-1. Reload `/canary/canary-demo` several times: about half of the answers are `version 1!`, the other half `version 2!`.
-2. If version 2 looks healthy, open the stage's **Canary** tab > **Promote canary**: the canary deployment
-    becomes the base and gets 100% of the traffic.
-3. To roll back instead, **Delete** the canary: all traffic returns to the base deployment (version 1).
+1. In a terminal, call the stage 10 times. Put your own API ID (the first part of the invoke URL) and Region
+    in the two variables:
+
+    ```bash
+    API_ID=<your-api-id>; REGION=<your-region>; for i in $(seq 1 10); do curl -s "https://$API_ID.execute-api.$REGION.amazonaws.com/canary/canary-demo"; echo; done
+    ```
+
+    With the canary at 50%, the answers mix `"Hello from Lambda version 1!"` and `"Hello from Lambda version 2!"`
+    (the split is random per request, e.g. 6/4 over 10 calls).
+
+2. Version 2 looks healthy, so open **Stages** > `canary` > **Canary** tab > **Promote canary** and confirm.
+    The canary's deployment becomes the stage's base deployment: **Requests directed to canary** drops to `0%`
+    and the stage serves `100%`.
+
+    ![Canary settings after Promote canary: 0% to the canary, 100% to the canary stage](../shared_assets/api_gateway/03_canary-promoted.png)
+
+3. Run the same command again. Every answer is now `"Hello from Lambda version 2!"`.
+
+    ![Ten calls before promoting return a mix of version 1 and 2; ten calls after promoting all return version 2](../shared_assets/api_gateway/03_curl-before-after-promote.png)
+
+> 💡 Promoting keeps the canary settings at `0%`, ready for the next release. To **roll back** instead of
+> promoting, click **Delete** on the canary: all traffic returns to the base deployment (version 1).
 
 ## Verification
 
-- With the canary at 50%, repeated calls return both messages (step 5).
-- After **Promote canary**, every call returns `"Hello from Lambda version 2!"`.
-- CLI alternative:
+- With the canary at 50%, repeated calls return both messages (step 5.1).
+- After **Promote canary**, every call returns `"Hello from Lambda version 2!"` (step 5.3).
+- The stage's canary settings, from the CLI (needs AWS credentials; on a laptop without `aws configure`, run it
+    in CloudShell). `--rest-api-id` takes the API ID only, not an ARN:
 
     ```bash
-    for i in $(seq 1 10); do curl -s https://API_ID.execute-api.REGION.amazonaws.com/canary/canary-demo; echo; done
-    aws apigateway get-stage --rest-api-id API_ID --stage-name canary --query canarySettings
+    aws apigateway get-stage --rest-api-id "$API_ID" --stage-name canary --region "$REGION" --query canarySettings
     ```
+
+    Before promoting: `"percentTraffic": 50.0`. After promoting: `"percentTraffic": 0.0`.
 
 ## Troubleshooting
 
@@ -95,6 +115,8 @@
 | Every call returns version 2 right away | The canary was promoted, or the stage had no canary when you deployed | Check the **Canary** tab; recreate it and redeploy |
 | 500 `Internal server error` from one side of the split | No invoke permission for that version | Re-select the function in the integration request so the console adds it, or run `aws lambda add-permission` for `:1` / `:2` |
 | `{"message":"Missing Authentication Token"}` | Wrong path | Call `/canary/canary-demo` (stage, then resource) |
+| `zsh: no matches found: arn:aws:execute-api:...` | An ARN was passed to `--rest-api-id`; zsh expands its unquoted `*` | Pass only the API ID, e.g. `--rest-api-id "$API_ID"` |
+| `Unable to locate credentials` | The local AWS CLI has no credentials | Run `aws configure`, or run the `aws` command in CloudShell |
 
 ## Cleanup
 
