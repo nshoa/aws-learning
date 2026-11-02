@@ -45,6 +45,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **DynamoDB** | [01 - Process DynamoDB Streams with Lambda](dynamodb/01_dynamodb_streams_with_lambda.md) | Stream view types, DynamoDB trigger, execution role permissions, INSERT/MODIFY records | Beginner | 20 min |
 | **API Gateway** | [01 - REST API Backed by a Lambda Function](api_gateway/01_rest_api_with_lambda.md) | GET method, Lambda proxy integration, console test, dev stage invoke URL | Beginner | 20 min |
 | **API Gateway** | [02 - Stages, Stage Variables and Lambda Aliases](api_gateway/02_stages_and_stage_variables.md) | Lambda versions and aliases, `${stageVariables.lambdaAlias}` integration, add-permission per alias, dev/test/prod stages | Intermediate | 30 min |
+| **API Gateway** | [03 - Canary Deployment on a Stage](api_gateway/03_canary_deployment.md) | Canary settings 50/50, deploy to canary only, promote or delete the canary | Intermediate | 20 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions
