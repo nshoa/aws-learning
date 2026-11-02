@@ -44,6 +44,7 @@ expected output, and Cleanup makes sure you tear down what you create.
 | **Lambda** | [08 - Call a Function with a Function URL](lambda/08_lambda_function_url.md) | Function URL with auth type NONE, resource-based policy, browser and curl calls | Beginner | 10 min |
 | **DynamoDB** | [01 - Process DynamoDB Streams with Lambda](dynamodb/01_dynamodb_streams_with_lambda.md) | Stream view types, DynamoDB trigger, execution role permissions, INSERT/MODIFY records | Beginner | 20 min |
 | **API Gateway** | [01 - REST API Backed by a Lambda Function](api_gateway/01_rest_api_with_lambda.md) | GET method, Lambda proxy integration, console test, dev stage invoke URL | Beginner | 20 min |
+| **API Gateway** | [02 - Stages, Stage Variables and Lambda Aliases](api_gateway/02_stages_and_stage_variables.md) | Lambda versions and aliases, `${stageVariables.lambdaAlias}` integration, add-permission per alias, dev/test/prod stages | Intermediate | 30 min |
 | **CloudFormation** | [Infrastructure as Code](cloud_formation/README.md) | Provision EC2 declaratively | Intermediate | — |
 
 ## Conventions

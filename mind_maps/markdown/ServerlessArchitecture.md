@@ -455,6 +455,7 @@ markmap:
     - ![Stage variables and Lambda aliases: stage prod invokes alias prod which sends 90% to version 3 and 10% to version 4, stage test invokes alias test which sends 100% to version 4, stage dev invokes alias dev which points to $LATEST](../images/APIGatewayStageVariables.png)
     - Release by moving alias weights in Lambda (e.g. prod 90% v3 / 10% v4) → **no API Gateway change or redeploy**.
     - Each alias needs a resource-based permission so API Gateway may invoke it (`aws lambda add-permission --function-name my-fn:prod …`).
+- **Hands-on lab**: [API Gateway Lab: Stages, Stage Variables and Lambda Aliases](https://hoans-swe.github.io/aws-learning/labs/api_gateway/02_stages_and_stage_variables/)
 
 ### Integrations
 
