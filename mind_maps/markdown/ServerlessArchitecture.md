@@ -427,6 +427,7 @@ markmap:
 
 - Fully managed service to **build, deploy and manage APIs** at any scale: the "front door" to your backends.
 - **Lambda + API Gateway** = a serverless API with no infrastructure to manage (e.g. client → API Gateway → Lambda → DynamoDB).
+- **Hands-on lab**: [API Gateway Lab: REST API Backed by a Lambda Function](https://nshoa.github.io/aws-learning/labs/api_gateway/01_rest_api_with_lambda/)
 
 ### Features
 
