@@ -425,36 +425,52 @@ markmap:
 
 ### Definition
 
-- Fully managed service to create, publish, maintain, monitor, and secure APIs at scale. Acts as a "front door" for applications.
-- Client → REST API → API Gateway → proxy request → Lambda → CRUD → DynamoDB
+- Fully managed service to **build, deploy and manage APIs** at any scale: the "front door" to your backends.
+- **Lambda + API Gateway** = a serverless API with no infrastructure to manage (e.g. client → API Gateway → Lambda → DynamoDB).
 
 ### Features
 
-- Exposes backend services (Lambda, HTTP, other AWS services) via RESTful or WebSocket APIs.
-- Handles API versioning, multiple environments (dev/test/prod).
-- Security: Authentication (IAM, Cognito, Custom Authorizers), Authorization, API Keys.
-- Request/Response transformation and validation.
-- Throttling and usage plans.
-- Response Caching.
-- Generates client SDKs.
+- REST APIs and the **WebSocket** protocol.
+- **API versioning** (v1, v2…) and **environments** with stages (dev, test, prod…).
+- **Security**: authentication and authorization.
+- **API keys** and request **throttling** (usage plans).
+- Import **Swagger / OpenAPI** definitions to define APIs quickly.
+- **Transform and validate** requests and responses.
+- Generate **SDKs** and API specifications.
+- **Cache** API responses.
 
 ### Integrations
 
-- **Lambda Function**: Invoke Lambda synchronously/asynchronously.
-- **HTTP Proxy**: Forward requests to backend HTTP endpoints (e.g., EC2, containers, on-prem).
-- **AWS Service Proxy**: Expose other AWS service actions directly (e.g., SQS SendMessage, Step Functions StartExecution).
+- ![API Gateway integration types: clients call API Gateway, which invokes a Lambda function that does CRUD on DynamoDB, proxies HTTP to an ALB or on-premises API, or calls an AWS service such as Kinesis Data Streams feeding Firehose and S3](../images/APIGatewayIntegrations.png)
+- **Lambda function**: invoke a function → easiest way to expose a REST API backed by Lambda.
+- **HTTP**: proxy to an HTTP endpoint in the backend (on-premises API, ALB…).
+    - Why: add rate limiting, caching, user authentication, API keys in front of it.
+- **AWS service**: expose an AWS API directly, no Lambda in between.
+    - e.g. start a Step Functions execution, send a message to SQS, `PutRecord` to Kinesis Data Streams (→ Firehose → JSON files in S3).
+    - Why: add authentication, public access and rate control to that AWS API.
 
 ### Endpoint Types
 
-- **Edge-Optimized (Default)**: Routed via CloudFront edge locations for lower latency globally. API Gateway itself remains regional. Requires ACM certificate in `us-east-1` for custom domains.
-- **Regional**: For clients within the same region as the API Gateway. Lower latency than Edge-Optimized if clients are regional. Requires ACM certificate in the API's region for custom domains.
-- **Private**: Accessible only from within a VPC via an Interface VPC Endpoint (ENI). Uses resource policies for access control.
+- ![API Gateway endpoint types: edge-optimized APIs are reached through the nearest CloudFront edge location, regional APIs directly by clients in the same Region, private APIs only from a VPC through an interface VPC endpoint; all three live in one Region](../images/APIGatewayEndpointTypes.png)
+- **Edge-optimized (default)**: for global clients.
+    - Requests go through the nearest **CloudFront edge location** (lower latency).
+    - The API itself still lives in **one Region**.
+- **Regional**: for clients in the same Region.
+    - Can be combined with **your own CloudFront** distribution for more control over caching and distribution.
+- **Private**: reachable only from your **VPC** through an **interface VPC endpoint (ENI)**.
+    - Access is defined with a **resource policy**.
 
 ### Security
 
-- **Authentication**: IAM (for internal/AWS access), Cognito User Pools (for app users), Lambda Custom Authorizers (custom logic).
-- **Authorization**: IAM permissions, Resource Policies.
-- **Custom Domains**: Use own domain name with HTTPS via ACM certificates.
+- **User authentication**
+    - **IAM roles**: for internal applications and AWS principals.
+    - **Cognito**: identity for external users (e.g. mobile app users).
+    - **Custom (Lambda) authorizer**: your own logic.
+- **Custom domain name over HTTPS** with **AWS Certificate Manager (ACM)**
+    - Edge-optimized endpoint → the certificate must be in **us-east-1**.
+    - Regional endpoint → the certificate must be in the **API's Region**.
+    - Point the domain at the API with a **CNAME** or **A-alias** record in Route 53.
+- **Authorization**: IAM permissions and resource policies.
 
 ## AWS Step Functions
 
