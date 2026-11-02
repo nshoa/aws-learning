@@ -153,6 +153,7 @@ nav:
           - Process DynamoDB Streams with Lambda: labs/dynamodb/01_dynamodb_streams_with_lambda.md
       - API Gateway:
           - REST API Backed by a Lambda Function: labs/api_gateway/01_rest_api_with_lambda.md
+          - Stages, Stage Variables and Lambda Aliases: labs/api_gateway/02_stages_and_stage_variables.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
