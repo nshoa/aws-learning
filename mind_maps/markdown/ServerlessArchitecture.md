@@ -463,6 +463,7 @@ markmap:
     - Can **override stage variables** for the canary only (e.g. `lambdaAlias = test`).
     - **Promote** → the canary becomes the base (100%); **delete** the canary → roll back.
     - = **blue/green deployment** with API Gateway + Lambda (no extra stage or URL).
+    - **Hands-on lab**: [API Gateway Lab: Canary Deployment on a Stage](https://hoans-swe.github.io/aws-learning/labs/api_gateway/03_canary_deployment/)
 
 ### Integrations
 
