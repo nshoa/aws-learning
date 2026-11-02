@@ -30,7 +30,7 @@
 
 ### 1. Add a Method that Calls Version 1
 
-1. Open the API `DVA_DemoAPIGatewayStages` > **Resources** > **Create resource**, e.g. **Resource name** `canary-demo`.
+1. Open the API `DVA_DemoAPIGatewayStages` > **Resources** > **Create resource**, **Resource name** `canary-demo`.
 2. On `/canary-demo` click **Create method**: **Method type** `GET`, **Integration type** Lambda function,
     turn on **Lambda proxy integration**, and enter the ARN of **version 1**:
 
