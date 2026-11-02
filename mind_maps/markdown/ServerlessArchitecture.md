@@ -73,7 +73,7 @@ markmap:
     - Throttling
         - Occurs when concurrency limit is exceeded. Sync calls get `ThrottleError (429)`
         - Async calls are retried (up to 6 hrs) then sent to Dead-Letter Queue (DLQ) if configured.
-- **Hands-on lab**: [Lambda Lab: Timeout and Initialization Outside the Handler](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_performance/)
+- **Hands-on lab**: [Lambda Lab: Timeout and Initialization Outside the Handler](https://hoans-swe.github.io/aws-learning/labs/lambda/06_lambda_performance/)
 
 ### Layers
 
@@ -81,7 +81,7 @@ markmap:
 - Extracted to `/opt` in the execution environment; Python imports from `/opt/python`.
 - Up to **5 layers** per function; function + layers must stay under **250 MB unzipped**.
 - Keeps the deployment package small; AWS publishes managed layers such as **AWS SDK for pandas**.
-- **Hands-on lab**: [Lambda Lab: Add a Library with a Layer](https://nshoa.github.io/aws-learning/labs/lambda/07_lambda_layers/)
+- **Hands-on lab**: [Lambda Lab: Add a Library with a Layer](https://hoans-swe.github.io/aws-learning/labs/lambda/07_lambda_layers/)
 
 ### Destinations
 
@@ -90,7 +90,7 @@ markmap:
 - On failure: the record is sent after the retries are used up (default **2 retries**, 3 attempts).
 - The record holds the original event (`requestPayload`), the result or error (`responsePayload`) and the `condition` (`Success`, `RetriesExhausted`).
 - Recommended over a Lambda DLQ, which only gets the failed event, without the error.
-- **Hands-on lab**: [Lambda Lab: Destinations for Asynchronous Invocations](https://nshoa.github.io/aws-learning/labs/lambda/05_lambda_destinations/)
+- **Hands-on lab**: [Lambda Lab: Destinations for Asynchronous Invocations](https://hoans-swe.github.io/aws-learning/labs/lambda/05_lambda_destinations/)
 
 ### Event Source Mapping
 
@@ -118,7 +118,7 @@ markmap:
     - A message can be delivered twice even without an error → make the processing idempotent.
     - Standard queue: no ordering; FIFO queue: in order within each message group.
     - **DLQ**: set it on the **SQS queue**, not on Lambda (a Lambda DLQ only works for async invocations), or use an on-failure destination.
-- **Hands-on lab**: [Lambda Lab: Event Source Mapping with an SQS Queue](https://nshoa.github.io/aws-learning/labs/lambda/04_lambda_event_source_mapping_sqs/)
+- **Hands-on lab**: [Lambda Lab: Event Source Mapping with an SQS Queue](https://hoans-swe.github.io/aws-learning/labs/lambda/04_lambda_event_source_mapping_sqs/)
 - **Scaling**
     - Streams: one invocation per shard at a time, up to 10 per shard with parallelization.
     - SQS standard: scales out as fast as possible; course figures are +60 instances per minute and up to 1,000 batches at once (check the AWS docs for the current limits).
@@ -137,7 +137,7 @@ markmap:
     - Give triggers and destinations a stable target: point them at the alias, not at a version number.
     - An alias cannot point to another alias.
     - **Weighted alias** = canary: split traffic between two published versions (e.g. 95% v1 / 5% v2).
-- **Hands-on lab**: [Lambda Lab: Versions and Aliases with a Weighted Canary](https://nshoa.github.io/aws-learning/labs/lambda/06_lambda_versions_and_aliases/)
+- **Hands-on lab**: [Lambda Lab: Versions and Aliases with a Weighted Canary](https://hoans-swe.github.io/aws-learning/labs/lambda/06_lambda_versions_and_aliases/)
 
 ### Function URL
 
@@ -148,7 +148,7 @@ markmap:
     - `AWS_IAM`: callers sign requests with SigV4.
     - New URLs need both `lambda:InvokeFunctionUrl` and `lambda:InvokeFunction`.
 - Supports CORS and response streaming; no usage plans, API keys or caching (use API Gateway for those).
-- **Hands-on lab**: [Lambda Lab: Call a Function with a Function URL](https://nshoa.github.io/aws-learning/labs/lambda/08_lambda_function_url/)
+- **Hands-on lab**: [Lambda Lab: Call a Function with a Function URL](https://hoans-swe.github.io/aws-learning/labs/lambda/08_lambda_function_url/)
 
 ### Networking
 
@@ -395,7 +395,7 @@ markmap:
     - Read by **Kinesis Client Library (KCL)** apps or **AWS Lambda**.
         - Lambda needs an **event source mapping** that polls the stream and invokes the function **synchronously** with a batch (see Lambda → Event Source Mapping).
         - The function's execution role needs permission to read the stream.
-    - **Hands-on lab**: [DynamoDB Lab: Process DynamoDB Streams with Lambda](https://nshoa.github.io/aws-learning/labs/dynamodb/01_dynamodb_streams_with_lambda/)
+    - **Hands-on lab**: [DynamoDB Lab: Process DynamoDB Streams with Lambda](https://hoans-swe.github.io/aws-learning/labs/dynamodb/01_dynamodb_streams_with_lambda/)
     - Or send changes to **Kinesis Data Streams** (longer retention, more consumers, Firehose to Redshift/S3/OpenSearch).
     - Use cases
         - React in real time, e.g. welcome email when a user item is created.
@@ -427,7 +427,7 @@ markmap:
 
 - Fully managed service to **build, deploy and manage APIs** at any scale: the "front door" to your backends.
 - **Lambda + API Gateway** = a serverless API with no infrastructure to manage (e.g. client → API Gateway → Lambda → DynamoDB).
-- **Hands-on lab**: [API Gateway Lab: REST API Backed by a Lambda Function](https://nshoa.github.io/aws-learning/labs/api_gateway/01_rest_api_with_lambda/)
+- **Hands-on lab**: [API Gateway Lab: REST API Backed by a Lambda Function](https://hoans-swe.github.io/aws-learning/labs/api_gateway/01_rest_api_with_lambda/)
 
 ### Features
 

@@ -258,7 +258,7 @@ markmap:
 - **Security**
     - In-flight (HTTPS)
     - At-rest (KMS)
-- **Hands-on lab**: [Kinesis Lab: Produce and Consume Data Streams with the CLI](https://nshoa.github.io/aws-learning/labs/kinesis/01_data_streams_cli/)
+- **Hands-on lab**: [Kinesis Lab: Produce and Consume Data Streams with the CLI](https://hoans-swe.github.io/aws-learning/labs/kinesis/01_data_streams_cli/)
 
 ### Amazon Data Firehose (Formerly Kinesis Data Firehose)
 
@@ -280,7 +280,7 @@ markmap:
     - No Data Storage within Firehose itself
     - No Replay Capability
     - Pay for data ingested
-- **Hands-on lab**: [Data Firehose Lab: Deliver a Kinesis Data Stream to S3](https://nshoa.github.io/aws-learning/labs/firehose/01_kinesis_data_streams_to_s3/)
+- **Hands-on lab**: [Data Firehose Lab: Deliver a Kinesis Data Stream to S3](https://hoans-swe.github.io/aws-learning/labs/firehose/01_kinesis_data_streams_to_s3/)
 
 ### Comparison: Data Firehose versus Kinesis Data Streams
 

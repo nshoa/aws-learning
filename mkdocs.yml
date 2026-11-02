@@ -1,10 +1,10 @@
-# MkDocs site for GitHub Pages: https://nshoa.github.io/aws-learning/
+# MkDocs site for GitHub Pages: https://hoans-swe.github.io/aws-learning/
 # Build locally with `make site` (outputs to _site/), or preview with `make serve`. Deployed by .github/workflows/pages.yml.
 site_name: AWS Learning
 site_description: Mind maps, cheatsheets, hands-on labs and exam practice for AWS certifications.
-site_url: https://nshoa.github.io/aws-learning/
-repo_url: https://github.com/nshoa/aws-learning
-repo_name: nshoa/aws-learning
+site_url: https://hoans-swe.github.io/aws-learning/
+repo_url: https://github.com/hoans-swe/aws-learning
+repo_name: hoans-swe/aws-learning
 edit_uri: edit/main/
 
 # The Markdown lives in the repo folders themselves, so the docs root is the repo root.
@@ -78,7 +78,7 @@ nav:
   - Home: README.md
   - Mind Maps:
       - mind_maps/README.md
-      - Interactive mind maps: https://nshoa.github.io/aws-learning/mind-maps/
+      - Interactive mind maps: https://hoans-swe.github.io/aws-learning/mind-maps/
       - Outlines:
           - mind_maps/markdown/README.md
           - EC2: mind_maps/markdown/EC2.md

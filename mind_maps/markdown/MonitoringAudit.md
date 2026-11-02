@@ -177,7 +177,7 @@ markmap:
     - Where are we being throttled?
     - Which users are affected?
 - Visual, so non-developers can help troubleshoot too.
-- **Hands-on lab**: [X-Ray Lab: Trace the Scorekeep App on ECS](https://nshoa.github.io/aws-learning/labs/xray/01_scorekeep_tracing/)
+- **Hands-on lab**: [X-Ray Lab: Trace the Scorekeep App on ECS](https://hoans-swe.github.io/aws-learning/labs/xray/01_scorekeep_tracing/)
 
 ### Core Concepts
 
