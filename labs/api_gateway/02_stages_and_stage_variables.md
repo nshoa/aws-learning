@@ -137,14 +137,24 @@
 ## Verification
 
 - Each stage URL returns the message of the version its alias points to (step 6).
-- `aws lambda get-policy --function-name DVA_DemoAPIGatewayStages:prod` shows the `apigateway.amazonaws.com` statement.
-- CLI alternative:
+- The `prod` alias has a policy statement for `apigateway.amazonaws.com` (see the CLI below).
+- CLI alternative: set the two values first. The API ID is the first part of the invoke URL
+    (`https://abc123defg.execute-api.ap-northeast-1.amazonaws.com/...` → `abc123defg`).
 
     ```bash
-    for s in dev test prod; do curl -s https://API_ID.execute-api.REGION.amazonaws.com/$s; echo; done
-    aws apigateway get-stages --rest-api-id API_ID \
+    API_ID=<your-api-id>
+    REGION=<your-region>   # e.g. ap-northeast-1
+
+    for s in dev test prod; do
+      curl -s "https://$API_ID.execute-api.$REGION.amazonaws.com/$s"; echo
+    done
+    aws apigateway get-stages --rest-api-id "$API_ID" --region "$REGION" \
       --query "item[].{stage:stageName,vars:variables}"
+    aws lambda get-policy --function-name DVA_DemoAPIGatewayStages:prod --region "$REGION"
     ```
+
+    Expected: `version 1!` (prod), `version 2!` (test), `latest version!` (dev); each stage with its
+    `lambdaAlias` variable; a policy whose `Principal` is `apigateway.amazonaws.com`.
 
 ## Troubleshooting
 
