@@ -456,6 +456,13 @@ markmap:
     - Release by moving alias weights in Lambda (e.g. prod 90% v3 / 10% v4) → **no API Gateway change or redeploy**.
     - Each alias needs a resource-based permission so API Gateway may invoke it (`aws lambda add-permission --function-name my-fn:prod …`).
 - **Hands-on lab**: [API Gateway Lab: Stages, Stage Variables and Lambda Aliases](https://hoans-swe.github.io/aws-learning/labs/api_gateway/02_stages_and_stage_variables/)
+- **Canary deployment**: on any stage (usually `prod`), send a chosen **% of traffic** to a new deployment.
+    - ![Canary deployment on the prod stage: clients hit one invoke URL, 90% of requests go to the base deployment that integrates with Lambda version 1 and 10% go to the canary deployment that integrates with Lambda version 2](../images/APIGatewayCanaryDeployment.png)
+    - Same invoke URL; API Gateway splits requests between the **base** and the **canary** deployment.
+    - Canary has its **own metrics and logs** → compare error rate and latency before going further.
+    - Can **override stage variables** for the canary only (e.g. `lambdaAlias = test`).
+    - **Promote** → the canary becomes the base (100%); **delete** the canary → roll back.
+    - = **blue/green deployment** with API Gateway + Lambda (no extra stage or URL).
 
 ### Integrations
 
