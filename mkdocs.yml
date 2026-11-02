@@ -151,6 +151,8 @@ nav:
           - Call a Function with a Function URL: labs/lambda/08_lambda_function_url.md
       - DynamoDB:
           - Process DynamoDB Streams with Lambda: labs/dynamodb/01_dynamodb_streams_with_lambda.md
+      - API Gateway:
+          - REST API Backed by a Lambda Function: labs/api_gateway/01_rest_api_with_lambda.md
       - CloudFormation: labs/cloud_formation/README.md
   - Exam Practice: exam_practices/README.md
   - Templates:
