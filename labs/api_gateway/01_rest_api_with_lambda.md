@@ -100,12 +100,18 @@
 - The `dev` invoke URL returns `"Hello API Gateway from Lambda!"` (step 5).
 - The function's log group `/aws/lambda/DVA_DemoAPIGateway` has an `event:` line per call, with
     `httpMethod: GET` and `path: /`.
-- CLI alternative:
+- CLI alternative: set the two values first. The API ID is the first part of the invoke URL
+    (`https://abc123defg.execute-api.ap-northeast-1.amazonaws.com/...` → `abc123defg`).
 
     ```bash
-    curl https://API_ID.execute-api.REGION.amazonaws.com/dev
-    aws logs tail /aws/lambda/DVA_DemoAPIGateway --since 5m
+    API_ID=<your-api-id>
+    REGION=<your-region>   # e.g. ap-northeast-1
+
+    curl -s "https://$API_ID.execute-api.$REGION.amazonaws.com/dev"; echo
+    aws logs tail /aws/lambda/DVA_DemoAPIGateway --since 5m --region "$REGION"
     ```
+
+    Expected: `"Hello API Gateway from Lambda!"`, then the function's log lines with `event: {...}`.
 
 ## Troubleshooting
 
