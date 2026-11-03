@@ -546,7 +546,7 @@ markmap:
 
 ### Logging, Tracing & Metrics
 
-- ![Monitoring API Gateway: Latency of 180 ms covers the whole request at API Gateway, IntegrationLatency of 150 ms covers only the Lambda call, the 30 ms difference is API Gateway overhead; execution and access logs go to CloudWatch Logs, traces to X-Ray, and per-stage metrics such as Count, Latency, IntegrationLatency, 4XXError, 5XXError and cache hits to CloudWatch](../images/APIGatewayMonitoring.png)
+- ![Monitoring API Gateway: a client calls GET /orders on the prod stage, API Gateway calls Lambda, which queries DynamoDB; API Gateway sends execution and access logs to CloudWatch Logs and Count, Latency and 4XX / 5XX metrics to CloudWatch, and both API Gateway and Lambda send trace segments to X-Ray](../images/APIGatewayMonitoring.png)
 - **CloudWatch Logs**: enabled on the **stage**, can be **overridden per method**.
     - **Execution logs**: log level `OFF`, `ERROR` or `INFO` (the course slide also lists DEBUG, which is not a level).
     - **Full request/response data** logging: request and response bodies → for debugging only, it can log sensitive data.
@@ -583,7 +583,7 @@ markmap:
 ### CORS
 
 - Needed when a **web page from another origin** calls the API, e.g. `https://shop.example.com` (S3 / CloudFront site) → `https://api.example.com`. CORS basics: see the [S3 mind map](https://hoans-swe.github.io/aws-learning/mind_maps/markdown/S3/#cross-origin-resource-sharing-cors).
-- ![CORS with API Gateway: the browser on shop.example.com sends an OPTIONS preflight with Origin and the requested method and headers, API Gateway's OPTIONS method answers 200 with the Access-Control-Allow-Origin, Methods and Headers headers, then the browser sends the real POST, Lambda returns Access-Control-Allow-Origin and the browser lets the page read the 201 response](../images/APIGatewayCORS.png)
+- ![CORS with API Gateway: the browser loads a page from the S3 website shop.example.com, sends an OPTIONS preflight to api.example.com that the OPTIONS method (MOCK) answers with the Access-Control-Allow headers, then sends the real POST, which API Gateway passes to a Lambda proxy handler that returns Access-Control-Allow-Origin](../images/APIGatewayCORS.png)
 - **Preflight**: before a non-simple request (e.g. `POST` with JSON or an `x-api-key` header), the browser sends `OPTIONS` with `Origin`, `Access-Control-Request-Method` and `Access-Control-Request-Headers`.
 - The preflight **response** must contain (the slide says the request; it is the response):
     - `Access-Control-Allow-Origin`
@@ -611,7 +611,7 @@ markmap:
 
 ### Security
 
-- ![API Gateway security: an app with an IAM role signs its request with SigV4 and API Gateway checks IAM policies; a mobile user signs in to a Cognito user pool and API Gateway checks the JWT; a partner app sends a third-party bearer token that a Lambda authorizer verifies, returning a principal and an IAM policy that API Gateway caches](../images/APIGatewayAuth.png)
+- ![API Gateway security: an app with an IAM role signs its request with SigV4 and API Gateway checks IAM policies for execute-api:Invoke; a mobile app user signs in to a Cognito user pool, sends the JWT and API Gateway verifies it with no code; a partner app sends a 3rd-party token that a Lambda authorizer verifies, returning a principal and an IAM policy that API Gateway caches](../images/APIGatewayAuth.png)
 - **IAM** (method authorization `AWS_IAM`): authentication = **IAM**, authorization = **IAM policy**.
     - Attach a policy that allows `execute-api:Invoke` to the user or role.
     - The request is signed with **SigV4**: the IAM credentials travel in the headers.
@@ -659,7 +659,7 @@ markmap:
     - The **server can push** data to the client without a request → **stateful** apps.
     - Use cases: **real-time** apps, e.g. chat, collaboration tools, multiplayer games, live trading dashboards.
 - Backends: **Lambda**, other AWS services (e.g. DynamoDB) or **HTTP endpoints**.
-- ![WebSocket API chat flow: the client opens wss://a1b2c3.execute-api…/prod, the $connect route invokes onConnect which stores the connectionId in DynamoDB; messages on the same connection go to the sendMessage route and Lambda looks up the room's connections; Lambda pushes back by POSTing to the @connections callback URL signed with SigV4; on disconnect the $disconnect route deletes the connectionId](../images/APIGatewayWebSocket.png)
+- ![WebSocket API chat flow: chat clients connect over wss:// to the API Gateway WebSocket API; the $connect route invokes onConnect, which puts the connectionId in DynamoDB; the sendMessage route invokes sendMessage, which queries the room and pushes back with a SigV4-signed POST to @connections/{connectionId}; the $disconnect route invokes onDisconnect, which deletes the connectionId](../images/APIGatewayWebSocket.png)
 - **Connect**: clients open `wss://{api-id}.execute-api.{region}.amazonaws.com/{stage}`.
     - The `$connect` route runs (e.g. Lambda `onConnect`) with a **`connectionId`** → store it (e.g. DynamoDB) to reach the client later.
 - **Client → server**: every message (frame) on that connection carries the **same `connectionId`** → the backend knows who sent it.
@@ -679,7 +679,7 @@ markmap:
 
 ### Architecture: Single Front Door
 
-- ![API Gateway as the single front door: web and mobile clients resolve api.example.com in Route 53 to API Gateway with a custom domain and ACM certificate, which routes /orders through a VPC link to an NLB or ALB in front of ECS, /payments to Lambda, /docs to an S3 bucket through an AWS service integration and /legacy to a public HTTP endpoint](../images/APIGatewayFrontDoor.png)
+- ![API Gateway as the single front door: web and mobile clients resolve api.example.com in Route 53 to API Gateway, which uses an ACM certificate and routes /orders through a VPC link to a Network Load Balancer and an ECS service in a VPC, /payments to Lambda, /docs to an S3 bucket and /legacy to an HTTP endpoint](../images/APIGatewayFrontDoor.png)
 - **One interface** for all the company's **microservices**: each path goes to its own backend (ECS behind a load balancer, Lambda, S3, any HTTP endpoint).
 - **One domain name + one TLS certificate** (custom domain with ACM, alias record in Route 53).
 - **Cross-cutting rules in one place**: auth, throttling, usage plans, caching, request / response transformation.
