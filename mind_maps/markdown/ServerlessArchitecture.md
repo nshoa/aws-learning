@@ -497,6 +497,32 @@ markmap:
 - **SOAP example**: SOAP APIs speak XML, REST clients speak JSON → API Gateway extracts data from the path, body or headers, builds the SOAP XML message, calls the SOAP service, then turns the XML reply into JSON for the client.
 - **Hands-on lab**: [API Gateway Lab: Rename a Response Field with a Mapping Template](https://hoans-swe.github.io/aws-learning/labs/api_gateway/04_mapping_template/)
 
+### OpenAPI Spec
+
+- **OpenAPI** (formerly Swagger) = the standard way to describe a REST API **as code**, in **YAML or JSON**.
+- ![OpenAPI round trip: an orders-api.yaml spec is imported into an API Gateway REST API, the API can be exported back to a spec, and a client SDK is generated per stage; validators declared in the spec apply params-only checks to GET /orders by default and full checks to POST /orders as a method override](../images/APIGatewayOpenAPI.png)
+- **Import** a spec → API Gateway builds the whole REST API: resources, methods, method request, integration request, method response.
+    - Supports **OpenAPI 2.0 and 3.0** (the course slide mentions only 3.0).
+    - **`x-amazon-apigateway-*` extensions** set the API Gateway-only options: integrations, validators, authorizers…
+    - Re-import to **overwrite** or **merge** into an existing API.
+- **Export** an existing API as a spec (YAML or JSON), with or without the API Gateway extensions, or with Postman extensions.
+- **Generate client SDKs** for a deployed stage: Java, JavaScript, Android, iOS (Swift / Objective-C), Ruby.
+
+### Request Validation
+
+- API Gateway checks the request in the **method request**, **before** the integration request → bad requests never reach the backend.
+- ![Request validation: a valid POST /orders passes the validator and invokes Lambda; an invalid one missing user_id with a non-numeric total fails, API Gateway returns 400 at once and Lambda is never invoked](../images/APIGatewayRequestValidation.png)
+- Checks
+    - **Required request parameters** (path, query string, headers) are present and **not blank**.
+    - The **body** matches the method's **request model** (JSON Schema draft 4).
+- Fails → **400** immediately (`BAD_REQUEST_BODY` / `BAD_REQUEST_PARAMETERS` gateway responses, customizable) → less load and cost on the backend.
+- Validator options: **body only**, **parameters only**, or **both**.
+- With OpenAPI:
+    - Define named validators in `x-amazon-apigateway-request-validators`.
+    - Set the API default with `x-amazon-apigateway-request-validator`.
+    - Override it on a single method with the same key (e.g. GET checks parameters, POST checks parameters + body).
+- **REST APIs only**: HTTP APIs have no request validation.
+
 ### Endpoint Types
 
 - ![API Gateway endpoint types: edge-optimized APIs are reached through the nearest CloudFront edge location, regional APIs directly by clients in the same Region, private APIs only from a VPC through an interface VPC endpoint; all three live in one Region](../images/APIGatewayEndpointTypes.png)
