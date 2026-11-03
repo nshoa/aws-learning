@@ -44,7 +44,7 @@ markmap:
 ### CI/CD Services on AWS
 
 - ![CI/CD on AWS: code in AWS CodeCommit (or GitHub, Bitbucket), build and test in AWS CodeBuild (or Jenkins), deploy and provision with AWS Elastic Beanstalk, or deploy only with AWS CodeDeploy to EC2, on-premises servers, Lambda or ECS; AWS CodePipeline orchestrates every stage](../images/CICDOnAWS.png)
-- **Code** → **AWS CodeCommit**: managed Git repositories.
+- **Code** → **AWS CodeCommit**: managed Git repositories (details below).
     - Or any 3rd-party repository: **GitHub**, **Bitbucket**…
     - CodeCommit was closed to new customers in July 2024 and reopened in November 2025.
 - **Build + test** → **AWS CodeBuild**: managed build containers, pay per build minute.
@@ -52,3 +52,50 @@ markmap:
 - **Deploy + provision** → **AWS Elastic Beanstalk**: deploys the code **and** creates the environment.
 - **Deploy only** → **AWS CodeDeploy**: to **EC2** instances, **on-premises** servers, **Lambda** functions and **ECS** services you already run.
 - **Orchestrate** → **AWS CodePipeline**: chains source → build → test → (approval) → deploy, triggered by each push.
+
+## AWS CodeCommit
+
+### Version Control & Git
+
+- **Version control**: see every change made to the code over time, and **roll back** if needed.
+- **Git** is the standard version control system.
+    - Each developer has a **local copy** of the repository, synced with a **central online repository**.
+- Benefits of a central repository:
+    - **Collaborate** with other developers.
+    - The code is **backed up** somewhere.
+    - Every change is **visible and auditable** (who changed what, when).
+- Hosted Git options: **GitHub**, **GitLab**, **Bitbucket**… and **AWS CodeCommit**.
+
+### Features
+
+- **Private Git repositories**, fully managed and highly available.
+- **No limit on repository size**: it scales seamlessly.
+    - Per-file limits: 6 MB in the console / API / CLI, 2 GB per Git blob.
+- Code stays **in your AWS account** → easier security and compliance.
+- **Security** built in: encryption, IAM access control (see below).
+- **Integrates** with CodeBuild, CodePipeline, Jenkins and other CI tools.
+- Pull requests with **approval rules** for code review.
+
+### Security
+
+- ![CodeCommit security: Git authenticates with an SSH key uploaded in IAM, HTTPS Git credentials for an IAM user, or the AWS CLI credential helper / git-remote-codecommit; an IAM policy allows codecommit:GitPull and GitPush on the orders-api repository, which is encrypted at rest with KMS and only reachable over HTTPS or SSH; for cross-account access a developer in account 444455556666 assumes a role in account 111122223333 through STS instead of sharing keys](../images/CodeCommitSecurity.png)
+- Interactions use **standard Git** commands.
+- **Authentication** (who you are):
+    - **SSH keys**: IAM users upload their SSH public key in the **IAM console**.
+    - **HTTPS**: **Git credentials** (user name + password) generated in IAM for an IAM user, or the **AWS CLI credential helper**.
+    - **git-remote-codecommit** (`codecommit://` URLs): for **roles, federated / SSO** users and other **temporary credentials** (not on the slides).
+- **Authorization** (what you can do): **IAM policies** on users / roles, e.g. allow `codecommit:GitPull` and `codecommit:GitPush` on one repository ARN.
+- **Encryption**:
+    - **At rest**: automatic, with **AWS KMS** (AWS managed key or your own customer managed key).
+    - **In transit**: only **HTTPS** or **SSH**, both encrypted.
+- **Cross-account access**:
+    - **Never share** SSH keys or AWS credentials.
+    - Create an **IAM role** in the repository's account and let the other account assume it with **AWS STS `AssumeRole`**.
+
+### CodeCommit vs GitHub
+
+- ![CodeCommit vs GitHub: both support pull requests, CodeBuild / CodePipeline integration and Git over SSH and HTTPS; CodeCommit users are IAM users and roles, it is hosted by AWS in your account with a minimal UI and KMS encryption; GitHub users are GitHub accounts, hosted on github.com or self-hosted with Enterprise Server, with a full-featured UI](../images/CodeCommitVsGitHub.png)
+- **Both**: pull requests / code review, CodeBuild integration, SSH + HTTPS.
+- **Users**: CodeCommit → **IAM users & roles**; GitHub → **GitHub accounts**.
+- **Hosting**: CodeCommit → **managed by AWS**; GitHub → github.com, or **GitHub Enterprise Server** on your own servers.
+- **UI**: CodeCommit → **minimal**; GitHub → **full featured**.
