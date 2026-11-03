@@ -99,3 +99,38 @@ markmap:
 - **Users**: CodeCommit → **IAM users & roles**; GitHub → **GitHub accounts**.
 - **Hosting**: CodeCommit → **managed by AWS**; GitHub → github.com, or **GitHub Enterprise Server** on your own servers.
 - **UI**: CodeCommit → **minimal**; GitHub → **full featured**.
+
+## AWS CodePipeline
+
+### Overview
+
+- **Visual workflow** that **orchestrates** the whole CI/CD process (where it fits: see "CI/CD Services on AWS" above).
+- ![CodePipeline stages: pipeline orders-api runs Source (CodeCommit main branch) → Build (CodeBuild) → Test with two parallel actions (CodeBuild unit tests and Device Farm mobile UI tests) → manual Approval → Deploy (CodeDeploy to prod EC2); below, the example providers for each action category](../images/CodePipelineStages.png)
+- A pipeline is made of **stages**, run **in order**, e.g. Build → Test → Deploy → Load testing.
+    - Each stage has one or more **actions**, run **in sequence and / or in parallel**.
+    - A **manual approval** action can be added to any stage.
+- Action categories and example providers:
+    - **Source**: CodeCommit, ECR, S3, GitHub, GitLab, Bitbucket (GitHub / GitLab / Bitbucket through a connection).
+    - **Build**: CodeBuild, Jenkins, CloudBees, TeamCity.
+    - **Test**: CodeBuild, AWS Device Farm, 3rd-party tools.
+    - **Deploy**: CodeDeploy, Elastic Beanstalk, CloudFormation, ECS, S3…
+    - **Invoke**: Lambda, Step Functions.
+    - **Approval**: manual.
+
+### Artifacts
+
+- ![CodePipeline artifacts: CodeCommit uploads SourceArtifact to the S3 artifact store, CodeBuild downloads it and uploads BuildArtifact, CodeDeploy downloads BuildArtifact and deploys v2 to the EC2 fleet](../images/CodePipelineArtifacts.png)
+- Each stage can create **artifacts**: its output (source code zip, build output…).
+- Artifacts are stored in an **S3 bucket** (the *artifact store*) and passed as **input** to the next stage.
+    - Stages never talk to each other directly: they **upload to and download from S3**.
+- Artifacts are **encrypted with KMS**; the pipeline's **service role** needs access to the bucket.
+- Cross-Region actions use an artifact bucket **in each Region** (not on the slides).
+
+### Troubleshooting
+
+- ![CodePipeline troubleshooting: a failed Build stage stops the pipeline and emits an event; an EventBridge rule on "CodePipeline Stage Execution State Change" with state FAILED sends it to SNS or Lambda; AccessDenied on an action means the pipeline's IAM service role lacks a permission; CloudTrail records who called the CodePipeline APIs](../images/CodePipelineTroubleshooting.png)
+- **Pipeline, stage and action state changes** → events in **Amazon EventBridge** (formerly CloudWatch Events).
+    - E.g. rules for **failed** pipelines or **canceled** stages → notify with SNS, run a Lambda.
+- A **failed stage stops the pipeline**; the console shows which action failed and why.
+- Pipeline **can't perform an action** → check the pipeline's **IAM service role** has the permissions (IAM policy).
+- **AWS CloudTrail** audits the CodePipeline **API calls** (who changed or started the pipeline).
