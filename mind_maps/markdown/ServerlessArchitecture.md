@@ -523,6 +523,26 @@ markmap:
     - Override it on a single method with the same key (e.g. GET checks parameters, POST checks parameters + body).
 - **REST APIs only**: HTTP APIs have no request validation.
 
+### Usage Plans & API Keys
+
+- Use case: **sell your API** to customers ($), each with their own access level and limits.
+- ![Usage plans and API keys: Customer A sends a Pro plan key and gets 200, Customer B has used the Free plan's 1,000 monthly calls and gets 429, a caller without a key gets 403; the Pro and Free plans set the rate, burst and quota for the prod stage; setup order is methods, API keys, usage plan, associate](../images/APIGatewayUsagePlans.png)
+- **Usage plan** = **who** can call which deployed **stages** (and methods), **how fast** and **how much**.
+    - **Throttling**: steady **rate** (req/s) + **burst**, per API key; can be overridden per method.
+    - **Quota**: maximum number of requests per **day, week or month**, per API key.
+    - One plan can cover several stages; one key can be in several plans, but **only one plan per stage**.
+- **API key** = a long alphanumeric string you hand out to a customer → identifies the client and **meters** its usage.
+    - Sent in the **`x-api-key`** header (or returned by a Lambda authorizer).
+    - Only enforced on methods with **API key required = true**.
+    - Missing / invalid key → **403 Forbidden**; over the throttle or quota → **429 Too Many Requests**.
+- **Setup order** (exam):
+    1. Methods: set **API key required**, then **deploy** to a stage.
+    2. **Generate or import** the API keys.
+    3. Create the **usage plan** with throttle + quota, and add the API **stage(s)**.
+    4. **Associate** the API keys with the usage plan.
+- ⚠️ **Not a security control**: API keys are not authentication → use IAM, Cognito or a Lambda authorizer.
+- ⚠️ Throttling and quotas are **best effort**, not hard limits → don't rely on them to cap costs (use AWS Budgets).
+
 ### Endpoint Types
 
 - ![API Gateway endpoint types: edge-optimized APIs are reached through the nearest CloudFront edge location, regional APIs directly by clients in the same Region, private APIs only from a VPC through an interface VPC endpoint; all three live in one Region](../images/APIGatewayEndpointTypes.png)
