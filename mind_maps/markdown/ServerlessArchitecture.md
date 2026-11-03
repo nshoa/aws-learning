@@ -431,7 +431,7 @@ markmap:
 
 ### Features
 
-- REST APIs and the **WebSocket** protocol.
+- Three API types: **REST**, **HTTP** and **WebSocket** APIs.
 - **API versioning** (v1, v2…) and **environments** with stages (dev, test, prod…).
 - **Security**: authentication and authorization.
 - **API keys** and request **throttling** (usage plans).
@@ -640,6 +640,51 @@ markmap:
     - Edge-optimized endpoint → the certificate must be in **us-east-1**.
     - Regional endpoint → the certificate must be in the **API's Region**.
     - Point the domain at the API with a **CNAME** or **A-alias** record in Route 53.
+
+### HTTP API vs REST API
+
+- ![HTTP API vs REST API: both support IAM, Lambda authorizers, Cognito and CORS; only HTTP APIs have a native JWT / OIDC / OAuth 2.0 authorizer and automatic deployments; only REST APIs have resource policies, API keys and usage plans, request validation, body mapping templates, caching, AWS WAF, MOCK integrations and edge-optimized or private endpoints](../images/APIGatewayHTTPvsREST.png)
+- **HTTP API**: minimal features → **cheaper** and **lower latency**.
+    - Built for **Lambda proxy** and **HTTP proxy** APIs, plus private integrations; no body mapping templates.
+    - Native **JWT authorizer** for **OIDC / OAuth 2.0** (Cognito works through it).
+    - **Built-in CORS**, automatic deployments.
+    - **No** usage plans, API keys, request validation, caching, resource policies or WAF; **Regional** endpoints only.
+- **REST API**: every feature except the native JWT authorizer (validate JWTs in a Lambda authorizer instead).
+- Exam rule: need **API keys, usage plans, caching, validation, WAF or a private API** → **REST API**; just a cheap Lambda proxy with JWT auth → **HTTP API**.
+- Full list: [Choose between REST APIs and HTTP APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html).
+
+### WebSocket API
+
+- **WebSocket**: one **persistent, two-way** connection between the client and the server.
+    - The **server can push** data to the client without a request → **stateful** apps.
+    - Use cases: **real-time** apps, e.g. chat, collaboration tools, multiplayer games, live trading dashboards.
+- Backends: **Lambda**, other AWS services (e.g. DynamoDB) or **HTTP endpoints**.
+- ![WebSocket API chat flow: the client opens wss://a1b2c3.execute-api…/prod, the $connect route invokes onConnect which stores the connectionId in DynamoDB; messages on the same connection go to the sendMessage route and Lambda looks up the room's connections; Lambda pushes back by POSTing to the @connections callback URL signed with SigV4; on disconnect the $disconnect route deletes the connectionId](../images/APIGatewayWebSocket.png)
+- **Connect**: clients open `wss://{api-id}.execute-api.{region}.amazonaws.com/{stage}`.
+    - The `$connect` route runs (e.g. Lambda `onConnect`) with a **`connectionId`** → store it (e.g. DynamoDB) to reach the client later.
+- **Client → server**: every message (frame) on that connection carries the **same `connectionId`** → the backend knows who sent it.
+- **Server → client**: the backend calls the **callback URL** `https://{api-id}.execute-api.{region}.amazonaws.com/{stage}/@connections/{connectionId}`.
+    - It is **`https://`**, not `wss://` as on the slide; requests are signed with **SigV4** (`execute-api:ManageConnections`).
+    - `POST` → send a message to the client.
+    - `GET` → latest connection status.
+    - `DELETE` → disconnect the client.
+- **Disconnect**: the `$disconnect` route runs (best effort) → remove the `connectionId`; a `POST` to a closed connection returns **410 Gone**.
+- Limits: **10 min** idle timeout, **2 h** max connection, **128 KB** message (32 KB frames).
+- **Routing**: incoming JSON messages go to different backends.
+    - ![WebSocket routing: the route selection expression $request.body.action reads "join" from the incoming JSON message, the join route key is selected and its Lambda joinRoom integration runs; a message that matches no route key or is not JSON goes to $default](../images/APIGatewayWebSocketRouting.png)
+    - A **route selection expression** on the API names the JSON field to route on, e.g. `$request.body.action`.
+    - Its value is matched against the **route keys** (e.g. `join`, `leave`, `sendMessage`) → each route has its own **integration**.
+    - No match, or the message is not JSON → **`$default`** route.
+    - Reserved routes: `$connect`, `$disconnect`, `$default`.
+
+### Architecture: Single Front Door
+
+- ![API Gateway as the single front door: web and mobile clients resolve api.example.com in Route 53 to API Gateway with a custom domain and ACM certificate, which routes /orders through a VPC link to an NLB or ALB in front of ECS, /payments to Lambda, /docs to an S3 bucket through an AWS service integration and /legacy to a public HTTP endpoint](../images/APIGatewayFrontDoor.png)
+- **One interface** for all the company's **microservices**: each path goes to its own backend (ECS behind a load balancer, Lambda, S3, any HTTP endpoint).
+- **One domain name + one TLS certificate** (custom domain with ACM, alias record in Route 53).
+- **Cross-cutting rules in one place**: auth, throttling, usage plans, caching, request / response transformation.
+- Private backends stay private: reached through a **VPC link** (NLB / ALB).
+- Clients see a stable API → teams can move or rewrite a backend without breaking clients.
 
 ## AWS Step Functions
 
