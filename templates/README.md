@@ -17,7 +17,6 @@ comment at the top, and run `make lint`.
 |----------|-----------|---------|
 | [lab.md](lab.md) | A hands-on Console/CLI walkthrough | `labs/<service>/NN_<slug>.md` |
 | [cheatsheet.md](cheatsheet.md) | A one-screen service summary | `cheatsheets/<service>.md` |
-| [exam-question.md](exam-question.md) | Practice questions with reasoning | `exam_practices/<EXAM>/<topic>.md` |
 | [note.md](note.md) | A general structured note | anywhere |
 
 ## Conventions (the house style)
@@ -55,7 +54,7 @@ Follow this exactly when asked to add or edit a doc:
     are lowercase with spaces turned into hyphens and punctuation removed.
 5. Keep additions **factual** — do not invent metrics, costs, screenshots, or links.
 6. **Register the new doc** in the relevant index (`labs/README.md`,
-    `cheatsheets/README.md`, `exam_practices/README.md`, ...).
+    `cheatsheets/README.md`, ...).
 7. Run `make lint` (or `pre-commit run markdownlint-cli2 --all-files`) and fix every
     finding before finishing.
 

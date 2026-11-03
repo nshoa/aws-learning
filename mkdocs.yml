@@ -1,7 +1,7 @@
 # MkDocs site for GitHub Pages: https://hoans-swe.github.io/aws-learning/
 # Build locally with `make site` (outputs to _site/), or preview with `make serve`. Deployed by .github/workflows/pages.yml.
 site_name: AWS Learning
-site_description: Mind maps, cheatsheets, hands-on labs and exam practice for AWS certifications.
+site_description: Mind maps, cheatsheets, hands-on and hands-on labs for AWS certifications.
 site_url: https://hoans-swe.github.io/aws-learning/
 repo_url: https://github.com/hoans-swe/aws-learning
 repo_name: hoans-swe/aws-learning
@@ -157,10 +157,8 @@ nav:
           - Canary Deployment on a Stage: labs/api_gateway/03_canary_deployment.md
           - Rename a Response Field with a Mapping Template: labs/api_gateway/04_mapping_template.md
       - CloudFormation: labs/cloud_formation/README.md
-  - Exam Practice: exam_practices/README.md
   - Templates:
       - templates/README.md
       - Lab: templates/lab.md
       - Cheatsheet: templates/cheatsheet.md
-      - Exam question: templates/exam-question.md
       - Note: templates/note.md
