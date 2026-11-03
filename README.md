@@ -3,7 +3,7 @@
 [![CI](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml)
 
 My study repository for AWS certifications — visual mind maps, quick-recall
-cheatsheets, hands-on labs, and exam practice. Built mostly while following
+cheatsheets, and hands-on labs. Built mostly while following
 Stephane Maarek's courses (SAA-C03 / DVA-C01).
 
 📖 **Read it as a website:** <https://hoans-swe.github.io/aws-learning/> (searchable, with
@@ -16,7 +16,6 @@ Stephane Maarek's courses (SAA-C03 / DVA-C01).
 | 🧠 [Mind Maps](mind_maps/) | XMind visual maps for **16 topic areas** (EC2, S3, VPC, IAM, …) — the big picture | [mind_maps/README.md](mind_maps/README.md) |
 | 📒 [Cheatsheets](cheatsheets/) | One-page service summaries for fast exam recall | [cheatsheets/README.md](cheatsheets/README.md) |
 | 🧪 [Labs](labs/) | Step-by-step console & CLI labs (EC2, IAM, S3, CloudFront, SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway, CloudFormation) | [labs/README.md](labs/README.md) |
-| 📝 [Exam Practice](exam_practices/) | Practice questions & reasoning, by certification | [exam_practices/README.md](exam_practices/README.md) |
 | 🧩 [Templates](templates/) | Reusable doc templates + house style (for humans & LLMs) | [templates/README.md](templates/README.md) |
 
 ## 🗂️ Repository structure
@@ -33,7 +32,6 @@ aws-learning/
 │   ├── cloud_formation/   # Infrastructure-as-Code templates + lab
 │   └── shared_assets/      # Screenshots referenced by the labs
 ├── mind_maps/         # XMind source (.xmind) + exported images
-├── exam_practices/    # Practice questions per exam (CLF-C02, …)
 └── templates/         # Reusable doc templates (lab, cheatsheet, note, …)
 ```
 
@@ -85,7 +83,6 @@ breadcrumb, metadata, cleanup — then run `make lint`.
 |------|----------------------|
 | **SAA-C03** — Solutions Architect Associate | Mind maps (all 16 topics), labs, cheatsheets |
 | **DVA-C01** — Developer Associate | S3 & CloudFront labs |
-| **CLF-C02** — Cloud Practitioner | Exam practice (in progress) |
 
 ---
 
