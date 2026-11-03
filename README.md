@@ -2,9 +2,13 @@
 
 [![CI](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml/badge.svg)](https://github.com/hoans-swe/aws-learning/actions/workflows/ci.yml)
 
-My study repository for AWS certifications — visual mind maps, quick-recall
-cheatsheets, and hands-on labs. Built mostly while following
-Stephane Maarek's courses (SAA-C03 / DVA-C01).
+My study repository for everything AWS — visual mind maps, quick-recall
+cheatsheets, and hands-on labs. It started with the Solutions Architect Associate
+(SAA-C03) course, is now growing with the Developer Associate (DVA-C02) course, and
+will keep collecting notes from every new AWS course I take.
+
+Content is organized **by AWS service, not by course**: when a new course covers a
+service again, its notes extend the same mind map, cheatsheet, or lab series.
 
 📖 **Read it as a website:** <https://hoans-swe.github.io/aws-learning/> (searchable, with
 [interactive mind maps](https://hoans-swe.github.io/aws-learning/mind-maps/)).
@@ -77,12 +81,13 @@ New lab, cheatsheet, or note? Copy the matching file from [`templates/`](templat
 (see the [authoring guide](templates/README.md)) so it follows the house style — TOC,
 breadcrumb, metadata, cleanup — then run `make lint`.
 
-## 🎯 Certification scope
+## 🎯 Courses & coverage
 
-| Exam | Coverage in this repo |
-|------|----------------------|
-| **SAA-C03** — Solutions Architect Associate | Mind maps (all 16 topics), labs, cheatsheets |
-| **DVA-C01** — Developer Associate | S3 & CloudFront labs |
+| Course | Status | What it added |
+|--------|--------|---------------|
+| **SAA-C03** — Solutions Architect Associate | ✅ Studied | Mind maps (all 16 topics), cheatsheets, EC2 / IAM / S3 / CloudFront labs |
+| **DVA-C02** — Developer Associate | 🚧 In progress | Deeper Lambda, DynamoDB and API Gateway theory in the mind maps; SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway and CloudFormation labs |
+| *Next AWS courses* | 🔜 Planned | Added here as I study them |
 
 ---
 
