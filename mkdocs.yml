@@ -17,7 +17,6 @@ exclude_docs: |
   /_site/
   /.github/
   /config/
-  /mind_maps/xminds/
   /requirements*.txt
   /Makefile
   /mkdocs.yml

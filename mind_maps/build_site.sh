@@ -12,7 +12,7 @@ OUT_DIR="${1:-_site}"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-# Copy only the images the Markdown actually embeds (the full set is ~58 MB).
+# Copy only the images the Markdown actually embeds.
 mkdir -p "$OUT_DIR/images"
 grep -rhoE '\.\./images/[^") ]+' "$SRC_DIR" | sort -u | while read -r ref; do
   cp "$SRC_DIR/$ref" "$OUT_DIR/images/"
@@ -66,7 +66,7 @@ cat > "$OUT_DIR/index.html" <<EOF
 </head>
 <body>
   <h1>AWS Learning Mind Maps</h1>
-  <p>Interactive mind maps for the AWS Solutions Architect Associate course. Click a node to expand or collapse it; scroll to zoom.</p>
+  <p>Interactive mind maps for my AWS studies. Click a node to expand or collapse it; scroll to zoom.</p>
   <ol>
 ${items}  </ol>
   <p><a href="../">← AWS Learning home</a> · <a href="https://github.com/hoans-swe/aws-learning/tree/main/mind_maps">Source on GitHub</a></p>

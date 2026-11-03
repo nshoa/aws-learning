@@ -17,7 +17,7 @@ service again, its notes extend the same mind map, cheatsheet, or lab series.
 
 | Section | What it is | Start here |
 |---------|-----------|-----------|
-| 🧠 [Mind Maps](mind_maps/) | XMind visual maps for **16 topic areas** (EC2, S3, VPC, IAM, …) — the big picture | [mind_maps/README.md](mind_maps/README.md) |
+| 🧠 [Mind Maps](mind_maps/) | Markdown mind maps for **16 topic areas** (EC2, S3, VPC, IAM, …), interactive on the website — the big picture | [mind_maps/README.md](mind_maps/README.md) |
 | 📒 [Cheatsheets](cheatsheets/) | One-page service summaries for fast exam recall | [cheatsheets/README.md](cheatsheets/README.md) |
 | 🧪 [Labs](labs/) | Step-by-step console & CLI labs (EC2, IAM, S3, CloudFront, SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway, CloudFormation) | [labs/README.md](labs/README.md) |
 | 🧩 [Templates](templates/) | Reusable doc templates + house style (for humans & LLMs) | [templates/README.md](templates/README.md) |
@@ -35,7 +35,7 @@ aws-learning/
 │   ├── cloudfront/
 │   ├── cloud_formation/   # Infrastructure-as-Code templates + lab
 │   └── shared_assets/      # Screenshots referenced by the labs
-├── mind_maps/         # XMind source (.xmind) + exported images
+├── mind_maps/         # Markdown mind maps (markdown/) + diagrams (images/)
 └── templates/         # Reusable doc templates (lab, cheatsheet, note, …)
 ```
 
