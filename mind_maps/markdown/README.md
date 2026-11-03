@@ -1,6 +1,7 @@
 # Mind Maps as Markdown
 
-Text versions of the mind map images in [`../images`](https://github.com/hoans-swe/aws-learning/tree/main/mind_maps/images), one file per topic.
+The mind maps, one file per topic. These Markdown files are the source of truth (the old XMind maps in [`../xminds`](https://github.com/hoans-swe/aws-learning/tree/main/mind_maps/xminds) are archived and no longer updated);
+diagrams they embed live in [`../images`](https://github.com/hoans-swe/aws-learning/tree/main/mind_maps/images).
 Each file is a plain Markdown outline (`#` = root, `##` = main branch, `###` = sub-branch, bullets = leaves),
 so it reads fine on GitHub and also renders as an interactive mind map with [Markmap](https://markmap.js.org).
 
@@ -30,4 +31,4 @@ so it reads fine on GitHub and also renders as an interactive mind map with [Mar
 - **Build locally:** `make site`, then open `_site/mind-maps/index.html`.
 - **VS Code:** install the *Markmap* extension and open any file.
 
-Architecture diagrams from the images are summarised as text lines starting with "Diagram:" or "Flow:".
+Older sections summarise architecture diagrams as text lines starting with "Diagram:" or "Flow:"; newer sections embed a diagram image.

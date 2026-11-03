@@ -66,7 +66,7 @@ cat > "$OUT_DIR/index.html" <<EOF
 </head>
 <body>
   <h1>AWS Learning Mind Maps</h1>
-  <p>Interactive mind maps for the AWS Solutions Architect Associate course. Click a node to expand or collapse it; scroll to zoom.</p>
+  <p>Interactive mind maps for my AWS studies. Click a node to expand or collapse it; scroll to zoom.</p>
   <ol>
 ${items}  </ol>
   <p><a href="../">← AWS Learning home</a> · <a href="https://github.com/hoans-swe/aws-learning/tree/main/mind_maps">Source on GitHub</a></p>
