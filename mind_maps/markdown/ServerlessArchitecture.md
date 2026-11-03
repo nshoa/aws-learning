@@ -580,6 +580,24 @@ markmap:
 - **Integration timeout**: 50 ms to **29 s** by default for all integration types.
     - Regional and private REST APIs can raise it above 29 s with a quota request (may lower the account throttle limit); edge-optimized APIs cannot.
 
+### CORS
+
+- Needed when a **web page from another origin** calls the API, e.g. `https://shop.example.com` (S3 / CloudFront site) → `https://api.example.com`. CORS basics: see the [S3 mind map](https://hoans-swe.github.io/aws-learning/mind_maps/markdown/S3/#cross-origin-resource-sharing-cors).
+- ![CORS with API Gateway: the browser on shop.example.com sends an OPTIONS preflight with Origin and the requested method and headers, API Gateway's OPTIONS method answers 200 with the Access-Control-Allow-Origin, Methods and Headers headers, then the browser sends the real POST, Lambda returns Access-Control-Allow-Origin and the browser lets the page read the 201 response](../images/APIGatewayCORS.png)
+- **Preflight**: before a non-simple request (e.g. `POST` with JSON or an `x-api-key` header), the browser sends `OPTIONS` with `Origin`, `Access-Control-Request-Method` and `Access-Control-Request-Headers`.
+- The preflight **response** must contain (the slide says the request; it is the response):
+    - `Access-Control-Allow-Origin`
+    - `Access-Control-Allow-Methods`
+    - `Access-Control-Allow-Headers`
+- The **real response** must also contain `Access-Control-Allow-Origin`, or the browser blocks it ("CORS error"), even with status 200.
+- **Enable CORS in the console** (REST API, per resource):
+    - Adds an `OPTIONS` method with a **MOCK** integration that answers the preflight.
+    - Non-proxy integrations: adds `Access-Control-Allow-Origin` to the method response.
+    - Optionally adds the headers to the **Default 4XX / 5XX gateway responses**, so error responses are readable too.
+    - **Redeploy** the API afterwards.
+- **Lambda proxy / HTTP proxy** integrations: the **backend must return** the CORS headers itself (e.g. in the Lambda response `headers`).
+- **HTTP APIs**: configure CORS on the API → API Gateway answers preflights automatically.
+
 ### Endpoint Types
 
 - ![API Gateway endpoint types: edge-optimized APIs are reached through the nearest CloudFront edge location, regional APIs directly by clients in the same Region, private APIs only from a VPC through an interface VPC endpoint; all three live in one Region](../images/APIGatewayEndpointTypes.png)
