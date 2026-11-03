@@ -43,7 +43,7 @@ markmap:
 
 ### CI/CD Services on AWS
 
-- ![CI/CD on AWS: code in AWS CodeCommit (or GitHub, Bitbucket), build and test in AWS CodeBuild (or Jenkins), deploy and provision with AWS Elastic Beanstalk, or deploy only with AWS CodeDeploy to EC2, on-premises servers, Lambda or ECS; AWS CodePipeline orchestrates every stage](../images/CICDOnAWS.png)
+- ![CI/CD on AWS: developers push to CodeCommit (or GitHub / Bitbucket), CodeBuild (or Jenkins) builds and tests, then CodeDeploy deploys to EC2 instances, on-premises servers, Lambda or ECS, or Elastic Beanstalk deploys and provisions; CodePipeline orchestrates all the stages](../images/CICDOnAWS.png)
 - **Code** → **AWS CodeCommit**: managed Git repositories (details below).
     - Or any 3rd-party repository: **GitHub**, **Bitbucket**…
     - CodeCommit was closed to new customers in July 2024 and reopened in November 2025.
@@ -78,7 +78,7 @@ markmap:
 
 ### Security
 
-- ![CodeCommit security: Git authenticates with an SSH key uploaded in IAM, HTTPS Git credentials for an IAM user, or the AWS CLI credential helper / git-remote-codecommit; an IAM policy allows codecommit:GitPull and GitPush on the orders-api repository, which is encrypted at rest with KMS and only reachable over HTTPS or SSH; for cross-account access a developer in account 444455556666 assumes a role in account 111122223333 through STS instead of sharing keys](../images/CodeCommitSecurity.png)
+- ![CodeCommit security: a developer (IAM user) runs git push over SSH or HTTPS, an IAM policy check allows GitPush, and the orders-api repository in account 111122223333 is encrypted at rest with a KMS key; a partner developer in account 444455556666 calls STS AssumeRole, gets temporary credentials for an IAM role in the repo account and pushes as that role](../images/CodeCommitSecurity.png)
 - Interactions use **standard Git** commands.
 - **Authentication** (who you are):
     - **SSH keys**: IAM users upload their SSH public key in the **IAM console**.
@@ -119,7 +119,7 @@ markmap:
 
 ### Artifacts
 
-- ![CodePipeline artifacts: CodeCommit uploads SourceArtifact to the S3 artifact store, CodeBuild downloads it and uploads BuildArtifact, CodeDeploy downloads BuildArtifact and deploys v2 to the EC2 fleet](../images/CodePipelineArtifacts.png)
+- ![CodePipeline artifacts: the developer pushes to CodeCommit, which writes SourceArtifact to the S3 artifact bucket; CodeBuild reads it as input and writes BuildArtifact back to S3; CodeDeploy reads BuildArtifact and deploys to EC2 instances](../images/CodePipelineArtifacts.png)
 - Each stage can create **artifacts**: its output (source code zip, build output…).
 - Artifacts are stored in an **S3 bucket** (the *artifact store*) and passed as **input** to the next stage.
     - Stages never talk to each other directly: they **upload to and download from S3**.
@@ -128,7 +128,7 @@ markmap:
 
 ### Troubleshooting
 
-- ![CodePipeline troubleshooting: a failed Build stage stops the pipeline and emits an event; an EventBridge rule on "CodePipeline Stage Execution State Change" with state FAILED sends it to SNS or Lambda; AccessDenied on an action means the pipeline's IAM service role lacks a permission; CloudTrail records who called the CodePipeline APIs](../images/CodePipelineTroubleshooting.png)
+- ![CodePipeline troubleshooting: a failed CodePipeline sends a state change event to an EventBridge rule, which notifies an SNS topic that emails the team and invokes a Lambda function for a chat alert; AccessDenied points to the pipeline's IAM service role, and CloudTrail logs the API calls](../images/CodePipelineTroubleshooting.png)
 - **Pipeline, stage and action state changes** → events in **Amazon EventBridge** (formerly CloudWatch Events).
     - E.g. rules for **failed** pipelines or **canceled** stages → notify with SNS, run a Lambda.
 - A **failed stage stops the pipeline**; the console shows which action failed and why.
