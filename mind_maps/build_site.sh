@@ -12,7 +12,7 @@ OUT_DIR="${1:-_site}"
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-# Copy only the images the Markdown actually embeds.
+# Copy only the images the Markdown actually embeds (the full set is ~58 MB).
 mkdir -p "$OUT_DIR/images"
 grep -rhoE '\.\./images/[^") ]+' "$SRC_DIR" | sort -u | while read -r ref; do
   cp "$SRC_DIR/$ref" "$OUT_DIR/images/"

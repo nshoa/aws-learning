@@ -1,6 +1,6 @@
 # Mind Maps as Markdown
 
-The mind maps, one file per topic. These Markdown files are the source of truth (the old XMind maps were retired);
+The mind maps, one file per topic. These Markdown files are the source of truth (the old XMind maps in [`../xminds`](https://github.com/hoans-swe/aws-learning/tree/main/mind_maps/xminds) are archived and no longer updated);
 diagrams they embed live in [`../images`](https://github.com/hoans-swe/aws-learning/tree/main/mind_maps/images).
 Each file is a plain Markdown outline (`#` = root, `##` = main branch, `###` = sub-branch, bullets = leaves),
 so it reads fine on GitHub and also renders as an interactive mind map with [Markmap](https://markmap.js.org).

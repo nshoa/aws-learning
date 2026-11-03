@@ -35,7 +35,7 @@ aws-learning/
 │   ├── cloudfront/
 │   ├── cloud_formation/   # Infrastructure-as-Code templates + lab
 │   └── shared_assets/      # Screenshots referenced by the labs
-├── mind_maps/         # Markdown mind maps (markdown/) + diagrams (images/)
+├── mind_maps/         # Markdown mind maps (markdown/) + diagrams (images/); xminds/ = archived XMind, not used
 └── templates/         # Reusable doc templates (lab, cheatsheet, note, …)
 ```
 
