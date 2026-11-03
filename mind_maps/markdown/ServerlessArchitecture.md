@@ -611,15 +611,35 @@ markmap:
 
 ### Security
 
-- **User authentication**
-    - **IAM roles**: for internal applications and AWS principals.
-    - **Cognito**: identity for external users (e.g. mobile app users).
-    - **Custom (Lambda) authorizer**: your own logic.
+- ![API Gateway security: an app with an IAM role signs its request with SigV4 and API Gateway checks IAM policies; a mobile user signs in to a Cognito user pool and API Gateway checks the JWT; a partner app sends a third-party bearer token that a Lambda authorizer verifies, returning a principal and an IAM policy that API Gateway caches](../images/APIGatewayAuth.png)
+- **IAM** (method authorization `AWS_IAM`): authentication = **IAM**, authorization = **IAM policy**.
+    - Attach a policy that allows `execute-api:Invoke` to the user or role.
+    - The request is signed with **SigV4**: the IAM credentials travel in the headers.
+    - Best for callers **inside AWS** (EC2, Lambda, IAM users).
+- **Resource policies**: a JSON policy on the API itself, like a Lambda resource policy.
+    - ![API Gateway resource policies: allow a Reporting role from account 222233334444 to call GET /orders on prod, deny every source IP outside 203.0.113.0/24, and deny every request that does not come through VPC endpoint vpce-0a1b2c3d](../images/APIGatewayResourcePolicy.png)
+    - **Cross-account** access, combined with IAM auth: the caller's IAM policy **and** the resource policy must both allow it.
+    - Allow or deny **source IP** ranges (`aws:SourceIp`).
+    - Allow only a **VPC endpoint** (`aws:SourceVpce`) → how **private APIs** control access.
+- **Cognito User Pools**: authentication = **Cognito**, authorization = API Gateway **methods**.
+    - Cognito manages the whole user lifecycle (sign-up, sign-in, Google / Facebook login); tokens **expire** automatically.
+    - The client sends the user pool token → API Gateway **verifies it itself**, no custom code.
+    - Per-method access via OAuth **scopes** in the access token; anything finer must be done **in the backend**.
+- **Lambda authorizer** (formerly *custom authorizer*): authentication = **external**, authorization = **your Lambda function**.
+    - **TOKEN** authorizer: a **bearer token** in a header (JWT, OAuth token from a 3rd-party IdP).
+    - **REQUEST** authorizer: **headers, query string, stage variables**, `$context` variables.
+    - The function returns a **principal + IAM policy** (Allow / Deny) → API Gateway **caches** it per token / identity sources for a TTL (0 = off).
+        - With caching on, the cached policy is reused for **other methods** → return a policy that covers all of them.
+    - You pay per Lambda invocation; caching cuts the calls.
+- **Which one?**
+    - **IAM**: users / roles already in your AWS account (+ resource policy for cross-account); authentication + authorization; SigV4.
+    - **Lambda authorizer**: **3rd-party tokens**; very flexible (any IAM policy); authentication + authorization in your function; pay per invocation, cached.
+    - **Cognito User Pool**: you manage your own user pool (social logins); no code to write; fine-grained authorization in the backend.
+- Missing or invalid token → **401 Unauthorized**; identity OK but the policy denies it → **403 Forbidden**.
 - **Custom domain name over HTTPS** with **AWS Certificate Manager (ACM)**
     - Edge-optimized endpoint → the certificate must be in **us-east-1**.
     - Regional endpoint → the certificate must be in the **API's Region**.
     - Point the domain at the API with a **CNAME** or **A-alias** record in Route 53.
-- **Authorization**: IAM permissions and resource policies.
 
 ## AWS Step Functions
 
