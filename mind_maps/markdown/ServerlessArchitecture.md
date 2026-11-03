@@ -526,7 +526,7 @@ markmap:
 ### Usage Plans & API Keys
 
 - Use case: **sell your API** to customers ($), each with their own access level and limits.
-- ![Usage plans and API keys: Customer A sends a Pro plan key and gets 200, Customer B has used the Free plan's 1,000 monthly calls and gets 429, a caller without a key gets 403; the Pro and Free plans set the rate, burst and quota for the prod stage; setup order is methods, API keys, usage plan, associate](../images/APIGatewayUsagePlans.png)
+- ![Usage plans and API keys: Customer A sends a Pro plan key and gets 200, Customer B has used the Free plan's 1,000 monthly calls and gets 429, a caller without a key gets 403; the Pro and Free plans set the rate, burst and quota for the prod stage; setup order is methods, API keys, usage plan, then associate stages and keys](../images/APIGatewayUsagePlans.png)
 - **Usage plan** = **who** can call which deployed **stages** (and methods), **how fast** and **how much**.
     - **Throttling**: steady **rate** (req/s) + **burst**, per API key; can be overridden per method.
     - **Quota**: maximum number of requests per **day, week or month**, per API key.
@@ -538,10 +538,47 @@ markmap:
 - **Setup order** (exam):
     1. Methods: set **API key required**, then **deploy** to a stage.
     2. **Generate or import** the API keys.
-    3. Create the **usage plan** with throttle + quota, and add the API **stage(s)**.
-    4. **Associate** the API keys with the usage plan.
+    3. Create the **usage plan** with the throttle + quota limits.
+    4. **Associate** the API **stages** and the **API keys** with the usage plan.
+    - Then callers must send their assigned key in the `x-api-key` header.
 - ⚠️ **Not a security control**: API keys are not authentication → use IAM, Cognito or a Lambda authorizer.
 - ⚠️ Throttling and quotas are **best effort**, not hard limits → don't rely on them to cap costs (use AWS Budgets).
+
+### Logging, Tracing & Metrics
+
+- ![Monitoring API Gateway: Latency of 180 ms covers the whole request at API Gateway, IntegrationLatency of 150 ms covers only the Lambda call, the 30 ms difference is API Gateway overhead; execution and access logs go to CloudWatch Logs, traces to X-Ray, and per-stage metrics such as Count, Latency, IntegrationLatency, 4XXError, 5XXError and cache hits to CloudWatch](../images/APIGatewayMonitoring.png)
+- **CloudWatch Logs**: enabled on the **stage**, can be **overridden per method**.
+    - **Execution logs**: log level `OFF`, `ERROR` or `INFO` (the course slide also lists DEBUG, which is not a level).
+    - **Full request/response data** logging: request and response bodies → for debugging only, it can log sensitive data.
+    - **Access logs**: one line per request in your own format (`$context` variables), to CloudWatch Logs or Data Firehose.
+    - API Gateway needs an **IAM role** (set once per Region in the API Gateway account settings) to write the logs.
+- **X-Ray**: enable **tracing** on the stage → extra detail on each request inside API Gateway.
+    - API Gateway + Lambda (active tracing) both traced → **the full picture** end to end in the service map.
+- **CloudWatch metrics**: **per stage**; enable **detailed metrics** for per-method metrics.
+    - `Count`: total number of API requests in the period.
+    - `Latency`: API Gateway receives the request → returns the response; **includes** `IntegrationLatency` + API Gateway overhead.
+    - `IntegrationLatency`: API Gateway relays the request to the backend → gets the backend's response.
+    - `4XXError` (client side) and `5XXError` (server side).
+    - `CacheHitCount` and `CacheMissCount`: how efficient the cache is.
+    - High `Latency` but low `IntegrationLatency` → the time is spent in API Gateway (authorizer, mapping); both high → the backend is slow.
+
+### Throttling & Errors
+
+- ![API Gateway throttling: an account limit per Region of 10,000 requests per second with a 5,000 burst contains a stage limit, which contains a method limit, and usage plans throttle each API key; in a noisy-neighbour example an Orders API spike of 9,900 requests per second plus 300 for Payments goes over the account limit, so Payments callers also get 429](../images/APIGatewayThrottling.png)
+- **Account limit**: **10,000 req/s** + a burst of **5,000**, per Region, **shared by all APIs** → soft limit, can be raised.
+- Throttled → **429 Too Many Requests**: a **retriable** error (retry with exponential backoff).
+- Set tighter **stage** and **method** limits to protect the backend, or **usage plans** to throttle each customer.
+- Noisy neighbour: like Lambda concurrency, one overloaded API without limits can get the **other APIs throttled**.
+- **4xx = client errors**
+    - `400` Bad Request (e.g. request validation failed).
+    - `403` Access Denied: missing or invalid API key, authorizer denied, request **blocked by WAF**.
+    - `429` Too Many Requests: throttled or **quota exceeded**.
+- **5xx = server errors**
+    - `502` Bad Gateway: usually a **Lambda proxy** function returning an output in the **wrong format**; sometimes out-of-order invocations under heavy load.
+    - `503` Service Unavailable.
+    - `504` Integration timeout ("Endpoint Request Timed-out"): the backend did not answer within the **integration timeout**.
+- **Integration timeout**: 50 ms to **29 s** by default for all integration types.
+    - Regional and private REST APIs can raise it above 29 s with a quota request (may lower the account throttle limit); edge-optimized APIs cannot.
 
 ### Endpoint Types
 
