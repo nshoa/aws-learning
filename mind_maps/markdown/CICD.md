@@ -1,0 +1,54 @@
+---
+title: CI/CD on AWS
+markmap:
+  colorFreezeLevel: 2
+  initialExpandLevel: 2
+---
+
+# CI/CD on AWS
+
+## Introduction
+
+### Why CI/CD
+
+- So far: create resources **by hand** (console), call AWS **programmatically** (CLI, SDK), deploy with **Elastic Beanstalk**.
+- Every manual step is a chance to **make a mistake** → automate the path from code to AWS.
+- Goal: code lives **in a repository** and is deployed to AWS:
+    - **Automatically**, the same way every time.
+    - **Tested** before it is deployed.
+    - Through several **stages / environments** (dev → test → staging → prod).
+    - With a **manual approval** where needed (e.g. before prod).
+
+### Continuous Integration (CI)
+
+- ![Continuous integration loop: the developer pushes code to the orders-api repository several times a day, the build server (CodeBuild, Jenkins) fetches each new commit, builds and runs the tests, and sends the results back within minutes: passed means safe to merge, failed means fix it while the change is fresh](../images/CICDContinuousIntegration.png)
+- Developers **push code often** to a shared repository (CodeCommit, GitHub, Bitbucket…).
+- A **build / test server** checks every push automatically (CodeBuild, Jenkins…).
+- The developer gets **fast feedback**: which tests and checks passed or failed.
+- Benefits:
+    - **Find bugs early** → small changes are easy to fix.
+    - **Deliver faster**, because the code is always tested.
+    - Deploy often; developers are not blocked by big merges.
+- Output: a **tested build artifact** (zip, container image…) ready to deploy.
+
+### Continuous Delivery (CD)
+
+- ![Continuous delivery: developer push → repository → build and test produce artifact v2 → every passing build is deployed, replacing v1 with v2 on each application server; continuous delivery puts a manual approval before prod, continuous deployment goes to prod automatically](../images/CICDContinuousDelivery.png)
+- Software can be **released reliably whenever needed**.
+- Deployments are **frequent and quick**: from "one release every 3 months" to "many releases a day".
+- In practice this means **automated deployment** (CodeDeploy, Jenkins, Spinnaker…).
+- **Continuous delivery** vs **continuous deployment** (not on the slides):
+    - Delivery: every build is *ready* for prod; a **person approves** the prod release.
+    - Deployment: every build that passes the tests goes to prod **automatically**.
+
+### CI/CD Services on AWS
+
+- ![CI/CD on AWS: code in AWS CodeCommit (or GitHub, Bitbucket), build and test in AWS CodeBuild (or Jenkins), deploy and provision with AWS Elastic Beanstalk, or deploy only with AWS CodeDeploy to EC2, on-premises servers, Lambda or ECS; AWS CodePipeline orchestrates every stage](../images/CICDOnAWS.png)
+- **Code** → **AWS CodeCommit**: managed Git repositories.
+    - Or any 3rd-party repository: **GitHub**, **Bitbucket**…
+    - CodeCommit was closed to new customers in July 2024 and reopened in November 2025.
+- **Build + test** → **AWS CodeBuild**: managed build containers, pay per build minute.
+    - Or any 3rd-party CI server, e.g. **Jenkins**.
+- **Deploy + provision** → **AWS Elastic Beanstalk**: deploys the code **and** creates the environment.
+- **Deploy only** → **AWS CodeDeploy**: to **EC2** instances, **on-premises** servers, **Lambda** functions and **ECS** services you already run.
+- **Orchestrate** → **AWS CodePipeline**: chains source → build → test → (approval) → deploy, triggered by each push.

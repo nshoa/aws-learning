@@ -37,6 +37,7 @@ The Markdown files are the source of truth: they are updated as I study each cou
 | 14 | Security & Encryption | [SecurityEncryption.md](markdown/SecurityEncryption.md) |
 | 15 | Networking - VPC | [Networking.md](markdown/Networking.md) |
 | 16 | Disaster Recovery & Migration | [DisasterRecoveryAndMigration.md](markdown/DisasterRecoveryAndMigration.md) |
+| 17 | CI/CD: CodeCommit, CodeBuild, CodeDeploy, CodePipeline | [CICD.md](markdown/CICD.md) |
 
 ## Adding content
 

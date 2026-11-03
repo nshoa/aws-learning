@@ -97,6 +97,7 @@ nav:
           - Security & Encryption: mind_maps/markdown/SecurityEncryption.md
           - Networking - VPC: mind_maps/markdown/Networking.md
           - Disaster Recovery & Migration: mind_maps/markdown/DisasterRecoveryAndMigration.md
+          - CI/CD on AWS: mind_maps/markdown/CICD.md
   - Cheatsheets:
       - cheatsheets/README.md
       - EC2: cheatsheets/ec2.md

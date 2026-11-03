@@ -23,6 +23,7 @@ so it reads fine on GitHub and also renders as an interactive mind map with [Mar
 | 14 | Security & Encryption | [SecurityEncryption.md](SecurityEncryption.md) |
 | 15 | Networking - VPC | [Networking.md](Networking.md) |
 | 16 | Disaster Recovery & Migration | [DisasterRecoveryAndMigration.md](DisasterRecoveryAndMigration.md) |
+| 17 | CI/CD on AWS | [CICD.md](CICD.md) |
 
 ## View as an interactive mind map
 

@@ -17,7 +17,7 @@ service again, its notes extend the same mind map, cheatsheet, or lab series.
 
 | Section | What it is | Start here |
 |---------|-----------|-----------|
-| 🧠 [Mind Maps](mind_maps/) | Markdown mind maps for **16 topic areas** (EC2, S3, VPC, IAM, …), interactive on the website — the big picture | [mind_maps/README.md](mind_maps/README.md) |
+| 🧠 [Mind Maps](mind_maps/) | Markdown mind maps for **17 topic areas** (EC2, S3, VPC, IAM, …), interactive on the website — the big picture | [mind_maps/README.md](mind_maps/README.md) |
 | 📒 [Cheatsheets](cheatsheets/) | One-page service summaries for fast exam recall | [cheatsheets/README.md](cheatsheets/README.md) |
 | 🧪 [Labs](labs/) | Step-by-step console & CLI labs (EC2, IAM, S3, CloudFront, SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway, CloudFormation) | [labs/README.md](labs/README.md) |
 | 🧩 [Templates](templates/) | Reusable doc templates + house style (for humans & LLMs) | [templates/README.md](templates/README.md) |
@@ -86,7 +86,7 @@ breadcrumb, metadata, cleanup — then run `make lint`.
 | Course | Status | What it added |
 |--------|--------|---------------|
 | **SAA-C03** — Solutions Architect Associate | ✅ Studied | Mind maps (all 16 topics), cheatsheets, EC2 / IAM / S3 / CloudFront labs |
-| **DVA-C02** — Developer Associate | 🚧 In progress | Deeper Lambda, DynamoDB and API Gateway theory in the mind maps; SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway and CloudFormation labs |
+| **DVA-C02** — Developer Associate | 🚧 In progress | Deeper Lambda, DynamoDB and API Gateway theory and a new CI/CD mind map; SQS, SNS, Kinesis, Data Firehose, CloudWatch, X-Ray, Lambda, DynamoDB, API Gateway and CloudFormation labs |
 | *Next AWS courses* | 🔜 Planned | Added here as I study them |
 
 ---
